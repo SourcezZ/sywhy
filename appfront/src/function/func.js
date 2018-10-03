@@ -28,6 +28,8 @@ exports.install = function (Vue, options) {
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
       };
+
+      //filter里使用dataFormat
     Vue.filter('dataFormat', function (value, fmt) {
         let getDate = new Date(value);
         let o = {

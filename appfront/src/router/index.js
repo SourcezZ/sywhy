@@ -9,19 +9,14 @@ Vue.use(Router)
 export default new Router({
   routes: [
   {
-    path: '/123', //url地址
-    name: '主页', //随便取一个name
+    path: '/practice', //url地址
+    name: '练习', //随便取一个name
     component: index //对应import的index，匹配大小写
   },
   {
-    path: '/leader', //url地址
+    path: '/', //url地址
     name: '导航条', //随便取一个name
     component: leader //对应import的index，匹配大小写
   },
-  {
-    path: '/',
-    name: 'Home',
-    component: home
-  }
   ],
 })

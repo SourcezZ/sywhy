@@ -1,3 +1,4 @@
+<!-- 走马灯组件 -->
 <template>
     <div style="text-align:center">
         <div>
@@ -6,7 +7,7 @@
             </el-button>
         </div>
         <div>
-            <el-carousel :interval="4000" type="card" height="200px">
+            <el-carousel :interval="4000" type="card" height="400px">
                 <el-carousel-item>
                     <img class="img" src="../img/1.jpg">
                 </el-carousel-item>
@@ -27,10 +28,6 @@
     export default {
         data() {
             return {
-                input: '',
-                out: '',
-                items: [],
-                value: '',
             }
         },
         methods: {
