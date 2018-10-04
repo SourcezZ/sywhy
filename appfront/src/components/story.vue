@@ -12,7 +12,7 @@
             </el-col>
         </el-row>
         <el-row>
-            <el-table :data="storyList" style="width:100%" border>
+            <el-table :data="storyList" style="width:100%">
                 <el-table-column prop="pk" label="编号" min-width="100">
                 </el-table-column>
                 <el-table-column prop="fields.title" label="标题" min-width="100">
@@ -80,7 +80,12 @@
     .el-row {
         margin-bottom: 20px;
     }
-
+    .el-input{
+        margin: 5px 0 5px 0;
+    }
+    .el-button{
+        margin: 5px 0 5px 5px;
+    }
     .el-col {
         border-radius: 4px;
     }

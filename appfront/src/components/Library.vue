@@ -60,3 +60,18 @@
         }
     }
 </script>
+<style>
+    .input {
+        margin: 5px 0 5px 0;
+        /*上 右 下 左*/
+    }
+
+    .el-row {
+        margin-bottom: 20px;
+    }
+
+    .el-col {
+        border-radius: 20px;
+    }
+
+</style>
