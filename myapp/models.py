@@ -17,6 +17,6 @@ class Story(models.Model):
     title = models.CharField(max_length=64)
     content = models.CharField(max_length=64)
     add_time = models.DateTimeField(auto_now_add=True)
-
+    objects = models.Manager()  #add 'objects = models.Manager()' to resolve 'no objects member' warning
     def __unicode__(self):
         return self.title
