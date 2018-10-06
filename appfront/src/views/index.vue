@@ -1,8 +1,9 @@
 <template>
     <div>
+        <Light></Light>
         <div class='div'>
             <el-menu :default-active="activeIndex" @select="handleSelect" background-color="#545c64" text-color="#fff"
-                active-text-color="#ffd04b">
+                active-text-color="#ffd04b" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
                 <el-menu-item index="1">主页</el-menu-item>
                 <el-menu-item index="2">走马灯</el-menu-item>
                 <el-menu-item index="3">书籍</el-menu-item>
@@ -50,12 +51,13 @@
 </script>
 <style>
     .el-menu {
-        width:100%;
+        width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: center;
     }
-    .div{
+
+    .div {
         display: flex;
         justify-content: center;
     }

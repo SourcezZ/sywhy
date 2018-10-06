@@ -2,7 +2,7 @@
 <template>
     <div>
         <el-row>
-            <el-col :span="4">
+            <el-col :span="7">
                 <!--span宽度-->
                 <el-input class='input' v-model="title" placeholder="请输入标题"></el-input>
                 <el-input class='input' v-model="content" type="textarea" rows="5" placeholder="请输入内容"></el-input>
@@ -15,14 +15,16 @@
             <el-card class="box-card" v-for="i in storyList" :key="i.pk">
                 <div slot="header" class="clearfix">
                     <span>{{ i.fields.title }}</span>
+                    <span style='float: right;'>{{ i.fields.add_time | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
                 </div>
                 <div class="text item">
                     <span>{{ i.fields.content }}</span>
-                    <span>{{ i.fields.add_time | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
-                    <el-badge :value="12" class="item inline" >
-                        <el-button size="small">评论</el-button>
-                    </el-badge>
                 </div>
+                <div v-for="j in commentList" :key='j.pk'>
+                    <span class='comments' v-if='j.fields.commentId==i.pk'>{{ j.fields.commentContent }}</span>
+                </div>
+                <el-input v-model='commentContent[i.pk]'></el-input>
+                <el-button style='float: right;' size="small" v-on:click='add_comment(i.pk)'>评论</el-button>
             </el-card>
         </div>
     </div>
@@ -34,7 +36,11 @@
             return {
                 title: '',
                 content: '',
+                commentContent: [],
+                commentId: '',
                 storyList: [],
+                commentList: [],
+                addFlag: 0,
             }
         },
         methods: {
@@ -65,10 +71,43 @@
                             console.log(res['msg'])
                         }
                     })
-            }
+            },
+            commentOnOff: function () {
+                this.addFlag = !this.addFlag
+            },
+            add_comment: function (commentId) {
+                if (this.commentContent == '') {
+                    this.$message.error("内容不能为空")
+                    return
+                }
+                this.$http.get('http://127.0.0.1:8000/api/add_comment?commentContent=' + this.commentContent[commentId] + '&commentId=' + commentId)
+                    .then((response) => {
+                        var res = JSON.parse(response.bodyText)
+                        if (res.error_num == 0) {
+                            this.commentContent = []
+                            this.show_comments()
+                        } else {
+                            this.$message.error('新增内容失败，请重试')
+                            console.log(res['msg'])
+                        }
+                    })
+            },
+            show_comments: function (params) {
+                this.$http.get('http://127.0.0.1:8000/api/show_comments')
+                    .then((response) => {
+                        var res = JSON.parse(response.bodyText)
+                        // console.log(res)
+                        if (res.error_num == 0) {
+                            this.commentList = res['list']
+                        } else {
+                            this.$message.error('查询失败')
+                        }
+                    })
+            },
         },
         mounted: function () {
             this.show_storys()
+            this.show_comments()
         }
     }
 </script>
@@ -106,10 +145,10 @@
         display: block;
     }
 
-    .el-badge{
+    .el-badge {
         float: right;
         margin-top: 30px;
-        width:66px;
+        width: 55px;
     }
 
     .clearfix:before,
@@ -132,5 +171,26 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+    }
+
+    .el-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .el-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .comments {
+        width: 400px;
+        height: 400px;
+        font-size: 10px;
+        background-color: antiquewhite;
     }
 </style>

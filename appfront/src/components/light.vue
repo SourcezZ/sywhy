@@ -2,12 +2,7 @@
 <template>
     <div style="text-align:center">
         <div>
-            <el-button id="surprise" plain @click="surprise">
-                a surprise
-            </el-button>
-        </div>
-        <div>
-            <el-carousel :interval="4000" type="card" height="400px">
+            <el-carousel :interval="4000" type="card" height="200px">
                 <el-carousel-item>
                     <img class="img" src="../img/1.jpg">
                 </el-carousel-item>
@@ -31,15 +26,6 @@
             }
         },
         methods: {
-            surprise() {
-                const h = this.$createElement;
-                this.$notify({
-                    title: 'I',
-                    message: h('i', 'hid a surprise in your computer'),
-                    position: 'top-left',
-
-                });
-            },
         }
 
     }        

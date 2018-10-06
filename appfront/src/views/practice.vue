@@ -4,10 +4,10 @@
       <el-input class="input" v-model="todoValue" v-on:keyup.enter.native="addNew"></el-input>
       <el-form :model="formData" :rules="baseRules">
         <el-form-item prop="addProp">
-            <el-input class="input" type='number' v-model.number="formData.addProp" placeholder="验证表单" ></el-input>
+          <el-input class="input" type='number' v-model.number="formData.addProp" placeholder="验证表单"></el-input>
         </el-form-item>
       </el-form>
-      
+
       <el-button v-on:click="addNew">addNew</el-button>
       <el-button @click="delete1">delete</el-button>
       <el-button @click="text1">global</el-button>
@@ -61,11 +61,11 @@
         answer: 'waitting for you question',
         checkedNames: [],
         star: Store.fetchStar(),
-        formData:{
-          addProp:null,
+        formData: {
+          addProp: null,
         },
-        baseRules:{
-          addProp : [{required : true , type : 'number' , trigger :'blur' ,message : '请输入数字'}]
+        baseRules: {
+          addProp: [{ required: true, type: 'number', trigger: 'blur', message: '请输入数字' }]
         }
       }
     },
@@ -128,15 +128,14 @@
 
   .input {
     width: 200px;
-    margin:5px ;
+    margin: 5px;
   }
 
   .div {
     margin: 10px
   }
 
-  input::-webkit-inner-spin-button{
+  input::-webkit-inner-spin-button {
     -webkit-appearance: none
-    }
-    
+  }
 </style>

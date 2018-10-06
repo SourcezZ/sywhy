@@ -15,8 +15,16 @@ class Book(models.Model):
 
 class Story(models.Model):
     title = models.CharField(max_length=64)
-    content = models.CharField(max_length=64)
+    content = models.CharField(max_length=256)
     add_time = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()  #add 'objects = models.Manager()' to resolve 'no objects member' warning
     def __unicode__(self):
         return self.title
+
+class Comment(models.Model):
+    commentId = models.CharField(max_length=64)
+    commentContent = models.CharField(max_length=256)
+    add_time = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+    def __unicode__(self):
+        return self.commentContent
