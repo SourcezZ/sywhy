@@ -11,19 +11,20 @@
                 <el-button type="primary" v-on:click="add_story">提交</el-button>
             </el-col>
         </el-row>
-        <el-row>
-            <el-table :data="storyList" style="width:100%">
-                <el-table-column prop="pk" label="编号" min-width="100">
-                </el-table-column>
-                <el-table-column prop="fields.title" label="标题" min-width="100">
-                </el-table-column>
-                <el-table-column prop="fields.content" label="内容" min-width="100">
-                </el-table-column>
-                <el-table-column label="添加时间" min-width="100">
-                    <template slot-scope="scope">{{ scope.row.fields.add_time | dataFormat('yyyy-MM-dd hh:mm:ss') }}</template>
-                </el-table-column>
-            </el-table>
-        </el-row>
+        <div class='box-in-card'>
+            <el-card class="box-card" v-for="i in storyList" :key="i.pk">
+                <div slot="header" class="clearfix">
+                    <span>{{ i.fields.title }}</span>
+                </div>
+                <div class="text item">
+                    <span>{{ i.fields.content }}</span>
+                    <span>{{ i.fields.add_time | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
+                    <el-badge :value="12" class="item inline" >
+                        <el-button size="small">评论</el-button>
+                    </el-badge>
+                </div>
+            </el-card>
+        </div>
     </div>
 </template>
 
@@ -51,10 +52,10 @@
             },
             add_story: function () {
                 if (this.content == '') {
-                    alert('内容不能为空')
+                    this.$message.error("内容不能为空")
                     return
                 }
-                this.$http.get('http://127.0.0.1:8000/api/add_book?title=' + this.title + '&content=' + this.content)
+                this.$http.get('http://127.0.0.1:8000/api/add_story?title=' + this.title + '&content=' + this.content)
                     .then((response) => {
                         var res = JSON.parse(response.bodyText)
                         if (res.error_num == 0) {
@@ -80,13 +81,56 @@
     .el-row {
         margin-bottom: 20px;
     }
-    .el-input{
+
+    .el-input {
         margin: 5px 0 5px 0;
     }
-    .el-button{
+
+    .el-button {
         margin: 5px 0 5px 5px;
     }
+
     .el-col {
         border-radius: 4px;
+    }
+
+    .text {
+        font-size: 14px;
+    }
+
+    .item {
+        margin-bottom: 18px;
+    }
+
+    .inline {
+        display: block;
+    }
+
+    .el-badge{
+        float: right;
+        margin-top: 30px;
+        width:66px;
+    }
+
+    .clearfix:before,
+    .clearfix:after {
+        display: table;
+        content: "";
+    }
+
+    .clearfix:after {
+        clear: both
+    }
+
+    .box-card {
+        width: 480px;
+        margin: 5px 0 5px 0;
+    }
+
+    .box-in-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 </style>
