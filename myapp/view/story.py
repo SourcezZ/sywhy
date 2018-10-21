@@ -26,7 +26,9 @@ def show_storys(request):
     response = {}
     try:
         storys = Story.objects.filter()
+        #storys = Story.objects.filter(id='1')
         response['list']  = json.loads(serializers.serialize("json", storys))
+        print(json.loads(serializers.serialize("json", storys)))
         response['msg'] = 'success'
         response['error_num'] = 0
     except  Exception as e:

@@ -7,12 +7,14 @@
                 <el-menu-item index="1">主页</el-menu-item>
                 <el-menu-item index="2">走马灯</el-menu-item>
                 <el-menu-item index="3">书籍</el-menu-item>
+                <el-menu-item index="4">图库</el-menu-item>                
             </el-menu>
         </div>
         <div>
             <Story v-if='activeIndex==1'></Story>
             <Light v-if='activeIndex==2'></Light>
             <Library v-if='activeIndex==3'></Library>
+            <Picture v-if='activeIndex==4'></Picture>
         </div>
     </div>
 </template>
@@ -21,8 +23,9 @@
     import Library from '../components/Library'
     import Story from '../components/story'
     import Light from '../components/light'
+    import Picture from '../components/upLoad'    
     export default {
-        components: { Library, Light, Story },
+        components: { Library, Light, Story, Picture },
         data() {
             return {
                 user: null,

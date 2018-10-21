@@ -4,15 +4,15 @@
         <div>
             <el-carousel :interval="4000" type="card" height="200px">
                 <el-carousel-item>
-                    <img class="img" src="../img/1.jpg">
+                    <img class="img" src="../light/1.jpg">
                 </el-carousel-item>
 
                 <el-carousel-item>
-                    <img class="img" src="../img/2.jpg">
+                    <img class="img" src="../light/2.jpg">
                 </el-carousel-item>
 
                 <el-carousel-item>
-                    <img class="img" src="../img/3.jpg">
+                    <img class="img" src="../light/3.jpg">
                 </el-carousel-item>
             </el-carousel>
         </div>
