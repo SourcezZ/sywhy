@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Light></Light>
+        <!-- <Light></Light> -->
         <div class='div'>
             <el-menu :default-active="activeIndex" @select="handleSelect" background-color="#545c64" text-color="#fff"
                 active-text-color="#ffd04b" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
@@ -38,17 +38,6 @@
                 this.activeIndex = key
                 console.log(key, keyPath);
             },
-            fetchData() {
-                this.$http.get('./../../static/json/data.json').then((response) => {
-                    console.log(response.data.data);
-                })
-            },
-        },
-        created() {
-            this.fetchData()
-        },
-        watch: {
-            '$route': 'fetchData'
         },
     }
 </script>
