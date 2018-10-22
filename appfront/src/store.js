@@ -11,5 +11,8 @@ export default {
     },
     saveStar(star){
         window.localStorage.setItem('star', star)
-    }
+    },
+    fetchUsername(){
+        return (window.sessionStorage.getItem('username'))
+    },
 }

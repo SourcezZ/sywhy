@@ -34,3 +34,8 @@ class Img(models.Model):
     img_name = models.CharField(max_length=256,default='false')
     img_url = models.ImageField(upload_to='media/') # upload_to指定图片上传的途径，如果不存在则自动创建
     objects = models.Manager()
+
+class User(models.Model):
+    account = models.CharField(max_length=64)
+    password = models.CharField(max_length=256)
+    objects = models.Manager()
