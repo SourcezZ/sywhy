@@ -8,6 +8,7 @@
                 <el-menu-item index="3">书籍</el-menu-item>
                 <el-menu-item index="4">图库</el-menu-item>
                 <el-menu-item index="5">登陆</el-menu-item>
+                <el-menu-item index="6" v-if="userName == '宋雨蔚'">You know me</el-menu-item>
             </el-menu>
         </div>
         <div class='login'>
@@ -15,11 +16,11 @@
                     <span v-else>未登录</span>
                 </div>
         <div>
-            <Story v-if='activeIndex==1'></Story>
+            <Story v-if='activeIndex==1' :userStatus='userStatus' :userName='userName'></Story>
             <Light v-if='activeIndex==2'></Light>
             <Library v-if='activeIndex==3'></Library>
             <Picture v-if='activeIndex==4'></Picture>
-            <Login @userSignIn='userSignIn' v-if='activeIndex==5'></Login>
+            <Login @userSignIn='userSignIn' v-if='activeIndex==5' :userStatus='userStatus'></Login>
         </div>
     </div>
 </template>
@@ -49,9 +50,9 @@ export default {
     },
     getUserStatus() {
       if (this.userName != "" && this.userName != null) {
-        this.userStatus = 1;
+        this.userStatus = 1;//已登录
       } else {
-        this.userStatus = 0;
+        this.userStatus = 0;//未登录
       }
     },
     userSignIn: function(userName) {

@@ -37,6 +37,7 @@
 
 <script>
 export default {
+  props:['userStatus','userName'],
   data() {
     return {
       title: "",
@@ -64,6 +65,9 @@ export default {
       if (this.content == "") {
         this.$message.error("内容不能为空");
         return;
+      }else if(this.userStatus != 1){
+        this.$message.error("请登录后再提交")
+        return
       }
       this.$http
         .get(

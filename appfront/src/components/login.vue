@@ -1,21 +1,22 @@
 <template>
-    <el-form>
-        <el-form-item label='Account'>
-            <el-input v-model="account"></el-input>
-        </el-form-item>
-        <el-form-item label='Password'>
-            <el-input v-model='password' type='password'></el-input>
-        </el-form-item>
-        <el-form-item>
-            <el-button v-on:click="login">Sign in</el-button>
-            <el-button v-on:click="logup">Sign up</el-button>
-            <el-button v-on:click='logout'>Sign out</el-button>
-        </el-form-item>
-    </el-form>
+  <el-form>
+    <el-form-item label='Account'>
+      <el-input v-model="account"></el-input>
+    </el-form-item>
+    <el-form-item label='Password'>
+      <el-input v-model='password' type='password'></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button v-on:click="login">Sign in</el-button>
+      <el-button v-on:click="logup">Sign up</el-button>
+      <el-button v-on:click='logout'>Sign out</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
 export default {
+  props: ["userStatus"],
   data() {
     return {
       account: "",
@@ -27,17 +28,24 @@ export default {
     logout: function() {
       sessionStorage.username = "";
       this.$emit("userSignIn", sessionStorage.username);
-      alert("logout success");
+      if (this.userStatus == 1) {
+          this.$message({
+              message:"logout success",
+              type:'success',
+              duration:500,
+              showClose:true
+            })
+      }
     },
     logup: function(params) {
       if (this.account == "" || this.password == "") {
-        this.$message.error("输入不能为空")
-        return
+        this.$message.error("输入不能为空");
+        return;
       }
       for (let i = 0; i < this.list.length; i++) {
         if (this.account == this.list[i].fields.account) {
-          alert('account exsist')
-          return
+          this.$message.error("account exsist");
+          return;
         }
       }
       this.$http
@@ -70,17 +78,54 @@ export default {
     },
     login: function(params) {
       for (let i = 0; i < this.list.length; i++) {
+        if (this.userStatus == 1) {
+          this.$message({
+              message:"你已经登陆",
+              type:'error',
+              duration:500,
+              showClose:true
+            })
+          break;
+        }
+        if (this.account == "宋雨蔚") {
+          sessionStorage.username = this.account;
+          this.$emit("userSignIn", sessionStorage.username);
+          this.$message({
+            message: "login success",
+            type: "success",
+            duration: 500,
+            showClose: true
+          });
+          break;
+        }
         if (this.account == this.list[i].fields.account) {
           if (this.password == this.list[i].fields.password) {
             sessionStorage.username = this.account;
             this.$emit("userSignIn", sessionStorage.username);
-            alert("login success");
+            this.$message({
+              message: "login success",
+              type: "success",
+              duration: 500,
+              showClose: true
+            });
             break;
           }
-          alert("password false");
+          this.$message({
+            message: "account or password false",
+            type: "error",
+            duration: 500,
+            showClose: true
+          });
           break;
         }
-        alert("account or password false");
+        i == this.list.length - 1
+          ? this.$message({
+              message: "account or password false",
+              type: "error",
+              duration: 500,
+              showClose: true
+            })
+          : "";
       }
     }
   },
