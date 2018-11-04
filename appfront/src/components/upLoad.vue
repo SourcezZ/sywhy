@@ -39,7 +39,7 @@ export default {
       console.log(file);
     },
     showImg: function(params) {
-      this.$http.get("http://127.0.0.1:8000/api/showImg").then(response => {
+      this.$http.get(url + "/api/showImg").then(response => {
         var res = JSON.parse(response.bodyText);
         // console.log(res)
         if (res.error_num == 0) {

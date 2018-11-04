@@ -31,7 +31,8 @@
         },
         methods: {
             show_books: function (params) {
-                this.$http.get('http://127.0.0.1:8000/api/show_books')
+                var url = window.location.href
+                this.$http.get(url + '/api/show_books')
                     .then((response) => {
                         var res = JSON.parse(response.bodyText)
                         // console.log(res)
@@ -43,7 +44,8 @@
                     })
             },
             add_book: function () {
-                this.$http.get('http://127.0.0.1:8000/api/add_book?book_name=' + this.input)
+                var url = window.location.href
+                this.$http.get(url + '/api/add_book?book_name=' + this.input)
                     .then((response) => {
                         var res = JSON.parse(response.bodyText)
                         if (res.error_num == 0) {

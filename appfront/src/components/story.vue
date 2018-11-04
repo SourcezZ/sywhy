@@ -51,7 +51,8 @@ export default {
   },
   methods: {
     show_storys: function(params) {
-      this.$http.get("http://127.0.0.1:8000/api/show_storys").then(response => {
+      
+      this.$http.get(url + "/api/show_storys").then(response => {
         var res = JSON.parse(response.bodyText);
         // console.log(res)
         if (res.error_num == 0) {
@@ -71,7 +72,7 @@ export default {
       }
       this.$http
         .get(
-          "http://127.0.0.1:8000/api/add_story?title=" +
+          url + "/api/add_story?title=" +
             this.title +
             "&content=" +
             this.content
@@ -96,7 +97,7 @@ export default {
       }
       this.$http
         .get(
-          "http://127.0.0.1:8000/api/add_comment?commentContent=" +
+          url + "/api/add_comment?commentContent=" +
             this.commentContent[commentId] +
             "&commentId=" +
             commentId
@@ -114,7 +115,7 @@ export default {
     },
     show_comments: function(params) {
       this.$http
-        .get("http://127.0.0.1:8000/api/show_comments")
+        .get(url + "/api/show_comments")
         .then(response => {
           var res = JSON.parse(response.bodyText);
           // console.log(res)
