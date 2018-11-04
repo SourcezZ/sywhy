@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     show_storys: function(params) {
-      
+      var url = window.location.href
       this.$http.get(url + "/api/show_storys").then(response => {
         var res = JSON.parse(response.bodyText);
         // console.log(res)
@@ -70,6 +70,7 @@ export default {
         this.$message.error("请登录后再提交")
         return
       }
+      var url = window.location.href
       this.$http
         .get(
           url + "/api/add_story?title=" +
@@ -95,6 +96,7 @@ export default {
         this.$message.error("内容不能为空");
         return;
       }
+      var url = window.location.href
       this.$http
         .get(
           url + "/api/add_comment?commentContent=" +
@@ -114,6 +116,7 @@ export default {
         });
     },
     show_comments: function(params) {
+      var url = window.location.href
       this.$http
         .get(url + "/api/show_comments")
         .then(response => {

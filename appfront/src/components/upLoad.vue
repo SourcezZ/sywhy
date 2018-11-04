@@ -39,6 +39,7 @@ export default {
       console.log(file);
     },
     showImg: function(params) {
+      var url = window.location.href
       this.$http.get(url + "/api/showImg").then(response => {
         var res = JSON.parse(response.bodyText);
         // console.log(res)
