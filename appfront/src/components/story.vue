@@ -52,7 +52,7 @@ export default {
   methods: {
     show_storys: function(params) {
       var url = window.location.href
-      this.$http.get(url + "/api/show_storys").then(response => {
+      this.$http.get(url + "api/show_storys").then(response => {
         var res = JSON.parse(response.bodyText);
         // console.log(res)
         if (res.error_num == 0) {
@@ -73,7 +73,7 @@ export default {
       var url = window.location.href
       this.$http
         .get(
-          url + "/api/add_story?title=" +
+          url + "api/add_story?title=" +
             this.title +
             "&content=" +
             this.content
@@ -99,7 +99,7 @@ export default {
       var url = window.location.href
       this.$http
         .get(
-          url + "/api/add_comment?commentContent=" +
+          url + "api/add_comment?commentContent=" +
             this.commentContent[commentId] +
             "&commentId=" +
             commentId
@@ -118,7 +118,7 @@ export default {
     show_comments: function(params) {
       var url = window.location.href
       this.$http
-        .get(url + "/api/show_comments")
+        .get(url + "api/show_comments")
         .then(response => {
           var res = JSON.parse(response.bodyText);
           // console.log(res)

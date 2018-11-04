@@ -48,9 +48,10 @@ export default {
           return;
         }
       }
+      var url = window.location.href
       this.$http
         .get(
-          "http://127.0.0.1:8000/api/add_user?account=" +
+          url + "api/add_user?account=" +
             this.account +
             "&password=" +
             this.password
@@ -66,7 +67,8 @@ export default {
         });
     },
     loginInfo: function(params) {
-      this.$http.get("http://127.0.0.1:8000/api/loginInfo").then(response => {
+      var url = window.location.href
+      this.$http.get(url + "api/loginInfo").then(response => {
         var res = JSON.parse(response.bodyText);
         // console.log(res)
         if (res.error_num == 0) {

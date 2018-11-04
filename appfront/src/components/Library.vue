@@ -32,7 +32,7 @@
         methods: {
             show_books: function (params) {
                 var url = window.location.href
-                this.$http.get(url + '/api/show_books')
+                this.$http.get(url + 'api/show_books')
                     .then((response) => {
                         var res = JSON.parse(response.bodyText)
                         // console.log(res)
@@ -45,7 +45,7 @@
             },
             add_book: function () {
                 var url = window.location.href
-                this.$http.get(url + '/api/add_book?book_name=' + this.input)
+                this.$http.get(url + 'api/add_book?book_name=' + this.input)
                     .then((response) => {
                         var res = JSON.parse(response.bodyText)
                         if (res.error_num == 0) {

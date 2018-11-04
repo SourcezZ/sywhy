@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-upload class="upload-demo" ref="upload" action="http://127.0.0.1:8000/api/uploadImg" :on-preview="handlePreview" :on-remove="handleRemove" :on-success="showImg" :auto-upload="false">
+    <el-upload class="upload-demo" ref="upload" :action="uploaadUrl" :on-preview="handlePreview" :on-remove="handleRemove" :on-success="showImg" :auto-upload="false">
       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
       <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
     </el-upload>
@@ -13,6 +13,7 @@
 export default {
   data() {
     return {
+      uploaadUrl : window.location.href + 'api/uploadImg' ,
       imgList: [],
       fileList: [
         {
@@ -40,7 +41,7 @@ export default {
     },
     showImg: function(params) {
       var url = window.location.href
-      this.$http.get(url + "/api/showImg").then(response => {
+      this.$http.get(url + "api/showImg").then(response => {
         var res = JSON.parse(response.bodyText);
         // console.log(res)
         if (res.error_num == 0) {
