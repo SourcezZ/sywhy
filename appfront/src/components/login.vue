@@ -49,7 +49,7 @@ export default {
         }
       }
       var url = window.location.href
-      url.includes('8000') ? "" : url=url + ':8000'
+      url.includes(':8000') ? "" : url=url.substring(0,url.length-1) + ':8000/'
       this.$http
         .get(
           url + "api/add_user?account=" +
@@ -69,7 +69,7 @@ export default {
     },
     loginInfo: function(params) {
       var url = window.location.href
-                url.includes('8000') ? "" : url=url + ':8000'
+                url.includes(':8000') ? "" : url=url.substring(0,url.length-1) + ':8000/'
       this.$http.get(url + "api/loginInfo").then(response => {
         var res = JSON.parse(response.bodyText);
         // console.log(res)
