@@ -52,6 +52,7 @@ export default {
   methods: {
     show_storys: function(params) {
       var url = window.location.href
+      url.includes('8000') ? "" : url=url + ':8000'
       this.$http.get(url + "api/show_storys").then(response => {
         var res = JSON.parse(response.bodyText);
         // console.log(res)
@@ -71,6 +72,7 @@ export default {
         return
       }
       var url = window.location.href
+                url.includes('8000') ? "" : url=url + ':8000'
       this.$http
         .get(
           url + "api/add_story?title=" +
@@ -97,6 +99,7 @@ export default {
         return;
       }
       var url = window.location.href
+                url.includes('8000') ? "" : url=url + ':8000'
       this.$http
         .get(
           url + "api/add_comment?commentContent=" +
@@ -117,6 +120,7 @@ export default {
     },
     show_comments: function(params) {
       var url = window.location.href
+                url.includes('8000') ? "" : url=url + ':8000'
       this.$http
         .get(url + "api/show_comments")
         .then(response => {

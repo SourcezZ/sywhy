@@ -32,6 +32,7 @@
         methods: {
             show_books: function (params) {
                 var url = window.location.href
+                url.includes('8000') ? "" : url=url + ':8000'
                 this.$http.get(url + 'api/show_books')
                     .then((response) => {
                         var res = JSON.parse(response.bodyText)
@@ -45,6 +46,7 @@
             },
             add_book: function () {
                 var url = window.location.href
+                url.includes('8000') ? "" : url=url + ':8000'
                 this.$http.get(url + 'api/add_book?book_name=' + this.input)
                     .then((response) => {
                         var res = JSON.parse(response.bodyText)
