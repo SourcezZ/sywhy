@@ -31,7 +31,7 @@ class Comment(models.Model):
         return self.commentContent
 
 class Img(models.Model):
-    img_name = models.CharField(max_length=256,default='false')
+    img_name = models.CharField(max_length=256,default='no_name')
     img_url = models.ImageField(upload_to='media/') # upload_to指定图片上传的途径，如果不存在则自动创建
     objects = models.Manager()
 

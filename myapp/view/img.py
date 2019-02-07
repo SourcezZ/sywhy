@@ -9,8 +9,10 @@ from myapp.models import Img
 @require_http_methods(["POST"])
 def uploadImg(request): # 图片上传函数
     if request.method == 'POST':
+        print(type(request.FILES.get('file')))
         img = Img(img_url=request.FILES.get('file'))
         img.save()
+        print(img.save())
     return render(request, 'index.html')
 
 @require_http_methods(["GET"])

@@ -17,9 +17,9 @@
                 </div>
         <div>
             <Story v-if='activeIndex==1' :userStatus='userStatus' :userName='userName'></Story>
-            <Light v-if='activeIndex==2'></Light>
-            <Library v-if='activeIndex==3'></Library>
-            <Picture v-if='activeIndex==4'></Picture>
+            <Light v-if='activeIndex==2' :userStatus='userStatus' :userName='userName'></Light>
+            <Library v-if='activeIndex==3' :userStatus='userStatus' :userName='userName'></Library>
+            <Picture v-if='activeIndex==4' :userStatus='userStatus' :userName='userName'></Picture>
             <Login @userSignIn='userSignIn' v-if='activeIndex==5' :userStatus='userStatus'></Login>
         </div>
     </div>
