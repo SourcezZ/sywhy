@@ -108,7 +108,7 @@ export default {
           this.$message({
             message: "login success",
             type: "success",
-            duration: 500,
+            duration: 1000,
             showClose: true
           });
           break;
@@ -120,7 +120,7 @@ export default {
             this.$message({
               message: "login success",
               type: "success",
-              duration: 500,
+              duration: 1000,
               showClose: true
             });
             break;
@@ -128,7 +128,7 @@ export default {
           this.$message({
             message: "account or password false",
             type: "error",
-            duration: 500,
+            duration: 1000,
             showClose: true
           });
           break;
@@ -137,7 +137,7 @@ export default {
           ? this.$message({
               message: "account or password false",
               type: "error",
-              duration: 500,
+              duration: 1000,
               showClose: true
             })
           : "";
