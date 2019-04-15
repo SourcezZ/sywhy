@@ -4,6 +4,7 @@
     <br>
     <span>{{ hello }}</span>
     <span @click="aaa(2,{nihao:2, buhao:3})">haha1</span>
+    <span @click="clickToComeTrue">click to come true</span>
   </div>
 </template>
 <script>
@@ -18,6 +19,16 @@
     watch: {
     },
     methods: {
+      clickToComeTrue : function () {
+        var req = {
+          'username':'admin',
+          'password':'admin'
+        }
+        this.postData2Server('loginInfo', req, function (res) {
+          console.log(res)
+        })
+
+      },
       aaa : function (haha1=1, {nihao = 'nihao',buhao = 'buhao'}) {
         console.log(haha1)
         console.log(nihao)

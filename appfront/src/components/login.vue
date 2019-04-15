@@ -26,6 +26,8 @@ export default {
     };
   },
   methods: {
+
+    //注销
     logout: function() {
       sessionStorage.username = "";
       this.$emit("userSignIn", sessionStorage.username);
@@ -38,6 +40,8 @@ export default {
             })
       }
     },
+
+    //注册
     logup: function(params) {
       if (this.account == "" || this.password == "") {
         this.$message.error("输入不能为空");
@@ -73,9 +77,12 @@ export default {
           }
         });
     },
+
+
+    //登陆信息
     loginInfo: function(params) {
       var url = window.location.href
-                if(url.includes(':8080')){
+      if(url.includes(':8080')){
           url=url.substring(0,url.lastIndexOf(":")) + ':8000/'
       }
       if (!url.includes(':8000')) {
@@ -91,6 +98,9 @@ export default {
         }
       });
     },
+
+
+    //登陆
     login: function(params) {
       for (let i = 0; i < this.list.length; i++) {
         if (this.userStatus == 1) {

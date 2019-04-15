@@ -21,9 +21,10 @@ def add_user(request):
 
     return JsonResponse(response)
 
-@require_http_methods(["GET"])
+@require_http_methods(["POST"])
 def loginInfo(request):
     response = {}
+    data = json.loads(request.body)
     try:
         user = User.objects.filter()
         #storys = Story.objects.filter(id='1')

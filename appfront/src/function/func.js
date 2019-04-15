@@ -1,4 +1,19 @@
 exports.install = function (Vue, options) {
+    Vue.prototype.postData2Server = function(transId, req, callback){
+      req._accessToken = sessionStorage.getItem('_accessToken')
+      var url = window.location.href
+      if(url.includes(':8080')){
+          url=url.substring(0,url.lastIndexOf(":")) + ':8000/'
+      }
+      if (!url.includes(':8000')) {
+        url=url.substring(0,url.length-1) + ':8000/'
+      }
+      this.$http.post(url + "api/" + transId, req).then(response => {
+        var res = JSON.parse(response.bodyText);
+        callback(res)
+      })
+
+  },
     Vue.prototype.text1 = function () {//全局函数1
         alert('执行成功1');
     };
