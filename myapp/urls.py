@@ -19,5 +19,6 @@ url(r'uploadImg$', img.uploadImg),
 url(r'showImg$', img.showImg),
 
 url(r'add_user', login.add_user),
-url(r'loginInfo', login.loginInfo),
+url(r'login', login.login),
+url(r'userInfo', login.loginInfo),
 ]

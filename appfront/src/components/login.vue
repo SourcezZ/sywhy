@@ -1,170 +1,125 @@
 <!-- 登陆组件 -->
 <template>
-  <el-form>
-    <el-form-item label='Account'>
-      <el-input v-model="account"></el-input>
-    </el-form-item>
-    <el-form-item label='Password'>
-      <el-input v-model='password' type='password'></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button v-on:click="login">Sign in</el-button>
-      <el-button v-on:click="logup">Sign up</el-button>
-      <el-button v-on:click='logout'>Sign out</el-button>
-    </el-form-item>
+  <el-form :rules='loginRule' :model='userForm' ref="userForm">
+	<el-form-item label='username' prop='username'>
+	  <el-input v-model="userForm.username" :disabled='isDisabled()'></el-input>
+	</el-form-item>
+	<el-form-item label='password' v-if="userStatus==0" prop='password'>
+	  <el-input v-model='userForm.password' type='password'></el-input>
+	</el-form-item>
+	<el-form-item>
+	  <el-button v-on:click="login" v-if="userStatus==0">Sign in</el-button>
+	  <el-button v-on:click="logup" v-if="userStatus==0">Sign up</el-button>
+	  <el-button v-on:click='logout' v-if="userStatus==1">Sign out</el-button>
+	</el-form-item>
   </el-form>
 </template>
 
 <script>
 export default {
-  props: ["userStatus"],
-  data() {
-    return {
-      account: "",
-      password: "",
-      list: []
-    };
-  },
-  methods: {
-
-    //注销
-    logout: function() {
-      sessionStorage.username = "";
-      this.$emit("userSignIn", sessionStorage.username);
-      if (this.userStatus == 1) {
-          this.$message({
-              message:"logout success",
-              type:'success',
-              duration:500,
-              showClose:true
-            })
-      }
+    props: ["userStatus"],
+    data() {
+        return {
+            userForm:{
+                username : '',
+                password : ''
+            },
+            loginRule:{
+                username : [
+                    {required:true, message:'need username', trigger:'blur'},
+                ],
+                password : {required:true, message:'need password', trigger:'blur'},
+            }
+        }
     },
+    methods: {
+        isDisabled : function(){
+            if (this.userStatus == 1) {
+                return true
+            }else{
+                return false
+            }
+        },
+        //注销
+        logout : function() {
+            sessionStorage.clear()
+            this.userForm.username = ''
+            if (this.userStatus == 1) {
+                this.$message({message:"logout success",type:'success',duration:500,showClose:true})
+                this.$emit("userSignIn", '')
+                debugger
+                this.$refs.userForm.resetFields()
+            }
+        },
 
-    //注册
-    logup: function(params) {
-      if (this.account == "" || this.password == "") {
-        this.$message.error("输入不能为空");
-        return;
-      }
-      for (let i = 0; i < this.list.length; i++) {
-        if (this.account == this.list[i].fields.account) {
-          this.$message.error("account exsist");
-          return;
-        }
-      }
-      var url = window.location.href
-      if(url.includes(':8080')){
-          url=url.substring(0,url.lastIndexOf(":")) + ':8000/'
-      }
-      if (!url.includes(':8000')) {
-        url=url.substring(0,url.length-1) + ':8000/'
-      }
-      this.$http
-        .get(
-          url + "api/add_user?account=" +
-            this.account +
-            "&password=" +
-            this.password
-        )
-        .then(response => {
-          var res = JSON.parse(response.bodyText);
-          // console.log(res)
-          if (res.error_num == 0) {
-          } else {
-            this.$message.error("新增内容失败，请重试");
-            console.log(res["msg"]);
-          }
-        });
-    },
+        //注册
+        logup : function(params) {
+            this.$refs.userForm.validate(valid => {
+                if(valid){
+                    if (this.userForm.username == "" || this.userForm.password == "") {
+                        this.$message.error("输入不能为空");
+                        return;
+                    }
+                    var req = {}
+                    req.username = this.userForm.username
+                    req.password = this.userForm.password
 
-
-    //登陆信息
-    loginInfo: function(params) {
-      var url = window.location.href
-      if(url.includes(':8080')){
-          url=url.substring(0,url.lastIndexOf(":")) + ':8000/'
-      }
-      if (!url.includes(':8000')) {
-        url=url.substring(0,url.length-1) + ':8000/'
-      }
-      this.$http.get(url + "api/loginInfo").then(response => {
-        var res = JSON.parse(response.bodyText);
-        // console.log(res)
-        if (res.error_num == 0) {
-          this.list = res["list"];
-        } else {
-          this.$message.error("查询失败");
-        }
-      });
-    },
-
-
-    //登陆
-    login: function(params) {
-      for (let i = 0; i < this.list.length; i++) {
-        if (this.userStatus == 1) {
-          this.$message({
-              message:"你已经登陆",
-              type:'error',
-              duration:500,
-              showClose:true
+                    var thisObj = this
+                    this.postData2Server('add_user', req, function(res){
+                        console.log(res)
+                        if(res.msg == 'success'){
+                            thisObj.$message({message: "logup success", type: "success",duration: 1000,showClose: true});
+                        }else{
+                            thisObj.$message({message: res.msg, type: "error",duration: 1000,showClose: true});
+                        }
+                    })
+                }
             })
-          break;
-        }
-        if (this.account == "宋雨蔚") {
-          sessionStorage.username = this.account;
-          this.$emit("userSignIn", sessionStorage.username);
-          this.$message({
-            message: "login success",
-            type: "success",
-            duration: 1000,
-            showClose: true
-          });
-          break;
-        }
-        if (this.account == this.list[i].fields.account) {
-          if (this.password == this.list[i].fields.password) {
-            sessionStorage.username = this.account;
-            this.$emit("userSignIn", sessionStorage.username);
-            this.$message({
-              message: "login success",
-              type: "success",
-              duration: 1000,
-              showClose: true
-            });
-            break;
-          }
-          this.$message({
-            message: "account or password false",
-            type: "error",
-            duration: 1000,
-            showClose: true
-          });
-          break;
-        }
-        i == this.list.length - 1
-          ? this.$message({
-              message: "account or password false",
-              type: "error",
-              duration: 1000,
-              showClose: true
+        },
+        
+        //登陆
+        login : function () {
+            this.$refs.userForm.validate(valid =>{
+                if(valid){
+                    var req = {}
+                    req.username = this.userForm.username
+                    req.password = this.userForm.password
+
+                    var thisObj = this
+                    this.postData2Server('login', req, function (res) {
+                        console.log(res)
+                        if (res.msg == 'success') {
+                            sessionStorage.setItem('token', res['token'])
+                            sessionStorage.setItem('username', req['username'])
+                            thisObj.$message({message: "login success", type: "success",duration: 1000,showClose: true});
+                            thisObj.$emit("userSignIn", sessionStorage.username);
+                        }else{
+                            thisObj.$message({message: res.msg, type: "error",duration: 1000,showClose: true});
+                        }
+
+                    })
+                }
             })
-          : "";
-      }
+        }
+        
+    },
+    mounted: function() {
+        var thisObj = this
+		this.postData2Server('userInfo', {}, function(res){
+			if (res.username != null) {
+				thisObj.userForm.username = res.username
+			}
+		})
     }
-  },
-  mounted: function() {
-    this.loginInfo();
-  }
-};
+}
 </script>
+
 <style>
 .el-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 </style>
 

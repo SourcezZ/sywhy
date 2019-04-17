@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-  props:['userStatus','userName'],
+  props:['userStatus','username'],
   data() {
     return {
       uploaadUrl : "" ,

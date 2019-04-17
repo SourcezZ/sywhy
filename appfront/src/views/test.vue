@@ -24,8 +24,9 @@
           'username':'admin',
           'password':'admin'
         }
-        this.postData2Server('loginInfo', req, function (res) {
+        this.postData2Server('login', req, function (res) {
           console.log(res)
+          sessionStorage.setItem('token',res['token'])
         })
 
       },

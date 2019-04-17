@@ -12,7 +12,7 @@
             </el-col>
         </el-row>
         <div class='box-in-card'>
-            <el-card class="box-card" v-for="i in storyList" :key="i.pk" v-if="userName=='syw'">
+            <el-card class="box-card" v-for="i in storyList" :key="i.pk" v-if="username=='syw'">
                 <div slot="header" class="clearfix">
                     <span>{{ i.fields.title }}</span>
                     <span style='float: right;'>{{ i.fields.add_time | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  props:['userStatus','userName'],
+  props:['userStatus','username'],
   data() {
     return {
       title: "",
