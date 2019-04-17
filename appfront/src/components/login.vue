@@ -47,7 +47,6 @@ export default {
             if (this.userStatus == 1) {
                 this.$message({message:"logout success",type:'success',duration:500,showClose:true})
                 this.$emit("userSignIn", '')
-                debugger
                 this.$refs.userForm.resetFields()
             }
         },

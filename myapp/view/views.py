@@ -7,11 +7,12 @@ from django.core import serializers
 from myapp.models import Book
 
 # Create your views here.
-@require_http_methods(["GET"])
+@require_http_methods(["POST"])
 def add_book(request):
     response = {}
+    data = json.loads(request.body)
     try:
-        book = Book(book_name=request.GET.get('book_name'))
+        book = Book(bookName=data['bookName'])
         book.save()
         response['msg'] = 'success'
         response['error_num'] = 0
@@ -21,7 +22,7 @@ def add_book(request):
 
     return JsonResponse(response)
 
-@require_http_methods(["GET"])
+@require_http_methods(["POST"])
 def show_books(request):
     response = {}
     try:

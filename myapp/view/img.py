@@ -8,14 +8,13 @@ from myapp.models import Img
 
 @require_http_methods(["POST"])
 def uploadImg(request): # 图片上传函数
+    file = request.FILES.get('file')
     if request.method == 'POST':
-        print(type(request.FILES.get('file')))
-        img = Img(img_url=request.FILES.get('file'))
+        img = Img(imgUrl=file,imgName=file.name)
         img.save()
-        print(img.save())
     return render(request, 'index.html')
 
-@require_http_methods(["GET"])
+@require_http_methods(["POST"])
 def showImg(request):
     response = {}
     try:

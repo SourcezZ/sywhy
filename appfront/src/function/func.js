@@ -10,8 +10,20 @@ exports.install = function (Vue, options) {
 		}
 		this.$http.post(url + "api/" + transId, req).then(response => {
 			var res = JSON.parse(response.bodyText);
+			console.log({'transId':transId, 'list':res.list, 'msg':res.msg})
 			callback(res)
 		})
+	}
+
+	Vue.prototype.getUploadUrl = function(transId){
+		var url = window.location.href
+		if(url.includes(':8080') || url.includes(':8000')){
+			url = url.substring(0,url.lastIndexOf(":")) + ':8000/api/' + transId
+		}
+		if (!url.includes(':8000')) {
+			url = url.substring(0,url.length-1) + ':8000/api/' + transId
+		}
+		return url
 	}
 	
     Date.prototype.Format = function (fmt) { //author: meizz

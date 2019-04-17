@@ -11,11 +11,12 @@
                 <el-button type="primary" v-on:click="add_story">提交</el-button>
             </el-col>
         </el-row>
+        <!-- <div class='box-in-card' v-if="username=='syw'"> -->
         <div class='box-in-card'>
-            <el-card class="box-card" v-for="i in storyList" :key="i.pk" v-if="username=='syw'">
+            <el-card class="box-card" v-for="i in storyList" :key="i.pk">
                 <div slot="header" class="clearfix">
                     <span>{{ i.fields.title }}</span>
-                    <span style='float: right;'>{{ i.fields.add_time | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
+                    <span style='float: right;'>{{ i.fields.addTime | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
                 </div>
                 <div class="text item">
                     <span>{{ i.fields.content }}</span>
@@ -25,7 +26,8 @@
                 <br><br>
                 <div v-if="!i.fields.commitFlag">
                   <div v-for="j in commentList" :key='j.pk'>
-                      <span class='comments' v-if='j.fields.commentId==i.pk'>{{ j.fields.commentContent }}</span>
+                      <span class='comments' v-if='j.pk==i.pk'>{{ j.fields.commentContent }}</span>
+					  <span style='font-size:5px;float: right;' v-if='j.pk==i.pk'>{{ j.fields.addTime | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
                   </div>
                   <el-input v-model='commentContent[i.pk]'></el-input>
                   <el-button style='float: right;' size="small" v-on:click='add_comment(i.pk)'>确定</el-button>
@@ -37,131 +39,95 @@
 
 <script>
 export default {
-  props:['userStatus','username'],
-  data() {
-    return {
-      title: "",
-      content: "",
-      commentContent: [],
-      commentId: "",
-      storyList: [],
-      commentList: [],
-      addFlag: 0,
-    };
-  },
-  methods: {
-    show_storys: function(params) {
-      var url = window.location.href
-      if(url.includes(':8080')){
-          url=url.substring(0,url.lastIndexOf(":")) + ':8000/'
-      }
-      if (!url.includes(':8000')) {
-        url=url.substring(0,url.length-1) + ':8000/'
-      }
-      this.$http.get(url + "api/show_storys").then(response => {
-        var res = JSON.parse(response.bodyText);
-        // console.log(res)
-        if (res.error_num == 0) {
-          this.storyList = res["list"];
-        } else {
-          this.$message.error("查询失败");
-        }
-      });
-    },
-    add_story: function() {
-      if (this.content == "") {
-        this.$message.error("内容不能为空");
-        return;
-      }else if(this.userStatus != 1){
-        this.$message.error("请登录后再提交")
-        return
-      }
-      var url = window.location.href
-                if(url.includes(':8080')){
-          url=url.substring(0,url.lastIndexOf(":")) + ':8000/'
-      }
-      if (!url.includes(':8000')) {
-        url=url.substring(0,url.length-1) + ':8000/'
-      }
-      this.$http
-        .get(
-          url + "api/add_story?title=" +
-            this.title +
-            "&content=" +
-            this.content
-        )
-        .then(response => {
-          var res = JSON.parse(response.bodyText);
-          if (res.error_num == 0) {
-            this.show_storys();
-          } else {
-            this.$message.error("新增内容失败，请重试");
-            console.log(res["msg"]);
-          }
-        });
-    },
-    commentOnOff: function() {
-      this.addFlag = !this.addFlag;
-    },
-    add_comment: function(commentId) {
-      if (this.commentContent == "") {
-        this.$message.error("内容不能为空");
-        return;
-      }
-      var url = window.location.href
-                if(url.includes(':8080')){
-          url=url.substring(0,url.lastIndexOf(":")) + ':8000/'
-      }
-      if (!url.includes(':8000')) {
-        url=url.substring(0,url.length-1) + ':8000/'
-      }
-      this.$http
-        .get(
-          url + "api/add_comment?commentContent=" +
-            this.commentContent[commentId] +
-            "&commentId=" +
-            commentId
-        )
-        .then(response => {
-          var res = JSON.parse(response.bodyText);
-          if (res.error_num == 0) {
-            this.commentContent = [];
-            this.show_comments();
-          } else {
-            this.$message.error("新增内容失败，请重试");
-            console.log(res["msg"]);
-          }
-        });
-    },
-    show_comments: function(params) {
-      var url = window.location.href
-                if(url.includes(':8080')){
-          url=url.substring(0,url.lastIndexOf(":")) + ':8000/'
-      }
-      if (!url.includes(':8000')) {
-        url=url.substring(0,url.length-1) + ':8000/'
-      }
-      this.$http
-        .get(url + "api/show_comments")
-        .then(response => {
-          var res = JSON.parse(response.bodyText);
-          // console.log(res)
-          if (res.error_num == 0) {
-            this.commentList = res["list"];
-          } else {
-            this.$message.error("查询失败");
-          }
-        });
-    },
-    ifCommit: function(params) {
-      this.storyList[params-1].fields.commitFlag = !this.storyList[params-1].fields.commitFlag
-    }
-  },
-  created: function() {
-    this.show_storys();
-    this.show_comments();
-  }
-};
+	props:['userStatus','username'],
+	data() {
+		return {
+			title: "",
+			content: "",
+			commentContent: [],
+			commentId: "1",
+			storyList: [],
+			commentList: [],
+			addFlag: 0,
+		}
+	},
+	methods: {
+		show_storys: function(params) {
+			var thisObj = this
+			this.postData2Server('show_storys', {}, function(res){
+				if (res.error_num == 0) {
+					thisObj.storyList = res["list"];
+				} else {
+					thisObj.$message.error("查询失败");
+				}
+			})
+		},
+
+		add_story: function() {
+			if (this.content == "") {
+				this.$message.error("内容不能为空");
+				return;
+			}else if(this.userStatus != 1){
+				this.$message.error("请登录后再提交")
+				return
+			}
+			var req = {
+				'title':this.title,
+				'content':this.content
+			}
+			var thisObj = this
+			this.postData2Server('add_story', req, function(res){
+				if (res.error_num == 0) {
+					thisObj.show_storys();
+				} else {
+					thisObj.$message.error("新增内容失败，请重试");
+				}
+			})
+		},
+		commentOnOff: function() {
+			this.addFlag = !this.addFlag;
+		},
+		add_comment: function(commentId) {
+			if (this.commentContent == "") {
+				this.$message.error("内容不能为空");
+				return;
+			}
+
+			var req = {
+				'commentContent' : this.commentContent[commentId],
+				'commentId' : commentId
+			}
+			var thisObj = this
+			this.postData2Server('add_comment', req, function(res){
+				if (res.error_num == 0) {
+					thisObj.commentContent = [];
+					thisObj.show_comments();
+				} else {
+					thisObj.$message.error("新增内容失败，请重试");
+				}
+			})
+		},
+		show_comments: function(params) {
+			var thisObj = this
+			this.postData2Server('show_comments', {}, function(res){
+				if (res.error_num == 0) {
+					thisObj.$nextTick(() =>{
+						thisObj.commentList = res["list"];
+					})
+				} else {
+					thisObj.$message.error("查询失败");
+				}
+			})
+		},
+		ifCommit: function(params) {
+			this.storyList[params-1].fields.commitFlag = !this.storyList[params-1].fields.commitFlag
+		}
+	},
+	created: function() {
+		this.show_storys()
+		this.show_comments()
+	}
+}
 </script>
 <style>
 .input {

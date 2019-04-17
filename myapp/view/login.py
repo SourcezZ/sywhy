@@ -49,10 +49,14 @@ def login(request):
         response['msg'] = str(e)
         response['error_num'] = 1
 
-    validPwd = userList[0]['fields']['password']
-    if(password == validPwd):
-        response['token'] = tokenFunc.create_token(username)
-        response['msg'] = 'success'
+    if userList != []:
+        validPwd = userList[0]['fields']['password']
+        if(password == validPwd):
+            response['token'] = tokenFunc.create_token(username)
+            response['msg'] = 'success'
+    else:
+        response['msg'] = 'username not exists, please log up'
+        response['error_num'] = 1
 
     return JsonResponse(response)
 
