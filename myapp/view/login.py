@@ -66,7 +66,11 @@ def loginInfo(request):
     data = json.loads(request.body)
     accessToken = data['token']
     if accessToken != None:
-        username = tokenFunc.get_username(accessToken)
-        response['username'] = username
+        try:
+            username = tokenFunc.get_username(accessToken)
+            response['username'] = username
+        except Exception as e:
+            response['returnCode'] = 0
+            response['msg'] = 'your session is time out, please login in again'
 
     return JsonResponse(response)

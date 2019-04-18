@@ -27,8 +27,17 @@ exports.install = function (Vue, options) {
 		}
 	}
 
+	Vue.prototype.delCookie = function(name)
+	{
+		var exp = new Date();
+		exp.setTime(exp.getTime() - 1);
+		var cval=this.getCookie(name);
+		if(cval!=null){
+			document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+		}
+	}
+
     Vue.prototype.postData2Server = function(transId, req, callback){
-		// req.token = sessionStorage.getItem('token')
 		req.token = this.getCookie('token')
 		var url = window.location.href
 		if(url.includes(':8080')){

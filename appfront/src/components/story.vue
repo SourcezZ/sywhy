@@ -25,12 +25,14 @@
                 <el-button style='float: right;' v-if="i.fields.commitFlag" size="small" v-on:click='ifCommit(i.pk)'>评论</el-button>
                 <br><br>
                 <div v-if="!i.fields.commitFlag">
-                  <div v-for="j in commentList" :key='j.pk'>
-                      <span class='comments' v-if='j.pk==i.pk'>{{ j.fields.commentContent }}</span>
-					  <span style='font-size:5px;float: right;' v-if='j.pk==i.pk'>{{ j.fields.addTime | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
-                  </div>
-                  <el-input v-model='commentContent[i.pk]'></el-input>
-                  <el-button style='float: right;' size="small" v-on:click='add_comment(i.pk)'>确定</el-button>
+					<div v-for="j in commentList" :key='j.pk'>
+						<div v-if='j.fields.storyId==i.pk'>
+							<span class='comments'>{{ j.fields.commentContent }}</span>
+							<span style='font-size:5px;float: right;' >{{ j.fields.addTime | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
+						</div>
+					</div>
+					<el-input v-model='commentContent[i.pk]'></el-input>
+					<el-button style='float: right;' size="small" v-on:click='add_comment(i.pk)'>确定</el-button>
                 </div>
             </el-card>
         </div>
@@ -39,7 +41,7 @@
 
 <script>
 export default {
-	props:['userStatus','username'],
+	props:['loginStatus','username'],
 	data() {
 		return {
 			title: "",
@@ -65,10 +67,10 @@ export default {
 
 		add_story: function() {
 			if (this.content == "") {
-				this.$message.error("内容不能为空");
+				this.$message({message: '内容不能为空', type: "error",duration: 1000,showClose: true})
 				return;
-			}else if(this.userStatus != 1){
-				this.$message.error("请登录后再提交")
+			}else if(this.loginStatus != 1){
+				this.$message({message: '请登录后再提交', type: "error",duration: 1000,showClose: true})
 				return
 			}
 			var req = {
@@ -89,13 +91,16 @@ export default {
 		},
 		add_comment: function(commentId) {
 			if (this.commentContent == "") {
-				this.$message.error("内容不能为空");
-				return;
+				this.$message({message: '内容不能为空', type: "error",duration: 1000,showClose: true})
+				return
+			}else if(this.loginStatus != 1){
+				this.$message({message: '请登录后再提交', type: "error",duration: 1000,showClose: true})
+				return
 			}
 
 			var req = {
 				'commentContent' : this.commentContent[commentId],
-				'commentId' : commentId
+				'storyId' : commentId
 			}
 			var thisObj = this
 			this.postData2Server('add_comment', req, function(res){
@@ -103,7 +108,7 @@ export default {
 					thisObj.commentContent = [];
 					thisObj.show_comments();
 				} else {
-					thisObj.$message.error("新增内容失败，请重试");
+					thisObj.$message.error(res.msg);
 				}
 			})
 		},

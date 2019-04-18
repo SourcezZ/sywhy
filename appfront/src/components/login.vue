@@ -4,22 +4,23 @@
 	<el-form-item label='username' prop='username'>
 	  <el-input v-model="userForm.username" :disabled='isDisabled()'></el-input>
 	</el-form-item>
-	<el-form-item label='password' v-if="userStatus==0" prop='password'>
+	<el-form-item label='password' v-if="loginStatus==0" prop='password'>
 	  <el-input v-model='userForm.password' type='password'></el-input>
 	</el-form-item>
 	<el-form-item>
-	  <el-button v-on:click="login" v-if="userStatus==0">Sign in</el-button>
-	  <el-button v-on:click="logup" v-if="userStatus==0">Sign up</el-button>
-	  <el-button v-on:click='logout' v-if="userStatus==1">Sign out</el-button>
+	  <el-button v-on:click="login" v-if="loginStatus==0">Sign in</el-button>
+	  <el-button v-on:click="logup" v-if="loginStatus==0">Sign up</el-button>
+	  <el-button v-on:click='logout' v-if="loginStatus==1">Sign out</el-button>
 	</el-form-item>
   </el-form>
 </template>
 
 <script>
 export default {
-    props: ["userStatus"],
+    // props: ["loginStatus"],
     data() {
         return {
+            loginStatus:'',
             userForm:{
                 username : '',
                 password : ''
@@ -34,7 +35,7 @@ export default {
     },
     methods: {
         isDisabled : function(){
-            if (this.userStatus == 1) {
+            if (this.loginStatus == 1) {
                 return true
             }else{
                 return false
@@ -42,12 +43,15 @@ export default {
         },
         //注销
         logout : function() {
-            sessionStorage.clear()
-            this.userForm.username = ''
-            if (this.userStatus == 1) {
+            this.delCookie('username')
+            this.delCookie('token')
+            if (this.loginStatus == 1) {
+                this.loginStatus = 0
                 this.$message({message:"logout success",type:'success',duration:500,showClose:true})
                 this.$emit("userSignIn", '')
-                this.$refs.userForm.resetFields()
+                
+                this.userForm.username = ''
+                this.userForm.password = ''
             }
         },
 
@@ -88,14 +92,14 @@ export default {
                     this.postData2Server('login', req, function (res) {
                         console.log(res)
                         if (res.msg == 'success') {
-                            // sessionStorage.setItem('token', res['token'])
-                            // sessionStorage.setItem('username', req['username'])
                             thisObj.setCookie('username', req['username'], 1)
                             thisObj.setCookie('token', res['token'], 1)
-                            thisObj.$message({message: "login success", type: "success",duration: 1000,showClose: true});
-                            thisObj.$emit("userSignIn", req['username']);
+                            thisObj.username = req['username']
+                            thisObj.loginStatus = 1
+                            thisObj.$message({message: "login success", type: "success",duration: 1000,showClose: true})
+                            thisObj.$emit("userSignIn", req['username'])
                         }else{
-                            thisObj.$message({message: res.msg, type: "error",duration: 1000,showClose: true});
+                            thisObj.$message({message: res.msg, type: "error",duration: 1000,showClose: true})
                         }
 
                     })
@@ -105,12 +109,12 @@ export default {
         
     },
     mounted: function() {
-        var thisObj = this
-		this.postData2Server('userInfo', {}, function(res){
-			if (res.username != null) {
-				thisObj.userForm.username = res.username
-			}
-		})
+        this.userForm.username = this.getCookie('username')
+        if(this.userForm.username == null){
+            this.loginStatus = 0
+        }else{
+            this.loginStatus = 1
+        }
     }
 }
 </script>

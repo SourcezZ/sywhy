@@ -26,6 +26,7 @@ class Story(models.Model):
 
 class Comment(models.Model):
     commentId = models.AutoField(primary_key=True)
+    storyId = models.IntegerField()
     commentContent = models.CharField(max_length=256)
     addTime = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()

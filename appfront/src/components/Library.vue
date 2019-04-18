@@ -23,8 +23,12 @@
 
 <script>
     export default {
+        props:['loginStatus','username'],
         data() {
             return {
+                userForm:{
+                    'username':'',
+                },
                 req:{
                     'bookName':''
                 },
@@ -39,11 +43,16 @@
                 })
             },
             add_book: function () {
+                if(this.loginStatus == 0){
+                    this.$message({message: '请登录后再提交', type: "error",duration: 1000,showClose: true})
+                    return
+                }
+                var thisObj = this
                 this.postData2Server('add_book', this.req, function(res){
                     if (res.error_num == 0) {
-                        this.show_books()
+                        thisObj.show_books()
                     } else {
-                        this.$message.error('新增书籍失败，请重试')
+                        thisObj.$message.error('新增书籍失败，请重试')
                         console.log(res['msg'])
                     }
                 })

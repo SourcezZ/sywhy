@@ -12,15 +12,15 @@
             </el-menu>
         </div>
         <div class='login'>
-                    <span v-if="userStatus==1">你好，{{this.username}}</span>
-                    <span v-else>未登录</span>
+                    <span v-if="loginStatus==1">hello，{{this.username}}</span>
+                    <span v-else>not login</span>
                 </div>
         <div>
-            <Story v-if='activeIndex==1' :userStatus='userStatus' :username='username'></Story>
-            <Light v-if='activeIndex==2' :userStatus='userStatus' :username='username'></Light>
-            <Library v-if='activeIndex==3' :userStatus='userStatus' :username='username'></Library>
-            <Picture v-if='activeIndex==4' :userStatus='userStatus' :username='username'></Picture>
-            <Login @userSignIn='userSignIn' v-if='activeIndex==5' :userStatus='userStatus'></Login>
+            <Story v-if='activeIndex==1' :loginStatus='loginStatus' :username='username'></Story>
+            <Light v-if='activeIndex==2' :loginStatus='loginStatus' :username='username'></Light>
+            <Library v-if='activeIndex==3' :loginStatus='loginStatus' :username='username'></Library>
+            <Picture v-if='activeIndex==4' :loginStatus='loginStatus' :username='username'></Picture>
+            <Login @userSignIn='userSignIn' v-if='activeIndex==5' :loginStatus='loginStatus'></Login>
         </div>
     </div>
 </template>
@@ -41,18 +41,18 @@ export default {
 		activeIndex: "1",
 		bookList: [],
 		username: "",
-		userStatus: 0
+		loginStatus: 0
 		};
 	},
 	methods: {
 		handleSelect(key, keyPath) {
 			this.activeIndex = key;
 		},
-		getUserStatus() {
+		getloginStatus() {
 			if (this.username != "" && this.username != null) {
-				this.userStatus = 1;//已登录
+				this.loginStatus = 1;//已登录
 			} else {
-				this.userStatus = 0;//未登录
+				this.loginStatus = 0;//未登录
 			}
 		},
 		userSignIn: function(username) {
@@ -61,16 +61,19 @@ export default {
 	},
 	watch: {
 		username: function() {
-			this.getUserStatus();
+			this.getloginStatus();
 		}
 	},
 	mounted: function() {
 		var thisObj = this
-		this.postData2Server('userInfo', {}, function(res){
-			if (res.username != null) {
-				thisObj.username = res.username
-			}
-		})
+		// this.postData2Server('userInfo', {}, function(res){
+		// 	if (res.username != null && res.returnCode != 0) {
+		// 		thisObj.username = res.username
+		// 	}else{
+		// 		thisObj.$message({message: res.msg, type: "warning",duration: 1500,showClose: true})
+		// 	}
+		// })
+		this.username = this.getCookie('username')
 	}
 };
 </script>

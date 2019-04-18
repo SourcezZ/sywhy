@@ -57,7 +57,7 @@ def add_comment(request):
     response = {}
     data = json.loads(request.body)
     try:
-        comment = Comment(commentId=data['commentId'],commentContent=data['commentContent'])
+        comment = Comment(storyId=data['storyId'],commentContent=data['commentContent'])
         comment.save()
         response['msg'] = 'success'
         response['error_num'] = 0
