@@ -30,15 +30,7 @@ export default {
 		},
 		submitUpload() {
 			this.$refs.upload.submit()
-			// this.postData2Server('uploadImg', this.$refs.upload.uploadFiles, function(res){
-            //     if (res.error_num == 0) {
-			// 		thisObj.imgList = res["list"];
-			// 	} else {
-			// 		thisObj.$message.error("查询失败");
-			// 	}
-            // })
 			this.success=true
-
 		},
 		handleRemove(file, fileList) {
 			console.log(file, fileList);

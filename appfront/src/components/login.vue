@@ -88,10 +88,12 @@ export default {
                     this.postData2Server('login', req, function (res) {
                         console.log(res)
                         if (res.msg == 'success') {
-                            sessionStorage.setItem('token', res['token'])
-                            sessionStorage.setItem('username', req['username'])
+                            // sessionStorage.setItem('token', res['token'])
+                            // sessionStorage.setItem('username', req['username'])
+                            thisObj.setCookie('username', req['username'], 1)
+                            thisObj.setCookie('token', res['token'], 1)
                             thisObj.$message({message: "login success", type: "success",duration: 1000,showClose: true});
-                            thisObj.$emit("userSignIn", sessionStorage.username);
+                            thisObj.$emit("userSignIn", req['username']);
                         }else{
                             thisObj.$message({message: res.msg, type: "error",duration: 1000,showClose: true});
                         }

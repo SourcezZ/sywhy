@@ -1,6 +1,35 @@
 exports.install = function (Vue, options) {
+	/**
+	 * 设置cookie
+	 * name cookie的名称
+	 * value cookie的值
+	 * day cookie的过期时间
+	*/
+	Vue.prototype.setCookie = function (name, value, day) {
+		if (day != 0 && day != null) { //当设置的时间等于0时，不设置expires属性，cookie在浏览器关闭后删除
+			var currentDate = new Date()
+			var offset = currentDate.getTimezoneOffset(8) // UTCTime - LOCALTime = offset
+			currentDate.setTime(currentDate.getTime() + day * 24 * 60 * 60 * 1000 - offset * 60 * 1000)
+			var expires = currentDate.toUTCString()
+			document.cookie = name + "=" + escape(value) + ";expires=" + expires
+		} else {
+			document.cookie = name + "=" + escape(value)
+		}
+	}
+
+	Vue.prototype.getCookie = function (name) {
+		var arr
+		var reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)")
+		if (arr = document.cookie.match(reg)){
+			return unescape(arr[2])
+		}else{
+			return null
+		}
+	}
+
     Vue.prototype.postData2Server = function(transId, req, callback){
-		req.token = sessionStorage.getItem('token')
+		// req.token = sessionStorage.getItem('token')
+		req.token = this.getCookie('token')
 		var url = window.location.href
 		if(url.includes(':8080')){
 			url=url.substring(0,url.lastIndexOf(":")) + ':8000/'
