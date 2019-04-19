@@ -21,8 +21,6 @@ def showImg(request):
         imgs = Img.objects.all() # 从数据库中取出所有的图片路径
         response['list'] = json.loads(serializers.serialize("json", imgs))
         response['msg'] = 'success'
-        response['error_num'] = 0
     except  Exception as e:
         response['msg'] = str(e)
-        response['error_num'] = 1
     return JsonResponse(response)

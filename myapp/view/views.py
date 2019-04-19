@@ -15,11 +15,9 @@ def add_book(request):
         book = Book(bookName=data['bookName'])
         book.save()
         response['msg'] = 'success'
-        response['error_num'] = 0
     except  Exception as e:
         response['msg'] = str(e)
-        response['error_num'] = 1
-
+        
     return JsonResponse(response)
 
 @require_http_methods(["POST"])
@@ -29,9 +27,7 @@ def show_books(request):
         books = Book.objects.filter()
         response['list']  = json.loads(serializers.serialize("json", books))
         response['msg'] = 'success'
-        response['error_num'] = 0
     except  Exception as e:
         response['msg'] = str(e)
-        response['error_num'] = 1
-
+        
     return JsonResponse(response)

@@ -16,11 +16,9 @@ def add_story(request):
         story = Story(title=data['title'],content=data['content'])
         story.save()
         response['msg'] = 'success'
-        response['error_num'] = 0
     except  Exception as e:
         response['msg'] = str(e)
-        response['error_num'] = 1
-
+        
     return JsonResponse(response)
 
 @require_http_methods(["POST"])
@@ -31,11 +29,9 @@ def show_storys(request):
         #storys = Story.objects.filter(id='1')
         response['list']  = json.loads(serializers.serialize("json", storys))
         response['msg'] = 'success'
-        response['error_num'] = 0
     except  Exception as e:
         response['msg'] = str(e)
-        response['error_num'] = 1
-
+        
     return JsonResponse(response)
 
 @require_http_methods(["POST"])
@@ -45,10 +41,8 @@ def show_comments(request):
         comments = Comment.objects.filter()
         response['list']  = json.loads(serializers.serialize("json", comments))
         response['msg'] = 'success'
-        response['error_num'] = 0
     except  Exception as e:
         response['msg'] = str(e)
-        response['error_num'] = 1
 
     return JsonResponse(response)
 
@@ -60,9 +54,7 @@ def add_comment(request):
         comment = Comment(storyId=data['storyId'],commentContent=data['commentContent'])
         comment.save()
         response['msg'] = 'success'
-        response['error_num'] = 0
     except  Exception as e:
         response['msg'] = str(e)
-        response['error_num'] = 1
 
     return JsonResponse(response)

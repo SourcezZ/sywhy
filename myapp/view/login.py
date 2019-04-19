@@ -21,18 +21,15 @@ def add_user(request):
     userList = json.loads(serializers.serialize("json", user))
     if(len(userList) != 0):
         response['msg'] = 'username exists'
-        response['error_num'] = 1
         return JsonResponse(response)
 
     try:
         user = User(username=username, password=password)
         user.save()
         response['msg'] = 'success'
-        response['error_num'] = 0
     except  Exception as e:
         response['msg'] = str(e)
-        response['error_num'] = 1
-
+        
     return JsonResponse(response)
 
 @require_http_methods(["POST"])
@@ -44,20 +41,19 @@ def login(request):
     try:
         user = User.objects.filter(username=username)
         userList = json.loads(serializers.serialize("json", user))
-        response['error_num'] = 0
     except  Exception as e:
         response['msg'] = str(e)
-        response['error_num'] = 1
 
     if userList != []:
         validPwd = userList[0]['fields']['password']
         if(password == validPwd):
             response['token'] = tokenFunc.create_token(username)
             response['msg'] = 'success'
+        else:
+            response['msg'] = 'password valid failed'
     else:
         response['msg'] = 'username not exists, please log up'
-        response['error_num'] = 1
-
+        
     return JsonResponse(response)
 
 @require_http_methods(["POST"])
