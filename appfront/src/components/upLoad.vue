@@ -53,7 +53,7 @@ export default {
 			}
 			var thisObj = this
 			this.postData2Server('showImg', {}, function(res){
-                if (res.error_num == 0) {
+                if (res.msg == 'success') {
 					thisObj.imgList = res["list"];
 				} else {
 					thisObj.$message.error("查询失败");

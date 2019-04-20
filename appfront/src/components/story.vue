@@ -57,7 +57,7 @@ export default {
 		show_storys: function(params) {
 			var thisObj = this
 			this.postData2Server('show_storys', {}, function(res){
-				if (res.error_num == 0) {
+				if (res.msg == 'success') {
 					thisObj.storyList = res["list"];
 				} else {
 					thisObj.$message.error("查询失败");
@@ -79,7 +79,7 @@ export default {
 			}
 			var thisObj = this
 			this.postData2Server('add_story', req, function(res){
-				if (res.error_num == 0) {
+				if (res.msg == 'success') {
 					thisObj.show_storys();
 				} else {
 					thisObj.$message.error("新增内容失败，请重试");
@@ -104,7 +104,7 @@ export default {
 			}
 			var thisObj = this
 			this.postData2Server('add_comment', req, function(res){
-				if (res.error_num == 0) {
+				if (res.msg == 'success') {
 					thisObj.commentContent = [];
 					thisObj.show_comments();
 				} else {
@@ -115,7 +115,7 @@ export default {
 		show_comments: function(params) {
 			var thisObj = this
 			this.postData2Server('show_comments', {}, function(res){
-				if (res.error_num == 0) {
+				if (res.msg == 'success') {
 					thisObj.$nextTick(() =>{
 						thisObj.commentList = res["list"];
 					})

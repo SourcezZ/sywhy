@@ -49,7 +49,7 @@
                 }
                 var thisObj = this
                 this.postData2Server('add_book', this.req, function(res){
-                    if (res.error_num == 0) {
+                    if (res.msg == 'success') {
                         thisObj.show_books()
                     } else {
                         thisObj.$message.error('新增书籍失败，请重试')
