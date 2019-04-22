@@ -8,6 +8,7 @@ import App from './App'
 import func from './function/func' //引用全局函数
 import VueResource from 'vue-resource' //引用vue-resource
 
+import "../static/BMap/js/bmap.js"; //BMap
 
 Vue.config.productionTip = false
 

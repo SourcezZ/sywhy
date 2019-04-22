@@ -8,6 +8,7 @@ yarn-error.log*
 selenium-debug.log
 /dist/static/img/
 /src/static/
+/static/BMap/maptile
 # Editor directories and files
 .idea
 .vscode
