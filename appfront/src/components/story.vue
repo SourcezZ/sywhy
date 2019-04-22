@@ -60,17 +60,14 @@ export default {
 				if (res.msg == 'success') {
 					thisObj.storyList = res["list"];
 				} else {
-					thisObj.$message.error("查询失败");
+					thisObj.message(res.msg, "error")
 				}
 			})
 		},
 
 		add_story: function() {
 			if (this.content == "") {
-				this.$message({message: '内容不能为空', type: "error",duration: 1000,showClose: true})
-				return;
-			}else if(this.loginStatus != 1){
-				this.$message({message: '请登录后再提交', type: "error",duration: 1000,showClose: true})
+				this.message('内容不能为空', "error")
 				return
 			}
 			var req = {
@@ -80,9 +77,9 @@ export default {
 			var thisObj = this
 			this.postData2Server('add_story', req, function(res){
 				if (res.msg == 'success') {
-					thisObj.show_storys();
+					thisObj.show_storys()
 				} else {
-					thisObj.$message.error("新增内容失败，请重试");
+					thisObj.message(res.msg, "error")
 				}
 			})
 		},
@@ -91,10 +88,7 @@ export default {
 		},
 		add_comment: function(commentId) {
 			if (this.commentContent == "") {
-				this.$message({message: '内容不能为空', type: "error",duration: 1000,showClose: true})
-				return
-			}else if(this.loginStatus != 1){
-				this.$message({message: '请登录后再提交', type: "error",duration: 1000,showClose: true})
+				this.message('内容不能为空', "error")
 				return
 			}
 
@@ -105,10 +99,10 @@ export default {
 			var thisObj = this
 			this.postData2Server('add_comment', req, function(res){
 				if (res.msg == 'success') {
-					thisObj.commentContent = [];
-					thisObj.show_comments();
+					thisObj.commentContent = []
+					thisObj.show_comments()
 				} else {
-					thisObj.$message.error(res.msg);
+					thisObj.message(res.msg, "error")
 				}
 			})
 		},
@@ -117,10 +111,10 @@ export default {
 			this.postData2Server('show_comments', {}, function(res){
 				if (res.msg == 'success') {
 					thisObj.$nextTick(() =>{
-						thisObj.commentList = res["list"];
+						thisObj.commentList = res["list"]
 					})
 				} else {
-					thisObj.$message.error("查询失败");
+					thisObj.message("查询失败", "error")
 				}
 			})
 		},

@@ -1,4 +1,15 @@
 exports.install = function (Vue, options) {
+
+    Vue.prototype.message = function (message, type, duration = 500, showClose = true) {
+        this.$message({
+            message : message,
+            type : type,
+            duration : duration,
+            showClose : showClose
+        })
+    }
+      
+
 	/**
 	 * 设置cookie
 	 * name cookie的名称

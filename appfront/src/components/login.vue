@@ -1,18 +1,18 @@
 <!-- 登陆组件 -->
 <template>
-  <el-form :rules='loginRule' :model='userForm' ref="userForm">
-	<el-form-item label='username' prop='username'>
-	  <el-input v-model="userForm.username" :disabled='isDisabled()'></el-input>
-	</el-form-item>
-	<el-form-item label='password' v-if="loginStatus==0" prop='password'>
-	  <el-input v-model='userForm.password' type='password'></el-input>
-	</el-form-item>
-	<el-form-item>
-	  <el-button v-on:click="login" v-if="loginStatus==0">Sign in</el-button>
-	  <el-button v-on:click="logup" v-if="loginStatus==0">Sign up</el-button>
-	  <el-button v-on:click='logout' v-if="loginStatus==1">Sign out</el-button>
-	</el-form-item>
-  </el-form>
+    <el-form :rules='loginRule' :model='userForm' ref="userForm">
+        <el-form-item label='username' prop='username'>
+            <el-input v-model="userForm.username" :disabled='isDisabled()'></el-input>
+        </el-form-item>
+        <el-form-item label='password' v-if="loginStatus==0" prop='password'>
+            <el-input v-model='userForm.password' type='password'></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button v-on:click="login" v-if="loginStatus==0">Sign in</el-button>
+            <el-button v-on:click="logup" v-if="loginStatus==0">Sign up</el-button>
+            <el-button v-on:click='logout' v-if="loginStatus==1">Sign out</el-button>
+        </el-form-item>
+    </el-form>
 </template>
 
 <script>
@@ -20,7 +20,7 @@ export default {
     // props: ["loginStatus"],
     data() {
         return {
-            loginStatus:'',
+            loginStatus:0,
             userForm:{
                 username : '',
                 password : ''
@@ -47,7 +47,7 @@ export default {
             this.delCookie('token')
             if (this.loginStatus == 1) {
                 this.loginStatus = 0
-                this.$message({message:"logout success",type:'success',duration:500,showClose:true})
+                this.message("logout success", "success")
                 this.$emit("userSignIn", '')
                 
                 this.userForm.username = ''
@@ -60,7 +60,7 @@ export default {
             this.$refs.userForm.validate(valid => {
                 if(valid){
                     if (this.userForm.username == "" || this.userForm.password == "") {
-                        this.$message.error("输入不能为空");
+                        this.message("输入不能为空", "error");
                         return;
                     }
                     var req = {}
@@ -71,9 +71,9 @@ export default {
                     this.postData2Server('add_user', req, function(res){
                         console.log(res)
                         if(res.msg == 'success'){
-                            thisObj.$message({message: "logup success", type: "success",duration: 1000,showClose: true});
+                            thisObj.message("logup success","success")
                         }else{
-                            thisObj.$message({message: res.msg, type: "error",duration: 1000,showClose: true});
+                            thisObj.message(res.msg, "error");
                         }
                     })
                 }
@@ -94,12 +94,13 @@ export default {
                         if (res.msg == 'success') {
                             thisObj.setCookie('username', req['username'], 1)
                             thisObj.setCookie('token', res['token'], 1)
-                            thisObj.username = req['username']
+
+                            thisObj.userForm.username = req['username']
                             thisObj.loginStatus = 1
-                            thisObj.$message({message: "login success", type: "success",duration: 1000,showClose: true})
+                            thisObj.message("login success", "success")
                             thisObj.$emit("userSignIn", req['username'])
                         }else{
-                            thisObj.$message({message: res.msg, type: "error",duration: 1000,showClose: true})
+                            thisObj.$message(res.msg, "error")
                         }
 
                     })
@@ -109,12 +110,13 @@ export default {
         
     },
     mounted: function() {
-        this.userForm.username = this.getCookie('username')
-        if(this.userForm.username == null){
-            this.loginStatus = 0
-        }else{
-            this.loginStatus = 1
-        }
+        var thisObj = this
+		this.postData2Server('get_username', {}, function(res){
+			if (res.msg == 'success') {
+                thisObj.userForm.username = res.username
+                thisObj.loginStatus = 1
+			}
+        })
     }
 }
 </script>

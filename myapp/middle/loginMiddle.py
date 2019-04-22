@@ -5,42 +5,38 @@ from myapp.middle.myappUtils import apiList
 import json
 from django.http import JsonResponse
 
-def getApiFlag(api):
-        ''' 不需要登陆  => 0 \n 不需登陆  => 1 \n 不在api中 => 2 \n '''
-        if api in apiList.UNNEEDLOGIN:
-            return 0
-        elif api in apiList.NEEDLOGIN:
-            return 1
-        else:
-            return 2
+def checkIsLogin(requestPath, token):
+    ''' 不需登陆  => 0 \n 需登陆  => 1 \n 不在api中 => 2 \n '''
+    response = {}
+    api = str(requestPath).replace('/api/','')
 
-def userLoginInfo(token):
-    username = tokenUtil.get_username(token)
-    return username
+    if api in apiList.UNNEEDLOGIN:
+        return None
+    elif api in apiList.NEEDLOGIN:
+        username = tokenUtil.get_username(token)
+        if username == None:
+            print('\nplease log in')
+            response['msg'] = 'please log in'
+            return JsonResponse(response)
+    else:
+        print('\nnot in api')
+        response['msg'] = 'illegal request'
+        return JsonResponse(response)
+    return None
 
 class middleLogin(MiddlewareMixin):
     def process_request(self, request):
-        response = {}
         try:
             request.data = json.loads(request.body)
         except Exception:
             request.data = {}
+        token = request.data.get('token')
+        notLogin = checkIsLogin(request.path, token)
+        if notLogin : return notLogin
 
-        api = str(request.path).replace('/api/','')
-        apiFlag = getApiFlag(api)
-
-        #需要登陆的请求，返回'需要登陆'；非法请求返回'非法请求'
-        if apiFlag == 1:
-            username = userLoginInfo(request.data['token'])
-            if username == None:
-                response['msg'] = 'please log in'
-                return response
-        elif apiFlag == 2:
-            response['msg'] = 'illegal request'
-            return response
+        
 
     def process_response(self, request, response):
-        print("")
         return response
 
 

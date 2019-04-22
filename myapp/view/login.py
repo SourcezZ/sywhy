@@ -5,7 +5,7 @@ from django.http import JsonResponse
 import json
 from django.core import serializers
 from myapp.models import User
-from myapp.view import token as tokenFunc
+from myapp.middle.myappUtils import token as tokenUtil
 
 
 # Create your views here.
@@ -47,7 +47,7 @@ def login(request):
     if userList != []:
         validPwd = userList[0]['fields']['password']
         if(password == validPwd):
-            response['token'] = tokenFunc.create_token(username)
+            response['token'] = tokenUtil.create_token(username)
             response['msg'] = 'success'
         else:
             response['msg'] = 'password valid failed'
@@ -57,16 +57,15 @@ def login(request):
     return JsonResponse(response)
 
 @require_http_methods(["POST"])
-def loginInfo(request):
+def get_username(request):
     response = {}
-    data = json.loads(request.body)
-    accessToken = data['token']
-    if accessToken != None:
-        try:
-            username = tokenFunc.get_username(accessToken)
+    accessToken = request.data.get('token')
+    try:
+        if accessToken != None:
+            username = tokenUtil.get_username(accessToken)
             response['username'] = username
-        except Exception as e:
-            response['returnCode'] = 0
+            response['msg'] = 'success'
+    finally:
+        if(response.get('msg') != 'success'):
             response['msg'] = 'your session is time out, please login in again'
-
     return JsonResponse(response)

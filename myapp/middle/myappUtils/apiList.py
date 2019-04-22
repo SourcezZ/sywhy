@@ -2,7 +2,7 @@ NEEDLOGIN = [
     'add_book',
     'add_story',
     'add_comments',
-    'uploadimg',
+    'uploadImg',
 ]
 
 UNNEEDLOGIN = [
@@ -13,5 +13,5 @@ UNNEEDLOGIN = [
     'showImg',
     'add_user',
     'login',
-    'userInfo',
+    'get_username',
 ]

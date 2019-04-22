@@ -27,14 +27,9 @@ export default {
 	},
 	methods: {
 		beforeUpload(){
-			if(this.loginStatus ==0 ){
-				this.$message({message: '请登录后再提交', type: "error",duration: 1000,showClose: true})
-				return false
-			}
 		},
 		submitUpload() {
 			this.$refs.upload.submit()
-			this.success=true
 		},
 		handleRemove(file, fileList) {
 			console.log(file, fileList);
@@ -42,13 +37,9 @@ export default {
 		handlePreview(file) {
 			console.log(file);
 		},
-		showImg: function(params, file, fileList) {
-			if(this.success==true){
-				this.$message({
-					type: 'success',
-					message: '操作成功'
-				})
-				console.log(this.uploadList)
+		showImg: function(res, file, fileList) {
+			if(res && res.msg == 'success'){
+				this.message('操作成功', 'success')
 				this.$refs.upload.clearFiles()
 			}
 			var thisObj = this
@@ -56,22 +47,14 @@ export default {
                 if (res.msg == 'success') {
 					thisObj.imgList = res["list"];
 				} else {
-					thisObj.$message.error("查询失败");
+					thisObj.message("查询失败", "error");
 				}
             })
-			this.success=false
 		}
 	},
 	mounted: function() {
 		this.showImg()
 		this.actionUrl = this.getUploadUrl('uploadImg')
-
-		this.userForm.username = this.getCookie('username')
-        if(this.userForm.username == null){
-            this.loginStatus = 0
-        }else{
-            this.loginStatus = 1
-        }
 	}
 }
 </script>

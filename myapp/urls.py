@@ -20,5 +20,5 @@ url(r'showImg$', img.showImg),
 
 url(r'add_user', login.add_user),
 url(r'login', login.login),
-url(r'userInfo', login.loginInfo),
+url(r'get_username', login.get_username),
 ]

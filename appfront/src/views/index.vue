@@ -65,15 +65,12 @@ export default {
 		}
 	},
 	mounted: function() {
-		var thisObj = this
-		// this.postData2Server('userInfo', {}, function(res){
-		// 	if (res.username != null && res.returnCode != 0) {
-		// 		thisObj.username = res.username
-		// 	}else{
-		// 		thisObj.$message({message: res.msg, type: "warning",duration: 1500,showClose: true})
-		// 	}
-		// })
-		this.username = this.getCookie('username')
+        var thisObj = this
+		this.postData2Server('get_username', {}, function(res){
+			if (res.msg == 'success') {
+				thisObj.username = res.username
+			}
+        })
 	}
 };
 </script>
