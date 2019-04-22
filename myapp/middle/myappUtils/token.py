@@ -51,7 +51,7 @@ def get_payload(token):
 def get_username(token):
     try:
         payload = get_payload(token)
-    except Exception as e:
+    except:
         return None
     return payload['username']
 
