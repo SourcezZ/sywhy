@@ -4,7 +4,7 @@
     <br>
     <span>{{ hello }}</span>
     <span @click="aaa(2,{nihao:2, buhao:3})">haha1</span>
-    <span @click="clickToComeTrue">click to come true</span>
+    <el-button @click="clickToComeTrue">click to come true</el-button>
   </div>
 </template>
 <script>
@@ -20,13 +20,15 @@
     },
     methods: {
       clickToComeTrue : function () {
-        var req = {
-          'username':'admin',
-          'password':'admin'
-        }
-        this.postData2Server('login', req, function (res) {
-          console.log(res)
-          sessionStorage.setItem('token',res['token'])
+        this.axios.post('/api/get_username', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
         })
 
       },
