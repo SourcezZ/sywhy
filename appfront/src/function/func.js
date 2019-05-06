@@ -1,6 +1,6 @@
 exports.install = function (Vue, options) {
 
-    Vue.prototype.message = function (message, type, duration = 500, showClose = true) {
+    Vue.prototype.message = function (message, type, duration = 1000, showClose = true) {
         this.$message({
             message : message,
             type : type,
@@ -16,11 +16,12 @@ exports.install = function (Vue, options) {
 	 * value cookie的值
 	 * day cookie的过期时间
 	*/
-	Vue.prototype.setCookie = function (name, value, day) {
-		if (day != 0 && day != null) { //当设置的时间等于0时，不设置expires属性，cookie在浏览器关闭后删除
+	Vue.prototype.setCookie = function (name, value, hour) {
+		if (hour != 0 && hour != null) { //当设置的时间等于0时，不设置expires属性，cookie在浏览器关闭后删除
 			var currentDate = new Date()
 			var offset = currentDate.getTimezoneOffset(8) // UTCTime - LOCALTime = offset
-			currentDate.setTime(currentDate.getTime() + day * 24 * 60 * 60 * 1000 - offset * 60 * 1000)
+			// currentDate.setTime(currentDate.getTime() + day * 24 * 60 * 60 * 1000 - offset * 60 * 1000)
+			currentDate.setTime(currentDate.getTime() + hour * 60 * 60 * 1000 - offset * 60 * 1000)
 			var expires = currentDate.toUTCString()
 			document.cookie = name + "=" + escape(value) + ";expires=" + expires
 		} else {
@@ -47,21 +48,27 @@ exports.install = function (Vue, options) {
 			document.cookie= name + "="+cval+";expires="+exp.toGMTString();
 		}
 	}
-
     Vue.prototype.postData2Server = function(transId, req, callback){
-		req.token = this.getCookie('token')
+        req.token = this.getCookie('token')
 		var url = window.location.href
 		if(url.includes(':8080')){
 			url=url.substring(0,url.lastIndexOf(":")) + ':8000/'
 		}
 		if (!url.includes(':8000')) {
 			url=url.substring(0,url.length-1) + ':8000/'
-		}
+        }
 		this.$http.post(url + "api/" + transId, req).then(response => {
+            if(response.data.loginStatus!=null && response.data.loginStatus!=1 && transId!='get_username') {
+                this.$router.push({name: '跳转登陆'})
+                this.message(response.data.msg, "error")
+                this.delCookie('token')
+                this.delCookie('username')
+                return
+            }
 			var res = JSON.parse(response.bodyText);
 			console.log({'transId':transId, 'list':res.list, 'msg':res.msg})
 			callback(res)
-		})
+        })
 	}
 
 	Vue.prototype.getUploadUrl = function(transId){

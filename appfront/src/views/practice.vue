@@ -101,6 +101,7 @@ export default {
         this.todoValue = ''
       },
       delete1: function () {
+          this.$router.push({name: '首页', params: {index: '5'}})
         	this.items.pop()
       },
       finish: function (item) {

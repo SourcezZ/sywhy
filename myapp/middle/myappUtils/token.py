@@ -57,8 +57,9 @@ def get_username(token):
 
 
 def check_token(token):
+    if token == None: return 0 # 0 未登录
     username = get_username(token)
     last_token = cache.get(username)
     if last_token:
-        return last_token == token
-    return False
+        return 1 if last_token == token else 2  # 1 已登录，2 超时， 0 未登录
+    return 2

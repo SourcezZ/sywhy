@@ -10,6 +10,7 @@
                 <el-menu-item index="5">登陆</el-menu-item>
                 <el-menu-item index="6" v-if="username == '宋雨蔚'">You know me</el-menu-item>
             </el-menu>
+            <!-- <router-link :to="{name:'首页',params:{index:'5'}}" style="font-size: 14px;color: orange;">立即注册</router-link> -->
         </div>
         <div class='login'>
                     <span v-if="loginStatus==1">hello，{{this.username}}</span>
@@ -38,15 +39,22 @@ export default {
 	data() {
 		return {
 		user: {},
-		activeIndex: "1",
+		activeIndex: this.$route.params.index || '1',
 		bookList: [],
 		username: "",
 		loginStatus: 0
 		};
 	},
 	methods: {
+        changeeee(){
+            debugger
+            this.activeIndex = this.$route.params.index
+
+            this.$router.push({name: '首页', params: {index: '5'}})
+            // this.$router.push({path:'/', query: {index: '5'}})
+        },
 		handleSelect(key, keyPath) {
-			this.activeIndex = key;
+			this.activeIndex = key
 		},
 		getloginStatus() {
 			if (this.username != "" && this.username != null) {
@@ -68,7 +76,7 @@ export default {
         var thisObj = this
 		this.postData2Server('get_username', {}, function(res){
 			if (res.msg == 'success') {
-				thisObj.username = res.username
+                thisObj.username = res.username
 			}
         })
 	}

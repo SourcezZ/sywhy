@@ -13,10 +13,12 @@ def checkIsLogin(requestPath, token):
     if api in apiList.UNNEEDLOGIN:
         return None
     elif api in apiList.NEEDLOGIN:
-        username = tokenUtil.get_username(token)
-        if username == None:
-            print('\nplease log in')
-            response['msg'] = 'please log in'
+        loginDict = {0:'please log in', 1:'is log in', 2:'your session is time out, please log in first'}
+        loginStatus = tokenUtil.check_token(token)
+        if(loginStatus!=1):
+            print('\n' + loginDict[loginStatus])
+            response['loginStatus'] = loginStatus
+            response['msg'] = loginDict[loginStatus]
             return JsonResponse(response)
     else:
         print('\nnot in api')
@@ -29,10 +31,14 @@ class middleLogin(MiddlewareMixin):
         try:
             request.data = json.loads(request.body)
         except Exception:
-            request.data = {}
+            try:
+                request.data = request.POST
+            except Exception:
+                request.data = {}
+                
         token = request.data.get('token')
         notLogin = checkIsLogin(request.path, token)
-        if notLogin : return notLogin
+        if notLogin : return notLogin # notLogin有值时，表示用户未登录， 结束请求, 返回JsonResponse信息
 
         
 

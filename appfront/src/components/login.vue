@@ -92,15 +92,15 @@ export default {
                     this.postData2Server('login', req, function (res) {
                         console.log(res)
                         if (res.msg == 'success') {
-                            thisObj.setCookie('username', req['username'], 1)
-                            thisObj.setCookie('token', res['token'], 1)
+                            thisObj.setCookie('username', req['username'], 0.5)
+                            thisObj.setCookie('token', res['token'], 0.5)
 
                             thisObj.userForm.username = req['username']
                             thisObj.loginStatus = 1
                             thisObj.message("login success", "success")
                             thisObj.$emit("userSignIn", req['username'])
                         }else{
-                            thisObj.$message(res.msg, "error")
+                            thisObj.message(res.msg, "error")
                         }
 
                     })

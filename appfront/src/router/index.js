@@ -4,6 +4,7 @@ import index from '@/views/index'
 import practice from '@/views/practice'
 import test from '@/views/test'
 import map from '@/views/map'
+import jumpLogin from '@/views/jumpLogin'
 Vue.use(Router)
 
 
@@ -29,6 +30,11 @@ export default new Router({
     path: '/map', //url地址
     name: '地图', //随便取一个name
     component: map //对应import的index，匹配大小写
+  },
+  {
+    path: '/jumpLogin', //url地址
+    name: '跳转登陆', //随便取一个name
+    component: jumpLogin //对应import的index，匹配大小写
   },
   ],
 })

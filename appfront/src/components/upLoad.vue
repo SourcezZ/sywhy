@@ -26,11 +26,26 @@ export default {
 		}
 	},
 	methods: {
-		beforeUpload(){
+		beforeUpload(file){
+            var thisObj = this
+            let formDatas = new FormData()
+            formDatas.append('file',file)
+            formDatas.append('token',this.getCookie('token'))//token
+            // for (var value of FormDatas.values()) {
+            //     console.log(value);
+            // }
+            let that = this
+            this.postData2Server('uploadImg', formDatas, function(res){
+                if (res.msg == 'success') {
+					thisObj.message("上传成功", "success");
+				} else {
+					thisObj.message("上传失败", "error");
+				}
+            })
 		},
 		submitUpload() {
-			this.$refs.upload.submit()
-		},
+            this.$refs.upload.submit()
+        },
 		handleRemove(file, fileList) {
 			console.log(file, fileList);
 		},
@@ -54,7 +69,8 @@ export default {
 	},
 	mounted: function() {
 		this.showImg()
-		this.actionUrl = this.getUploadUrl('uploadImg')
+		// this.actionUrl = this.getUploadUrl('uploadImg')
+		this.actionUrl = ''
 	}
 }
 </script>
