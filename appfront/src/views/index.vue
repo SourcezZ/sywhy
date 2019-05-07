@@ -6,7 +6,7 @@
                 <el-menu-item index="1">主页</el-menu-item>
                 <el-menu-item index="2">走马灯</el-menu-item>
                 <el-menu-item index="3">书籍</el-menu-item>
-                <!-- <el-menu-item index="4">图库</el-menu-item> -->
+                <el-menu-item index="4">图库</el-menu-item>
                 <el-menu-item index="5">登陆</el-menu-item>
                 <el-menu-item index="6" v-if="username == '宋雨蔚'">You know me</el-menu-item>
             </el-menu>

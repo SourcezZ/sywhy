@@ -6,9 +6,7 @@
       <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
     </el-upload>
     <div v-for="i in imgList" :key="i.pk">
-        <span>{{ i.fields.imgUrl }}</span>
-        <el-image :src="i.fields.imgUrl" ></el-image>
-        <img :src="i.fields.imgUrl" >
+        <el-image :src="require('@/upload/' + i.fields.imgUrl)" ></el-image>
     </div>
   </div>
 </template>
@@ -63,9 +61,9 @@ export default {
 			this.postData2Server('showImg', {}, function(res){
                 if (res.msg == 'success') {
                     thisObj.imgList = res["list"];
-                    thisObj.imgList.forEach(img => {
-                        img.fields.imgUrl = require('../upload/' + img.fields.imgUrl)
-                    });
+                    // thisObj.imgList.forEach(img => {
+                        // img.fields.imgUrl = require('~upload/' + img.fields.imgUrl)
+                    // });
 				} else {
 					thisObj.message("查询失败", "error");
 				}
