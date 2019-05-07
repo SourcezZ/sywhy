@@ -62,7 +62,7 @@ export default {
                 if (res.msg == 'success') {
                     thisObj.imgList = res["list"];
                     thisObj.imgList.forEach(img => {
-                        img.fields.imgUrl = require('../upload/' + img.fields.imgUrl)
+                        img.fields.imgUrl = require('@/upload/' + img.fields.imgUrl)
                     });
 				} else {
 					thisObj.message("查询失败", "error");
