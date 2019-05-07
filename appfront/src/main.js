@@ -8,7 +8,7 @@ import App from './App'
 import func from './function/func' //引用全局函数
 import VueResource from 'vue-resource' //引用vue-resource
 //BMap
-import "../static/BMap/js/bmap.js"; 
+// import "../static/BMap/js/bmap.js"; 
 
 //axios
 import * as axios_config from './function/axios_config'
