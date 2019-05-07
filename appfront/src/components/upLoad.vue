@@ -6,7 +6,9 @@
       <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
     </el-upload>
     <div v-for="i in imgList" :key="i.pk">
+        <span>{{ i.fields.imgUrl }}</span>
         <el-image :src="i.fields.imgUrl" ></el-image>
+        <img :src="i.fields.imgUrl" >
     </div>
   </div>
 </template>
