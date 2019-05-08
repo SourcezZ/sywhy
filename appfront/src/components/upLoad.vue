@@ -6,7 +6,7 @@
       <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
     </el-upload>
     <div v-for="i in imgList" :key="i.pk">
-      <img :src="'upload/img/' + i.fields.imgUrl">
+      <img :src="'/static/upload/img/' + i.fields.imgUrl">
     </div>
   </div>
 </template>
@@ -22,7 +22,8 @@ export default {
 			uploadList:[],
 			userForm:{
 				'username':''
-			}
+            },
+            filess:'/static/upload/img/media/8.jpg',
 		}
 	},
 	methods: {
