@@ -36,7 +36,7 @@ class Comment(models.Model):
 class Img(models.Model):
     imgId = models.AutoField(primary_key=True)
     imgName = models.CharField(max_length=256,default='no_name')
-    imgUrl = models.ImageField(upload_to='media/') # upload_to指定图片上传的途径，如果不存在则自动创建
+    imgUrl = models.ImageField(upload_to='') # upload_to指定图片上传的途径，如果不存在则自动创建
     objects = models.Manager()
 
 class User(models.Model):
