@@ -1,7 +1,7 @@
 NEEDLOGIN = [
     'add_book',
     'add_story',
-    'add_comments',
+    'add_comment',
     'uploadImg',
 ]
 
