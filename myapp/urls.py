@@ -21,4 +21,5 @@ url(r'showImg$', img.showImg),
 url(r'add_user', login.add_user),
 url(r'login', login.login),
 url(r'get_username', login.get_username),
+url(r'send_register_email', login.send_register_email),
 ]

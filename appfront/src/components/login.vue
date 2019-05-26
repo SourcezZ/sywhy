@@ -1,18 +1,24 @@
 <!-- 登陆组件 -->
 <template>
-    <el-form :rules='loginRule' :model='userForm' ref="userForm">
-        <el-form-item label='username' prop='username'>
-            <el-input v-model="userForm.username" :disabled='isDisabled()'></el-input>
-        </el-form-item>
-        <el-form-item label='password' v-if="loginStatus==0" prop='password'>
-            <el-input v-model='userForm.password' type='password'></el-input>
-        </el-form-item>
-        <el-form-item>
-            <el-button v-on:click="login" v-if="loginStatus==0">Sign in</el-button>
-            <el-button v-on:click="logup" v-if="loginStatus==0">Sign up</el-button>
-            <el-button v-on:click='logout' v-if="loginStatus==1">Sign out</el-button>
-        </el-form-item>
-    </el-form>
+        <el-form class="loginForm" :rules='loginRule' :model='userForm' ref="userForm" label-width="80px" label-position="left">
+            <el-form-item label='username' prop='username'>
+                <el-input v-model="userForm.username" :disabled='isDisabled()'></el-input>
+            </el-form-item>
+            <el-form-item label='password' v-if="loginStatus==0" prop='password'>
+                <el-input v-model='userForm.password' type='password' @keyup.enter.native='login'></el-input>
+            </el-form-item>
+            <el-form-item label='email' v-if="loginStatus==0" prop='email' >
+                <el-input v-model='userForm.email' ></el-input><el-button style="position:absolute" v-on:click="send_register_email" :disabled="!showSendValid">获取验证码 {{ remainSecond }} </el-button>
+            </el-form-item>
+            <el-form-item label='validCode' v-if="loginStatus==0" prop='validCode'>
+                <el-input v-model='userForm.validCode'></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button v-on:click="login" v-if="loginStatus==0">Sign in</el-button>
+                <el-button v-on:click="logup" v-if="loginStatus==0">Sign up</el-button>
+                <el-button v-on:click='logout' v-if="loginStatus==1">Sign out</el-button>
+            </el-form-item>
+        </el-form>
 </template>
 
 <script>
@@ -20,16 +26,23 @@ export default {
     // props: ["loginStatus"],
     data() {
         return {
+            showSendValid:true,
+            timer:null,
+            remainSecond:null,
             loginStatus:0,
             userForm:{
                 username : '',
-                password : ''
+                password : '',
+                email : '',
+                validCode: '',
             },
             loginRule:{
                 username : [
-                    {required:true, message:'need username', trigger:'blur'},
+                    {required:true, message:'need username', trigger:'change'},
                 ],
-                password : {required:true, message:'need password', trigger:'blur'},
+                password : {required:true, message:'need password', trigger:'change'},
+                validCode : {required:true, message:'need validCode', trigger:'change'},
+                email : {required:true, message:'need email', trigger:'change'},
             }
         }
     },
@@ -63,12 +76,9 @@ export default {
                         this.message("输入不能为空", "error");
                         return;
                     }
-                    var req = {}
-                    req.username = this.userForm.username
-                    req.password = this.userForm.password
 
                     var thisObj = this
-                    this.postData2Server('add_user', req, function(res){
+                    this.postData2Server('add_user', this.userForm, function(res){
                         console.log(res)
                         if(res.msg == 'success'){
                             thisObj.message("logup success","success")
@@ -106,7 +116,41 @@ export default {
                     })
                 }
             })
-        }
+        },
+
+        send_register_email : function () {
+            thisObj = this
+            this.postData2Server('send_register_email', this.userForm, function (res) {
+                console.log(res)
+                if (res.msg == 'success') {
+                    thisObj.setCookie('username', req['username'], 0.5)
+                    thisObj.setCookie('token', res['token'], 0.5)
+
+                    thisObj.userForm.username = req['username']
+                    thisObj.loginStatus = 1
+                    thisObj.message("login success", "success")
+                    thisObj.$emit("userSignIn", req['username'])
+                }else{
+                    thisObj.message(res.msg, "error")
+                }
+
+            })
+            const TIME_COUNT = 60;
+            this.showSendValid = false
+            if (!this.timer) {
+                this.remainSecond = TIME_COUNT;
+                this.timer = setInterval(() => {
+                    if (this.remainSecond > 0 && this.remainSecond <= TIME_COUNT) {
+                        this.remainSecond--
+                    } else {
+                        clearInterval(this.timer)
+                        this.timer = null
+                        this.remainSecond = null
+                        this.showSendValid = true
+                    }
+                }, 1000)
+            }
+        },
         
     },
     mounted: function() {
@@ -122,11 +166,15 @@ export default {
 </script>
 
 <style>
-.el-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.loginForm{
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
 }
+
+.loginForm 
+    .el-input {
+        width: 200px;
+    }
 </style>
 
