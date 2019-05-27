@@ -8,7 +8,7 @@
                 <el-input v-model='userForm.password' type='password' @keyup.enter.native='login'></el-input>
             </el-form-item>
             <el-form-item label='邮箱' v-if="loginStatus==0" prop='email' >
-                <el-input v-model='userForm.email' ></el-input><el-button style="position:absolute" v-on:click="send_register_email" :disabled="!showSendValid">获取验证码 {{ remainSecond }} </el-button>
+                <el-input v-model='userForm.email' ></el-input> <el-button style="position:absolute;top: 1px;left: 205px;" v-on:click="send_register_email" :disabled="!showSendValid">获取验证码 {{ remainSecond }} </el-button>
             </el-form-item>
             <el-form-item label='验证码' v-if="loginStatus==0" prop='validCode'>
                 <el-input v-model='userForm.validCode'></el-input>
@@ -172,7 +172,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .loginForm{
     display: flex; 
     flex-direction: column; 

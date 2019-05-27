@@ -58,7 +58,7 @@
         }
     }
 </script>
-<style>
+<style scoped>
     .input {
         margin: 5px 0 5px 0;
         /*上 右 下 左*/

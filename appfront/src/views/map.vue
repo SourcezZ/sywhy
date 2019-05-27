@@ -43,7 +43,7 @@
   },
 }
 </script>
-<style type="text/css">
+<style type="text/css" scoped>
 body,html,#map_container {
   width: 100%;
   height: 100%;

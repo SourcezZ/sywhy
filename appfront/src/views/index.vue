@@ -83,7 +83,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .el-menu {
 	width: 100%;
 	display: flex;
