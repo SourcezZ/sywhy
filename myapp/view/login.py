@@ -36,8 +36,8 @@ def send_register_email(request, send_type='register'):
 
     if send_type == "register":
         email_title = "RainRose注册验证码"
-        email_body = f'''{username}：\n
-            \t欢迎注册RainRose，您的验证码为：{validCode}'''
+        email_body = '''{}：\n
+            \t欢迎注册RainRose，您的验证码为：{}'''.format(username, validCode)
         # Parameter：subject标题, message主体, from_email发送邮箱, recipient_list邮件列表,
         send_status = send_mail(email_title,email_body,EMAIL_FROM,email_to) #返回真值，判断是否发送OK
         if send_status:
