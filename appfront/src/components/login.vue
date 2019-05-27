@@ -1,22 +1,22 @@
 <!-- 登陆组件 -->
 <template>
         <el-form class="loginForm" :rules='loginRule' :model='userForm' ref="userForm" label-width="80px" label-position="left">
-            <el-form-item label='username' prop='username'>
+            <el-form-item label='用户名' prop='username'>
                 <el-input v-model="userForm.username" :disabled='isDisabled()'></el-input>
             </el-form-item>
-            <el-form-item label='password' v-if="loginStatus==0" prop='password'>
+            <el-form-item label='密码' v-if="loginStatus==0" prop='password'>
                 <el-input v-model='userForm.password' type='password' @keyup.enter.native='login'></el-input>
             </el-form-item>
-            <el-form-item label='email' v-if="loginStatus==0" prop='email' >
+            <el-form-item label='邮箱' v-if="loginStatus==0" prop='email' >
                 <el-input v-model='userForm.email' ></el-input><el-button style="position:absolute" v-on:click="send_register_email" :disabled="!showSendValid">获取验证码 {{ remainSecond }} </el-button>
             </el-form-item>
-            <el-form-item label='validCode' v-if="loginStatus==0" prop='validCode'>
+            <el-form-item label='验证码' v-if="loginStatus==0" prop='validCode'>
                 <el-input v-model='userForm.validCode'></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button v-on:click="login" v-if="loginStatus==0">Sign in</el-button>
-                <el-button v-on:click="logup" v-if="loginStatus==0">Sign up</el-button>
-                <el-button v-on:click='logout' v-if="loginStatus==1">Sign out</el-button>
+                <el-button v-on:click="login" v-if="loginStatus==0">登陆</el-button>
+                <el-button v-on:click="logup" v-if="loginStatus==0">注册</el-button>
+                <el-button v-on:click='logout' v-if="loginStatus==1">注销</el-button>
             </el-form-item>
         </el-form>
 </template>
@@ -37,12 +37,13 @@ export default {
                 validCode: '',
             },
             loginRule:{
-                username : [
-                    {required:true, message:'need username', trigger:'change'},
+                username : {required:true, message:'请输入用户名', trigger:'change'},
+                password : {required:true, message:'请输入密码', trigger:'change'},
+                validCode : {required:true, message:'请输入验证码', trigger:'change'},
+                email : [
+                    {required:true, message:'请输入邮箱', trigger:'change'},
+                    {pattern:/^[\da-zA-Z\S]+@[\da-zA-Z]+.com$/, message:'邮箱格式错误', trigger:'blur'}
                 ],
-                password : {required:true, message:'need password', trigger:'change'},
-                validCode : {required:true, message:'need validCode', trigger:'change'},
-                email : {required:true, message:'need email', trigger:'change'},
             }
         }
     },
@@ -119,22 +120,28 @@ export default {
         },
 
         send_register_email : function () {
-            thisObj = this
-            this.postData2Server('send_register_email', this.userForm, function (res) {
-                console.log(res)
-                if (res.msg == 'success') {
-                    thisObj.setCookie('username', req['username'], 0.5)
-                    thisObj.setCookie('token', res['token'], 0.5)
+            var thisObj = this
+            this.$refs.userForm.validateField('username', (errorMsg) => {
+                this.$refs.userForm.validateField('email', (errorMsg) => {
+                    if (errorMsg == ''){
+                        this.postData2Server('send_register_email', this.userForm, function (res) {
+                            console.log(res)
+                            if (res.msg == 'success') {
+                                thisObj.message("validCode send success, please check your email", "success")
+                                thisObj.sendEmail()
+                            }else{
+                                thisObj.message(res.msg, "error")
+                            }
 
-                    thisObj.userForm.username = req['username']
-                    thisObj.loginStatus = 1
-                    thisObj.message("login success", "success")
-                    thisObj.$emit("userSignIn", req['username'])
-                }else{
-                    thisObj.message(res.msg, "error")
-                }
-
+                        })
+                        
+                    }
+                })
             })
+            
+        },
+
+        sendEmail : function () {
             const TIME_COUNT = 60;
             this.showSendValid = false
             if (!this.timer) {
@@ -150,7 +157,7 @@ export default {
                     }
                 }, 1000)
             }
-        },
+        }
         
     },
     mounted: function() {

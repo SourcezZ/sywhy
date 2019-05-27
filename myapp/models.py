@@ -43,6 +43,7 @@ class User(models.Model):
     userId = models.AutoField(primary_key=True)
     username = models.CharField(max_length=64)
     password = models.CharField(max_length=256, null=True)
+    email = models.CharField(max_length=256, default='')
     objects = models.Manager()
     def __unicode__(self):
         return self.username
