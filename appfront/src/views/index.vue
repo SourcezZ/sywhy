@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- <Light></Light> -->
-        <div class='div'>
+        <div class='div1'>
             <el-menu :default-active="activeIndex" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
                 <el-menu-item index="1">主页</el-menu-item>
                 <el-menu-item index="2">走马灯</el-menu-item>
@@ -13,9 +13,9 @@
             <!-- <router-link :to="{name:'首页',params:{index:'5'}}" style="font-size: 14px;color: orange;">立即注册</router-link> -->
         </div>
         <div class='login'>
-                    <span v-if="loginStatus==1">hello，{{this.username}}</span>
-                    <span v-else>not login</span>
-                </div>
+            <span v-if="loginStatus==1">hello，{{this.username}}</span>
+            <span v-else>未登录</span>
+        </div>
         <div>
             <Story v-if='activeIndex==1' :loginStatus='loginStatus' :username='username'></Story>
             <Light v-if='activeIndex==2' :loginStatus='loginStatus' :username='username'></Light>
@@ -34,66 +34,65 @@ import Picture from "../components/upLoad";
 import Login from "../components/login";
 import Store from "../store";
 export default {
-	components: { Library, Light, Story, Picture, Login },
+    components: { Library, Light, Story, Picture, Login },
 
-	data() {
-		return {
-		user: {},
-		activeIndex: this.$route.params.index || '1',
-		bookList: [],
-		username: "",
-		loginStatus: 0
-		};
-	},
-	methods: {
-        changeeee(){
+    data () {
+        return {
+            user: {},
+            activeIndex: this.$route.params.index || '1',
+            bookList: [],
+            username: "",
+            loginStatus: 0
+        };
+    },
+    methods: {
+        changeeee () {
             debugger
             this.activeIndex = this.$route.params.index
 
-            this.$router.push({name: '首页', params: {index: '5'}})
+            this.$router.push({ name: '首页', params: { index: '5' } })
             // this.$router.push({path:'/', query: {index: '5'}})
         },
-		handleSelect(key, keyPath) {
-			this.activeIndex = key
-		},
-		getloginStatus() {
-			if (this.username != "" && this.username != null) {
-				this.loginStatus = 1;//已登录
-			} else {
-				this.loginStatus = 0;//未登录
-			}
-		},
-		userSignIn: function(username) {
-			this.username = username;
-		}
-	},
-	watch: {
-		username: function() {
-			this.getloginStatus();
-		}
-	},
-	mounted: function() {
+        handleSelect (key, keyPath) {
+            this.activeIndex = key
+        },
+        getloginStatus () {
+            if (this.username != "" && this.username != null) {
+                this.loginStatus = 1;//已登录
+            } else {
+                this.loginStatus = 0;//未登录
+            }
+        },
+        userSignIn: function (username) {
+            this.username = username;
+        }
+    },
+    watch: {
+        username: function () {
+            this.getloginStatus();
+        }
+    },
+    mounted: function () {
         var thisObj = this
-		this.postData2Server('get_username', {}, function(res){
-			if (res.msg == 'success') {
+        this.postData2Server('get_username', {}, function (res) {
+            if (res.msg == 'success') {
                 thisObj.username = res.username
-			}
+            }
         })
-	}
+    }
 };
 </script>
 
 <style scoped>
-.el-menu {
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+.div1 .el-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
-.div {
-	display: flex;
-	justify-content: center;
+.div1 {
+    display: flex;
+    justify-content: center;
 }
-
 </style>

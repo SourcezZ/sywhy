@@ -1,7 +1,7 @@
 <!-- addbook组件 -->
 <template>
     <div class="home">
-        <el-row display="margin-top:10px">
+        <el-row class="inputBook">
             <el-col :span="4">
                 <el-input v-model="req.bookName" placeholder="请输入书名"></el-input>
             </el-col>
@@ -22,54 +22,52 @@
 </template>
 
 <script>
-    export default {
-        props:['loginStatus','username'],
-        data() {
-            return {
-                userForm:{
-                    'username':'',
-                },
-                req:{
-                    'bookName':''
-                },
-                bookList: [],
-            }
-        },
-        methods: {
-            show_books: function (params) {
-                var thisObj = this
-                this.postData2Server('show_books', {}, function(res){
-                    thisObj.bookList = res.list
-                })
+export default {
+    props: ['loginStatus', 'username'],
+    data () {
+        return {
+            userForm: {
+                'username': '',
             },
-            add_book: function () {
-                var thisObj = this
-                this.postData2Server('add_book', this.req, function(res){
-                    if (res.msg == 'success') {
-                        thisObj.show_books()
-                    } else {
-                        thisObj.message(res['msg'], 'error')
-                    }
-                })
-            }
-        },
-        mounted: function () {
-            this.show_books()
+            req: {
+                'bookName': ''
+            },
+            bookList: [],
         }
+    },
+    methods: {
+        show_books: function (params) {
+            var thisObj = this
+            this.postData2Server('show_books', {}, function (res) {
+                thisObj.bookList = res.list
+            })
+        },
+        add_book: function () {
+            var thisObj = this
+            this.postData2Server('add_book', this.req, function (res) {
+                if (res.msg == 'success') {
+                    thisObj.show_books()
+                } else {
+                    thisObj.message(res['msg'], 'error')
+                }
+            })
+        }
+    },
+    mounted: function () {
+        this.show_books()
     }
+}
 </script>
 <style scoped>
-    .input {
-        margin: 5px 0 5px 0;
-        /*上 右 下 左*/
-    }
+.inputBook {
+    display: flex;
+    justify-content: center;
+}
+.el-row {
+    margin-bottom: 20px;
+}
 
-    .el-row {
-        margin-bottom: 20px;
-    }
-
-    .el-col {
-        border-radius: 20px;
-    }
-
+.el-col {
+    border-radius: 20px;
+}
 </style>
