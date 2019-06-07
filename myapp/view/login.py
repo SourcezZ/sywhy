@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 
 from myproject.settings import EMAIL_FROM
 
+
 @require_http_methods(["POST"])
 def send_register_email(request, send_type='register'):
     response = {}
@@ -32,14 +33,15 @@ def send_register_email(request, send_type='register'):
     email_to.append(email)
 
     validCode = myUtils.getValidCode()
-    cache.set(email, validCode, 5*60)
+    cache.set(username + ':' + email, validCode, 5*60)
 
     if send_type == "register":
         email_title = "RainRose注册验证码"
-        email_body = '''{}：\n
-            \t欢迎注册RainRose，您的验证码为：{}'''.format(username, validCode)
+        email_body = '''{}：\n\t欢迎注册RainRose，您的验证码为：{}'''.format(
+            username, validCode)
         # Parameter：subject标题, message主体, from_email发送邮箱, recipient_list邮件列表,
-        send_status = send_mail(email_title,email_body,EMAIL_FROM,email_to) #返回真值，判断是否发送OK
+        send_status = send_mail(email_title, email_body,
+                                EMAIL_FROM, email_to)  # 返回真值，判断是否发送OK
         if send_status:
             # 你想怎样
             response['msg'] = 'success'
@@ -56,14 +58,15 @@ def add_user(request):
     username = data['username']
     password = data['password']
     email = data['email']
-    validCode = data['validCode']
+    inputValidCode = str(data['validCode']).lower()
+    rightValidCode = str(cache.get(username + ':' + email)).lower()
 
-    #判断验证码是否正确
-    if validCode != cache.get(email): 
+    # 判断验证码是否正确
+    if inputValidCode != rightValidCode or rightValidCode != 'none':
         response['msg'] = '验证码错误，请重试（更换用户名或邮箱需重新发送验证码）'
         return JsonResponse(response)
 
-    #判断账号是否存在
+    # 判断账号是否存在
     user = User.objects.filter(username=username)
     userList = json.loads(serializers.serialize("json", user))
     if(len(userList) != 0):
@@ -74,10 +77,11 @@ def add_user(request):
         user = User(username=username, password=password, email=email)
         user.save()
         response['msg'] = 'success'
-    except  Exception as e:
+    except Exception as e:
         response['msg'] = str(e)
-        
+
     return JsonResponse(response)
+
 
 @require_http_methods(["POST"])
 def login(request):
@@ -88,7 +92,7 @@ def login(request):
     try:
         user = User.objects.filter(username=username)
         userList = json.loads(serializers.serialize("json", user))
-    except  Exception as e:
+    except Exception as e:
         response['msg'] = str(e)
 
     if userList != []:
@@ -100,8 +104,9 @@ def login(request):
             response['msg'] = '密码错误'
     else:
         response['msg'] = '该用户不存在，请先注册'
-        
+
     return JsonResponse(response)
+
 
 @require_http_methods(["POST"])
 def get_username(request):
@@ -116,4 +121,3 @@ def get_username(request):
         if(response.get('msg') != 'success'):
             response['msg'] = '登陆信息已失效，请重新登陆'
     return JsonResponse(response)
-

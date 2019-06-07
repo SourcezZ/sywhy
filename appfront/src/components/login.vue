@@ -15,7 +15,9 @@
             </el-form-item>
             <el-form-item label='邮箱' v-if="loginStatus==0 && chooseLog=='logup'" prop='email'>
                 <el-input v-model='userForm.email'></el-input>
-                <el-button style="position:absolute;top: 1px;left: 205px;" v-on:click="send_register_email" :disabled="!showSendValid">获取验证码 {{ remainSecond }} </el-button>
+                <el-button style="position:absolute;top: 1px;left: 205px;" v-on:click="send_register_email" :disabled="!showSendValid">
+                    获取验证码 {{ remainSecond }}<span v-if="remainSecond!=null">s</span>
+                </el-button>
             </el-form-item>
             <el-form-item label='验证码' v-if="loginStatus==0  && chooseLog=='logup'" prop='validCode'>
                 <el-input v-model='userForm.validCode'></el-input>
@@ -45,7 +47,7 @@ export default {
                 validCode: '',
             },
             loginRule: {
-                username: { required: true, message: '请输入用户名', trigger: 'change' },
+                username: { required: true, message: '请输入用户名', trigger: 'blur' },
                 password: { required: true, message: '请输入密码', trigger: 'change' },
                 validCode: { required: true, message: '请输入验证码', trigger: 'change' },
                 email: [
@@ -98,6 +100,7 @@ export default {
                         console.log(res)
                         if (res.msg == 'success') {
                             thisObj.message("logup success", "success")
+                            thisObj.chooseLog = 'login'//注册成功，转换登陆页面
                         } else {
                             thisObj.message(res.msg, "error");
                         }
