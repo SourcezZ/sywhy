@@ -13,7 +13,7 @@
         </el-row>
         <!-- <div class='box-in-card' v-if="username=='syw'"> -->
         <div class='box-in-card'>
-            <el-card class="box-card" v-for="i in storyList" :key="i.pk">
+            <el-card class="box-card" v-for="(i, index) in storyList" :key="i.pk">
                 <div slot="header" class="clearfix">
                     <span>{{ i.fields.title }}</span>
                     <span style='float: right;'>{{ i.fields.addTime | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
@@ -21,10 +21,10 @@
                 <div class="text item">
                     <span>{{ i.fields.content }}</span>
                 </div>
-                <el-button style='float: right;' v-if="!i.fields.commitFlag" size="small" v-on:click='ifCommit(i.pk)'>收起</el-button>
-                <el-button style='float: right;' v-if="i.fields.commitFlag" size="small" v-on:click='ifCommit(i.pk)'>评论</el-button>
+                <el-button style='float: right;' v-if="i.fields.commitFlag == 1" size="small" v-on:click='ifCommit(index)'>收起</el-button>
+                <el-button style='float: right;' v-if="i.fields.commitFlag == 0" size="small" v-on:click='ifCommit(index)'>评论</el-button>
                 <br><br>
-                <div v-if="!i.fields.commitFlag">
+                <div v-if="i.fields.commitFlag == 1">
 					<div v-for="j in commentList" :key='j.pk'>
 						<div v-if='j.fields.storyId==i.pk'>
 							<span class='comments'>{{ j.fields.commentContent }}</span>
@@ -119,7 +119,7 @@ export default {
 			})
 		},
 		ifCommit: function(params) {
-			this.storyList[params-1].fields.commitFlag = !this.storyList[params-1].fields.commitFlag
+			this.storyList[params].fields.commitFlag = !this.storyList[params].fields.commitFlag
 		}
 	},
 	created: function() {
