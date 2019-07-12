@@ -44,8 +44,7 @@ def showImgForUs(request):
     response = {}
     name = []
     file_dir = r'./appfront/dist/upload/img/us/'
-    # for root, dirs, files in os.walk(file_dir):
-    for files in os.walk(file_dir):
+    for root, dirs, files in os.walk(file_dir):
         for file in files:
             name.append(file)
     try:
