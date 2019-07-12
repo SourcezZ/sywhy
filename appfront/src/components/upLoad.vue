@@ -5,8 +5,15 @@
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
             <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
         </el-upload>
-        <div v-for="i in imgList" :key="i.pk">
-            <img :src="'/upload/img/' + i.fields.imgUrl">
+        <!-- <div v-for="i in imgList" :key="i.pk">
+            <a :href="'/upload/img/' + i.fields.imgUrl">
+                <el-image :src="'/upload/img/' + i.fields.imgUrl"></el-image>
+            </a>
+        </div> -->
+        <div class="demo-image__lazy">
+            <a v-for="i in imgList" :key="i.pk" :href="'/upload/img/' + i.fields.imgUrl">
+                <el-image class="img_class" :src="'/upload/img/' + i.fields.imgUrl" lazy></el-image>
+            </a>
         </div>
     </div>
 </template>
@@ -23,7 +30,7 @@ export default {
             userForm: {
                 'username': ''
             },
-            filess: '/static/upload/img/media/8.jpg',
+            filess: '/static/img/1.2e40016.jpg',
         }
     },
     methods: {
@@ -75,4 +82,9 @@ export default {
     }
 }
 </script>
+<style>
+.img_class {
+    width: 45%;
+}
+</style>
 
