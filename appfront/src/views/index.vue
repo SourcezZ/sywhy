@@ -9,6 +9,7 @@
                 <el-menu-item index="4">图库</el-menu-item>
                 <el-menu-item index="5">登陆</el-menu-item>
                 <el-menu-item index="6" v-if="username == '宋雨蔚'">You know me</el-menu-item>
+                <el-menu-item index="7">You know me</el-menu-item>
             </el-menu>
             <!-- <router-link :to="{name:'首页',params:{index:'5'}}" style="font-size: 14px;color: orange;">立即注册</router-link> -->
         </div>
@@ -22,6 +23,8 @@
             <Library v-if='activeIndex==3' :loginStatus='loginStatus' :username='username'></Library>
             <Picture v-if='activeIndex==4' :loginStatus='loginStatus' :username='username'></Picture>
             <Login @userSignIn='userSignIn' v-if='activeIndex==5' :loginStatus='loginStatus'></Login>
+            <ZY v-if='activeIndex==7'></ZY>
+            <TOGETHER v-if="activeIndex==520"></TOGETHER>
         </div>
     </div>
 </template>
@@ -33,8 +36,10 @@ import Light from "../components/light";
 import Picture from "../components/upLoad";
 import Login from "../components/login";
 import Store from "../store";
+import ZY from "../components/zy";
+import TOGETHER from "../components/together";
 export default {
-    components: { Library, Light, Story, Picture, Login },
+    components: { Library, Light, Story, Picture, Login, ZY, TOGETHER },
 
     data () {
         return {
