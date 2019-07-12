@@ -92,5 +92,6 @@ export default {
 }
 .img_class {
     width: 45%;
+    margin: 8px;
 }
 </style>

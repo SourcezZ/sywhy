@@ -85,6 +85,7 @@ export default {
 <style>
 .img_class {
     width: 45%;
+    margin: 8px;
 }
 </style>
 
