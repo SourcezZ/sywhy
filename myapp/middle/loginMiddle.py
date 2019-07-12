@@ -11,7 +11,9 @@ def checkIsLogin(requestPath, token):
     response = {}
     api = str(requestPath).replace('/api/', '')
 
-    if api in apiList.UNNEEDLOGIN:
+    if api == '':
+        return None
+    elif api in apiList.UNNEEDLOGIN:
         return None
     elif api in apiList.NEEDLOGIN:
         loginDict = {0: '请先登录', 1: '已登陆', 2: '您的登陆会话超时，请重新登录'}

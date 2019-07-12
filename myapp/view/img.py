@@ -6,6 +6,7 @@ import json
 import os
 from django.core import serializers
 from myapp.models import Img
+from myapp.models import ImgOnlyUpload
 from django.conf import settings
 
 
@@ -52,4 +53,18 @@ def showImgForUs(request):
         response['msg'] = 'success'
     except Exception as e:
         response['msg'] = str(e)
+    return JsonResponse(response)
+
+
+@require_http_methods(["POST"])
+def uploadImgForUs(request):  # 图片上传函数
+    response = {}
+    file = request.FILES.get('file')
+    try:
+        img = ImgOnlyUpload(imgUrl=file)
+        img.save()
+        response['msg'] = 'success'
+    except Exception as e:
+        response['msg'] = str(e)
+    # return render(request, 'index.html')
     return JsonResponse(response)

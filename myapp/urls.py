@@ -17,6 +17,7 @@ urlpatterns = [
 
     url(r'uploadImg$', img.uploadImg),
     url(r'showImg$', img.showImg),
+    url(r'uploadImgForUs$', img.uploadImgForUs),
     url(r'showImgForUs', img.showImgForUs),
 
     url(r'add_user', login.add_user),
