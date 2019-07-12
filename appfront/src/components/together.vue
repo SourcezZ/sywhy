@@ -1,19 +1,11 @@
 <template>
-    <div style="text-align:center">
-        <div>
-            <el-carousel :interval="4000" type="card" height="200px">
-                <el-carousel-item>
-                    <img class="img" src="../light/1.jpg">
-                </el-carousel-item>
-
-                <el-carousel-item>
-                    <img class="img" src="../light/2.jpg">
-                </el-carousel-item>
-
-                <el-carousel-item>
-                    <img class="img" src="../light/3.jpg">
-                </el-carousel-item>
-            </el-carousel>
+    <div>
+        <!-- <el-upload :before-upload="beforeUpload" :file-list="uploadList" class="upload-demo" ref="upload" :action="actionUrl" :on-preview="handlePreview" :on-remove="handleRemove" :on-success="showImg" :auto-upload="false">
+            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+        </el-upload> -->
+        <div v-for="i in imgList" :key="i.pk">
+            <img :src="'/upload/img/us/' + i">
         </div>
     </div>
 </template>
@@ -22,9 +14,23 @@
 export default {
     data () {
         return {
+            imgList: []
         }
     },
     methods: {
+        showImg: function (res, file, fileList) {
+            var thisObj = this
+            this.postData2Server('showImgForUs', {}, function (res) {
+                if (res.msg == 'success') {
+                    thisObj.imgList = res["list"];
+                } else {
+                    thisObj.message("查询失败", "error");
+                }
+            })
+        }
+    },
+    mounted: function () {
+        this.showImg()
     }
 
 }        

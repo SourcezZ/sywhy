@@ -15,4 +15,5 @@ UNNEEDLOGIN = [
     'login',
     'get_username',
     'send_register_email',
+    'showImgForUs'
 ]
