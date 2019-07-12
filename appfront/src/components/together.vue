@@ -4,9 +4,12 @@
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
             <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
         </el-upload>
-        <div v-for="i in imgList" :key="i.pk">
-            <img :src="'/upload/img/us/' + i">
+        <div class="demo-image__lazy">
+            <el-image v-for="url in imgList" :key="url" :src="'/upload/img/us/' + url" lazy></el-image>
         </div>
+        <!-- <div v-for="i in imgList" :key="i.pk">
+            <img :src="'/upload/img/us/' + i">
+        </div> -->
     </div>
 </template>
 
