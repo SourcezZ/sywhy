@@ -15,6 +15,8 @@ def checkIsLogin(requestPath, token):
         return None
     elif api in apiList.UNNEEDLOGIN:
         return None
+    # elif api in apiList.ROUTER:
+    #     return None
     elif api in apiList.NEEDLOGIN:
         loginDict = {0: '请先登录', 1: '已登陆', 2: '您的登陆会话超时，请重新登录'}
         loginStatus = tokenUtil.check_token(token)
@@ -23,10 +25,10 @@ def checkIsLogin(requestPath, token):
             response['loginStatus'] = loginStatus
             response['msg'] = loginDict[loginStatus]
             return JsonResponse(response)
-    else:
-        print('\nnot in api')
-        response['msg'] = 'illegal request'
-        return JsonResponse(response)
+    # else:
+    #     print('\nnot in api')
+    #     response['msg'] = 'illegal request'
+    #     return JsonResponse(response)
     return None
 
 

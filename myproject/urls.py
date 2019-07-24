@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(myapp.urls)),
     url(r'^$', TemplateView.as_view(template_name="index.html")),
+    url(r'^.*', TemplateView.as_view(template_name="index.html")),
 ] + static(settings.STATIC_URL, document_root = settings.STATICFILES_DIRS)  + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
