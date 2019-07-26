@@ -5,6 +5,7 @@ import practice from '@/views/practice'
 import test from '@/views/test'
 import map from '@/views/map'
 import jumpLogin from '@/views/jumpLogin'
+import RainRose from '@/components/zy'
 Vue.use(Router)
 
 
@@ -35,6 +36,11 @@ export default new Router({
     path: '/jumpLogin', //url地址
     name: '跳转登陆', //随便取一个name
     component: jumpLogin //对应import的index，匹配大小写
+  },
+  {
+    path: '/syw', //url地址
+    name: 'RainRose', //随便取一个name
+    component: RainRose //对应import的index，匹配大小写
   },
   ],
 })
