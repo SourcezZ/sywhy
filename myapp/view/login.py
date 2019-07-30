@@ -62,7 +62,7 @@ def add_user(request):
     rightValidCode = str(cache.get(username + ':' + email)).lower()
 
     # 判断验证码是否正确
-    if inputValidCode != rightValidCode or rightValidCode != 'none':
+    if inputValidCode != rightValidCode or rightValidCode == 'none':
         response['msg'] = '验证码错误，请重试（更换用户名或邮箱需重新发送验证码）'
         return JsonResponse(response)
 
