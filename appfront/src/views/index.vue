@@ -2,6 +2,9 @@
     <div class="index_main" :style="'height:' + picHeight + 'px'">
         <!-- <Light></Light> -->
         <div class='div1'>
+            <div style="margin:0;padding:0;overflow:hidden" >
+                <iframe class="framClass" src="/static/mp3/monsters.mp3?autoplay=1"></iframe>
+            </div>
             <el-menu :default-active="activeIndex" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
                 <el-menu-item index="1">主页</el-menu-item>
                 <el-menu-item index="2">走马灯</el-menu-item>
@@ -108,5 +111,16 @@ export default {
     background-repeat:repeat;
     width: 100%;
 }
+
+.framClass {
+    position: fixed; 
+    right: 30px;
+    top: 50px; 
+    display: none;
+    background-color: pink;
+    /* width:100%; */
+    /* height:80px; */
+}
+
 
 </style>
