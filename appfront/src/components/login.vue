@@ -142,6 +142,7 @@ export default {
             this.$refs.userForm.validateField('username', (errorMsg) => {
                 this.$refs.userForm.validateField('email', (errorMsg) => {
                     if (errorMsg == '') {
+                        thisObj.message("sending, please wait.", "success")
                         this.postData2Server('send_register_email', this.userForm, function (res) {
                             console.log(res)
                             if (res.msg == 'success') {

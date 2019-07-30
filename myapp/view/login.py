@@ -12,6 +12,12 @@ from django.core.mail import send_mail
 
 from myproject.settings import EMAIL_FROM
 
+import logging
+# 生成一个以当前文件名为名字的logger实例
+logger = logging.getLogger(__name__)
+# 生成一个名为collect的logger实例
+validCode_logger = logging.getLogger("valiCode")
+login_record_logger = logging.getLogger("login_record")
 
 @require_http_methods(["POST"])
 def send_register_email(request, send_type='register'):
@@ -34,6 +40,8 @@ def send_register_email(request, send_type='register'):
 
     validCode = myUtils.getValidCode()
     cache.set(username + ':' + email, validCode, 5*60)
+
+    validCode_logger.info(username + ' : ' + email + ' : ' + validCode)
 
     if send_type == "register":
         email_title = "RainRose注册验证码"
@@ -100,7 +108,9 @@ def login(request):
         if(password == validPwd):
             response['token'] = tokenUtil.create_token(username)
             response['msg'] = 'success'
+            login_record_logger.info('log in success' + username)
         else:
+            login_record_logger.info('log in failed' + username)
             response['msg'] = '密码错误'
     else:
         response['msg'] = '该用户不存在，请先注册'
