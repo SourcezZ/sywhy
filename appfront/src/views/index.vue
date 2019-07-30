@@ -3,7 +3,8 @@
         <!-- <Light></Light> -->
         <div class='div1'>
             <div style="margin:0;padding:0;overflow:hidden" >
-                <iframe class="framClass" src="/static/mp3/monsters.mp3?autoplay=1"></iframe>
+                <!-- <iframe class="framClass" src="/static/mp3/monsters.mp3?autoplay=1"></iframe> -->
+                <iframe class="framClass" src="https://www.missevan.com/sound/player?id=1234303?autoplay=1"></iframe>
             </div>
             <el-menu :default-active="activeIndex" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
                 <el-menu-item index="1">主页</el-menu-item>
@@ -115,11 +116,11 @@ export default {
 .framClass {
     position: fixed; 
     right: 30px;
-    top: 50px; 
-    display: none;
+    bottom: 10px; 
+    /* display: none; */
     background-color: pink;
-    /* width:100%; */
-    /* height:80px; */
+    width:100%;
+    height:45px;
 }
 
 
