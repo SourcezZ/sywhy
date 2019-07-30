@@ -119,7 +119,7 @@ export default {
     bottom: 10px; 
     /* display: none; */
     background-color: pink;
-    width:100%;
+    width:100px;
     height:45px;
 }
 
