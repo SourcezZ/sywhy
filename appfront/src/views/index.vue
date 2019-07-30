@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="index_main" :style="'height:' + picHeight + 'px'">
         <!-- <Light></Light> -->
         <div class='div1'>
             <el-menu :default-active="activeIndex" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
@@ -47,7 +47,8 @@ export default {
             activeIndex: this.$route.params.index || '1',
             bookList: [],
             username: "",
-            loginStatus: 0
+            loginStatus: 0,
+            picHeight:'',
         };
     },
     methods: {
@@ -78,6 +79,7 @@ export default {
         }
     },
     mounted: function () {
+        this.picHeight = document.body.scrollWidth
         var thisObj = this
         this.postData2Server('get_username', {}, function (res) {
             if (res.msg == 'success') {
@@ -100,4 +102,11 @@ export default {
     display: flex;
     justify-content: center;
 }
+
+.index_main {
+    background-image: url('/static/img/bg/bg1.jpg');
+    background-repeat:repeat;
+    width: 100%;
+}
+
 </style>
