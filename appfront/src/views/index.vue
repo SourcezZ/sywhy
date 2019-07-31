@@ -3,7 +3,11 @@
         <!-- <Light></Light> -->
         <div class='div1'>
             <div :style="'display:' + musicFlag">
-                <iframe class="framClass" frameborder="no" border="0" marginwidth="0" marginheight="0" src="http://www.kuwo.cn/my/5651795?autoplay=1"></iframe>
+            <!-- <div> -->
+                <!-- <iframe class="framClass" frameborder="no" border="0" marginwidth="0" marginheight="0" src="http://www.kuwo.cn/my/5651795?autoplay=1"></iframe> -->
+                <audio id='audio' class="framClass2" src="/static/mp3/monsters.mp3" controls="controls" autoplay>
+                    Your browser does not support the audio tag.
+                </audio>
             </div>
                 <!-- <iframe class="framClass" src="/static/mp3/monsters.mp3?autoplay=1"></iframe> -->
                 <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28481189&auto=1&height=66"></iframe> -->
@@ -101,6 +105,8 @@ export default {
                 thisObj.username = res.username
             }
         })
+        var audio = document.getElementById('audio');
+        audio.play();
     }
 };
 </script>
@@ -133,6 +139,17 @@ export default {
     width:100%;
     height:200px;
     z-index:100;
+}
+
+.framClass2 {
+    position: fixed; 
+    bottom: 0px; 
+    /* display: none; */
+    background-color: pink;
+    /* width:100%; */
+    /* height:200px; */
+    z-index:100;
+    border-radius:35px;
 }
 
 .musicButton{
