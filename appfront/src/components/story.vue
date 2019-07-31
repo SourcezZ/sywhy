@@ -4,22 +4,23 @@
         <el-row>
             <el-col :span="7">
                 <!--span宽度-->
-                <el-input class='input' v-model="title" placeholder="请输入标题"></el-input>
-                <el-input class='input' v-model="content" type="textarea" rows="5" placeholder="请输入内容"></el-input>
+                <!-- <el-input class='input' v-model="title" placeholder="请输入标题"></el-input> -->
+                <el-input class='input' v-model="content" type="textarea" rows="5" placeholder="请输入你的话"></el-input>
             </el-col>
             <el-col>
                 <el-button type="primary" v-on:click="add_story">提交</el-button>
             </el-col>
         </el-row>
         <!-- <div class='box-in-card' v-if="username=='syw'"> -->
-        <div class='box-in-card'>
+        <div class='box_in_card'>
             <el-card class="box-card" v-for="(i, index) in storyList" :key="i.pk">
-                <div slot="header" class="clearfix">
+                <!-- <div slot="header" class="clearfix">
                     <span>{{ i.fields.title }}</span>
                     <span style='float: right;'>{{ i.fields.addTime | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
-                </div>
+                </div> -->
                 <div class="text item">
                     <span>{{ i.fields.content }}</span>
+                    <span style='float: right;'>{{ i.fields.addTime | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
                 </div>
                 <el-button style='float: right;' v-if="i.fields.commitFlag == 1" size="small" v-on:click='ifCommit(index)'>收起</el-button>
                 <el-button style='float: right;' v-if="i.fields.commitFlag == 0" size="small" v-on:click='ifCommit(index)'>评论</el-button>
@@ -119,7 +120,11 @@ export default {
 			})
 		},
 		ifCommit: function(params) {
-			this.storyList[params].fields.commitFlag = !this.storyList[params].fields.commitFlag
+            if (this.storyList[params].fields.commitFlag == 0) {
+                this.storyList[params].fields.commitFlag = 1
+            }else{
+                this.storyList[params].fields.commitFlag = 0
+            }
 		}
 	},
 	created: function() {
@@ -179,15 +184,13 @@ export default {
 }
 
 .box-card {
-  width: 480px;
-  margin: 5px 0 5px 0;
+  width: 100%;
+  margin: 5px 0 15px 0;
 }
 
-.box-in-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.box_in_card {
+  width: 75%;
+  margin: auto;
 }
 
 .el-row {
@@ -205,8 +208,6 @@ export default {
 }
 
 .comments {
-  width: 400px;
-  height: 400px;
   font-size: 10px;
   background-color: antiquewhite;
 }

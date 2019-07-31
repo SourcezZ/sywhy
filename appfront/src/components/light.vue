@@ -2,7 +2,7 @@
 <template>
     <div style="text-align:center">
         <div>
-            <el-carousel :interval="4000" type="card" height="200px">
+            <el-carousel :interval="4000" type="card" height="100px">
                 <el-carousel-item>
                     <img class="img" src="../light/1.jpg">
                 </el-carousel-item>
@@ -54,4 +54,5 @@
         max-width: 100%;
         display: block;
     }
+
 </style>

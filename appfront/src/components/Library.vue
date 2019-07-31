@@ -2,9 +2,10 @@
 <template>
     <div class="home">
         <el-row class="inputBook">
-            <el-col :span="4">
+            <el-col :span="7">
                 <el-input v-model="req.bookName" placeholder="请输入书名"></el-input>
             </el-col>
+            <span style="width:20px"></span>
             <el-button type="primary" v-on:click="add_book">新增</el-button>
         </el-row>
         <el-row>

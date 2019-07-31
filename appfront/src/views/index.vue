@@ -2,24 +2,26 @@
     <div class="index_main" :style="'height:' + picHeight + 'px'">
         <!-- <Light></Light> -->
         <div class='div1'>
-            <div style="margin:0;padding:0;overflow:hidden" >
-                <!-- <iframe class="framClass" src="/static/mp3/monsters.mp3?autoplay=1"></iframe> -->
-                <iframe class="framClass" src="https://www.missevan.com/sound/player?id=1234303?autoplay=1"></iframe>
+            <div :style="'display:' + musicFlag">
+                <iframe class="framClass" frameborder="no" border="0" marginwidth="0" marginheight="0" src="http://www.kuwo.cn/my/5651795?autoplay=1"></iframe>
             </div>
+                <!-- <iframe class="framClass" src="/static/mp3/monsters.mp3?autoplay=1"></iframe> -->
+                <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28481189&auto=1&height=66"></iframe> -->
             <el-menu :default-active="activeIndex" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
                 <el-menu-item index="1">主页</el-menu-item>
-                <el-menu-item index="2">走马灯</el-menu-item>
+                <el-menu-item index="2">没得用</el-menu-item>
                 <el-menu-item index="3">书籍</el-menu-item>
                 <el-menu-item index="4">图库</el-menu-item>
                 <el-menu-item index="5">登陆</el-menu-item>
+                <el-menu-item :index=activeIndex @click="openMusic">bgm</el-menu-item>
                 <!-- <el-menu-item index="6" v-if="username == '宋雨蔚'">You know me</el-menu-item> -->
                 <!-- <el-menu-item index="7">You know me</el-menu-item> -->
             </el-menu>
             <!-- <router-link :to="{name:'首页',params:{index:'5'}}" style="font-size: 14px;color: orange;">立即注册</router-link> -->
         </div>
         <div class='login'>
-            <span v-if="loginStatus==1">hello，{{this.username}}</span>
-            <span v-else>未登录</span>
+            <el-tag type="success" v-if="loginStatus==1">hello，{{this.username}}</el-tag>
+            <el-tag type="success" v-else>未登录</el-tag>
         </div>
         <div>
             <Story v-if='activeIndex==1' :loginStatus='loginStatus' :username='username'></Story>
@@ -34,6 +36,7 @@
 </template>
 
 <script>
+document.body.style.margin = 0;
 import Library from "../components/Library";
 import Story from "../components/story";
 import Light from "../components/light";
@@ -53,6 +56,7 @@ export default {
             username: "",
             loginStatus: 0,
             picHeight:'',
+            musicFlag:'none',
         };
     },
     methods: {
@@ -75,6 +79,13 @@ export default {
         },
         userSignIn: function (username) {
             this.username = username;
+        },
+        openMusic(){
+            if (this.musicFlag == 'none') {
+                this.musicFlag = ''
+            }else{
+                this.musicFlag = 'none'
+            }
         }
     },
     watch: {
@@ -83,7 +94,7 @@ export default {
         }
     },
     mounted: function () {
-        this.picHeight = document.body.scrollWidth
+        this.picHeight = document.body.scrollHeight + window.screen.height + document.body.scrollHeight ; 
         var thisObj = this
         this.postData2Server('get_username', {}, function (res) {
             if (res.msg == 'success') {
@@ -110,18 +121,24 @@ export default {
 .index_main {
     background-image: url('/static/img/bg/bg1.jpg');
     background-repeat:repeat;
+    background-size: 50%;
     width: 100%;
 }
 
 .framClass {
     position: fixed; 
-    right: 30px;
-    bottom: 10px; 
+    bottom: 0px; 
     /* display: none; */
     background-color: pink;
-    width:100px;
-    height:45px;
+    width:100%;
+    height:200px;
+    z-index:100;
 }
 
+.musicButton{
+    position:absolute;
+    right: 50px;
+    top:150px;
+}
 
 </style>
