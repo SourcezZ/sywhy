@@ -100,11 +100,13 @@ export default {
     mounted: function () {
         this.picHeight = document.body.scrollHeight + window.screen.height + document.body.scrollHeight ; 
         var thisObj = this
-        this.postData2Server('get_username', {}, function (res) {
-            if (res.msg == 'success') {
-                thisObj.username = res.username
-            }
-        })
+        if (this.activeIndex != '5'){
+            this.postData2Server('get_username', {}, function (res) {
+                if (res.msg == 'success') {
+                    thisObj.username = res.username
+                }
+            })
+        }
         // var audio = document.getElementById('audio');
         // audio.play();
     }

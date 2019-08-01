@@ -44,9 +44,14 @@ export default {
             })
         },
         add_book: function () {
+            if (this.req.bookName == ''){
+                this.message('内容不能为空', "error")
+				return
+            }
             var thisObj = this
             this.postData2Server('add_book', this.req, function (res) {
                 if (res.msg == 'success') {
+                    this.req.bookName = ''
                     thisObj.show_books()
                 } else {
                     thisObj.message(res['msg'], 'error')

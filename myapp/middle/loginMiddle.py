@@ -21,7 +21,7 @@ def checkIsLogin(requestPath, token):
         loginDict = {0: '请先登录', 1: '已登陆', 2: '您的登陆会话超时，请重新登录'}
         loginStatus = tokenUtil.check_token(token)
         if(loginStatus != 1):
-            print('\n' + loginDict[loginStatus])
+            print(loginDict[loginStatus])
             response['loginStatus'] = loginStatus
             response['msg'] = loginDict[loginStatus]
             return JsonResponse(response)

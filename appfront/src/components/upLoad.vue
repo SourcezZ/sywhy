@@ -1,7 +1,7 @@
 <!-- 图片上传组件 -->
 <template>
     <div>
-        <el-upload :before-upload="beforeUpload" :file-list="uploadList" class="upload-demo" ref="upload" :action="actionUrl" :on-preview="handlePreview" :on-remove="handleRemove" :on-success="showImg" :auto-upload="false">
+        <el-upload :before-upload="beforeUpload" :file-list="uploadList" class="upload-demo" ref="upload" action="#" :on-preview="handlePreview" :on-remove="handleRemove" :on-success="showImg" :auto-upload="false">
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
             <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
         </el-upload>
@@ -50,6 +50,7 @@ export default {
                     thisObj.message("上传失败", "error");
                 }
             })
+            return false
         },
         submitUpload () {
             this.$refs.upload.submit()
