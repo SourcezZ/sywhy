@@ -27,7 +27,7 @@ def add_story(request):
 def show_storys(request):
     response = {}
     try:
-        storys = Story.objects.filter()
+        storys = Story.objects.filter().order_by('-addTime')
         #storys = Story.objects.filter(id='1')
         response['list'] = json.loads(serializers.serialize("json", storys))
         response['msg'] = 'success'

@@ -56,7 +56,8 @@ export default {
 	},
 	methods: {
 		show_storys: function(params) {
-			var thisObj = this
+            var thisObj = this
+            this.content = ""
 			this.postData2Server('show_storys', {}, function(res){
 				if (res.msg == 'success') {
 					thisObj.storyList = res["list"];
@@ -78,6 +79,7 @@ export default {
 			var thisObj = this
 			this.postData2Server('add_story', req, function(res){
 				if (res.msg == 'success') {
+                    thisObj.message("提交成功", "success")
 					thisObj.show_storys()
 				} else {
 					thisObj.message(res.msg, "error")

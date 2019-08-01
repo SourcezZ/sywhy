@@ -108,9 +108,9 @@ def login(request):
         if(password == validPwd):
             response['token'] = tokenUtil.create_token(username)
             response['msg'] = 'success'
-            login_record_logger.info('log in success' + username)
+            login_record_logger.info('log in success. user : ' + username)
         else:
-            login_record_logger.info('log in failed' + username)
+            login_record_logger.info('log in failed. user : ' + username)
             response['msg'] = '密码错误'
     else:
         response['msg'] = '该用户不存在，请先注册'
