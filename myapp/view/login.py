@@ -34,7 +34,7 @@ def send_register_email(request, send_type='register'):
     # email_title = ""邮件标题
     # email_body = ""主体
     email_to = []
-    username = request.data['username']
+    username = request.data['username'].lower()
     email = request.data['email']
     email_to.append(email)
 
@@ -63,7 +63,7 @@ def send_register_email(request, send_type='register'):
 def add_user(request):
     response = {}
     data = json.loads(request.body)
-    username = data['username']
+    username = data['username'].lower()
     password = data['password']
     email = data['email']
     inputValidCode = str(data['validCode']).lower()
@@ -95,7 +95,7 @@ def add_user(request):
 def login(request):
     response = {}
     data = json.loads(request.body)
-    username = data['username']
+    username = data['username'].lower()
     password = data['password']
     try:
         user = User.objects.filter(username=username)
