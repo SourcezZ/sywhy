@@ -35,6 +35,16 @@ export default {
     },
     methods: {
         beforeUpload (file) {
+            let isJPG = (file.type == 'image/jpeg' || file.type == 'image/jpg' || file.type == 'image/png' || file.type == 'image/gif')
+            let is500K = file.size / 1024 < 500
+
+            if (!isJPG){
+                this.message("上传图片只支持jpg、jpeg、png或gif格式", "error");
+                return false
+            } else if (!is500K){
+                this.message("上传图片大小不能超过500K", "error");
+                return false
+            }
             var thisObj = this
             let formDatas = new FormData()
             formDatas.append('file', file)
