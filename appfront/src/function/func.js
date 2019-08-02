@@ -17,34 +17,46 @@ exports.install = function (Vue, options) {
 	 * day cookie的过期时间
 	*/
     Vue.prototype.setCookie = function (name, value, hour) {
-        if (hour != 0 && hour != null) { //当设置的时间等于0时，不设置expires属性，cookie在浏览器关闭后删除
-            var currentDate = new Date()
-            var offset = currentDate.getTimezoneOffset(8) // UTCTime - LOCALTime = offset
-            // currentDate.setTime(currentDate.getTime() + day * 24 * 60 * 60 * 1000 - offset * 60 * 1000)
-            currentDate.setTime(currentDate.getTime() + hour * 60 * 60 * 1000 - offset * 60 * 1000)
-            var expires = currentDate.toUTCString()
-            document.cookie = name + "=" + escape(value) + ";expires=" + expires
-        } else {
-            document.cookie = name + "=" + escape(value)
+        try {
+            if (hour != 0 && hour != null) { //当设置的时间等于0时，不设置expires属性，cookie在浏览器关闭后删除
+                var currentDate = new Date()
+                var offset = currentDate.getTimezoneOffset(8) // UTCTime - LOCALTime = offset
+                // currentDate.setTime(currentDate.getTime() + day * 24 * 60 * 60 * 1000 - offset * 60 * 1000)
+                currentDate.setTime(currentDate.getTime() + hour * 60 * 60 * 1000 - offset * 60 * 1000)
+                var expires = currentDate.toUTCString()
+                document.cookie = name + "=" + escape(value) + ";expires=" + expires
+            } else {
+                document.cookie = name + "=" + escape(value)
+            }
+        } catch (error) {
+            this.message(error, "error")
         }
     }
 
     Vue.prototype.getCookie = function (name) {
-        var arr
-        var reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)")
-        if (arr = document.cookie.match(reg)) {
-            return unescape(arr[2])
-        } else {
-            return null
+        try {
+            var arr
+            var reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)")
+            if (arr = document.cookie.match(reg)) {
+                return unescape(arr[2])
+            } else {
+                return null
+            }
+        } catch (error) {
+            this.message(error, "error")
         }
     }
 
     Vue.prototype.delCookie = function (name) {
-        var exp = new Date();
-        exp.setTime(exp.getTime() - 1);
-        var cval = this.getCookie(name);
-        if (cval != null) {
-            document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+        try {
+            var exp = new Date();
+            exp.setTime(exp.getTime() - 1);
+            var cval = this.getCookie(name);
+            if (cval != null) {
+                document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+            }
+        } catch (error) {
+            this.message(error, "error")
         }
     }
     Vue.prototype.postData2Server = function (transId, req, callback) {
