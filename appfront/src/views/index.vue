@@ -5,7 +5,7 @@
             <div :style="'display:' + musicFlag">
             <!-- <div> -->
                 <!-- <iframe class="framClass" frameborder="no" border="0" marginwidth="0" marginheight="0" src="http://www.kuwo.cn/my/5651795?autoplay=1"></iframe> -->
-                <audio id='audio' class="framClass2" src="/static/mp3/monsters8.mp3" controls="controls">
+                <audio id='audio' class="framClass2" src="/static/mp3/monsters8.mp3" controls="controls" preload="none">
                     Your browser does not support the audio tag.
                 </audio>
             </div>
