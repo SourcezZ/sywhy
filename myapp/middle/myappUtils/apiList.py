@@ -1,11 +1,11 @@
-NEEDLOGIN = [
-    # 暂时取消登陆
-    # 'add_book',
-    # 'add_story',
-    # 'add_comment',
-    # 'uploadImg',
-    'changeBug'
+NEEDLOGIN2 = [
+    'add_book',
+    'add_story',
+    'add_comment',
+    'uploadImg',
 ]
+
+NEEDLOGIN = [ ]
 
 UNNEEDLOGIN = [
     '/',
