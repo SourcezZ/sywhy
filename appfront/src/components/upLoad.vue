@@ -118,7 +118,7 @@ export default {
 }
 .time_class{
     position: absolute;
-    top: 25px;
+    top: 110%;
     left: 11%;
     width: 100%;
 }
