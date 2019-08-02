@@ -11,8 +11,9 @@
             </a>
         </div> -->
         <div class="demo-image__lazy">
-            <a v-for="i in imgList" :key="i.pk" :href="'/upload/img/' + i.fields.imgUrl" target="_Blank">
+            <a class="img_a" v-for="i in imgList" :key="i.pk" :href="'/upload/img/' + i.fields.imgUrl" target="_Blank">
                 <el-image class="img_class" :src="'/upload/convert_img/' + i.fields.imgUrl" lazy></el-image>
+                <span class="time_class">{{ i.fields.addTime | dataFormat('yyyy-MM-dd hh:mm')}}</span>
             </a>
         </div>
     </div>
@@ -102,9 +103,24 @@ export default {
 }
 </script>
 <style>
+.img_a{
+    position: relative;
+    width: 100%;
+    text-decoration:none;
+}
+
+.img_a:link {color:#2E84FF;}
+.img_a:visited {color:#2E84FF;}
+
 .img_class {
     width: 45%;
-    margin: 8px;
+    margin: 7px 0 25px 8px;
+}
+.time_class{
+    position: absolute;
+    top: 25px;
+    left: 11%;
+    width: 100%;
 }
 </style>
 
