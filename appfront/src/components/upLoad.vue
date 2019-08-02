@@ -11,8 +11,8 @@
             </a>
         </div> -->
         <div class="demo-image__lazy">
-            <a v-for="i in imgList" :key="i.pk" :href="'/upload/img/' + i.fields.imgUrl">
-                <el-image class="img_class" :src="'/upload/img/' + i.fields.imgUrl" lazy></el-image>
+            <a v-for="i in imgList" :key="i.pk" :href="'/upload/img/' + i.fields.imgUrl" target="_Blank">
+                <el-image class="img_class" :src="'/upload/convert_img/' + i.fields.imgUrl" lazy></el-image>
             </a>
         </div>
     </div>
@@ -42,8 +42,16 @@ export default {
                 this.message("上传图片只支持jpg、jpeg、png或gif格式", "error");
                 return false
             } else if (!is500K){
-                this.message("上传图片大小不能超过500K", "error");
-                return false
+                this.$confirm('上传图片大小超过500K,上传可能花费较长时间,是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.message("上传图片大小超过500K，请耐心等待上传成功", "success");
+                }).catch(() => {
+                    this.message("已取消上传", "info");
+                    return false
+                })
             }
             var thisObj = this
             let formDatas = new FormData()

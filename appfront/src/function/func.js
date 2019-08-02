@@ -1,6 +1,6 @@
 exports.install = function (Vue, options) {
 
-    Vue.prototype.message = function (message, type, duration = 2000, showClose = true) {
+    Vue.prototype.message = function (message, type, duration = 0, showClose = true) {
         this.$message({
             message: message,
             type: type,

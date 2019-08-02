@@ -8,7 +8,7 @@ from django.core import serializers
 from myapp.models import Img
 from myapp.models import ImgOnlyUpload
 from django.conf import settings
-
+from myapp.middle.myappUtils.img_utils import make_little_img
 
 @require_http_methods(["POST"])
 def uploadImg(request):  # 图片上传函数
@@ -17,6 +17,7 @@ def uploadImg(request):  # 图片上传函数
     try:
         img = Img(imgUrl=file, imgName=file.name)
         img.save()
+        make_little_img(file.name)
         response['msg'] = 'success'
     except Exception as e:
         response['msg'] = str(e)
