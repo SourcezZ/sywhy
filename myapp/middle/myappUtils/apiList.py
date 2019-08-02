@@ -1,8 +1,9 @@
 NEEDLOGIN = [
-    'add_book',
-    'add_story',
-    'add_comment',
-    'uploadImg',
+    # 暂时取消登陆
+    # 'add_book',
+    # 'add_story',
+    # 'add_comment',
+    # 'uploadImg',
 ]
 
 UNNEEDLOGIN = [
