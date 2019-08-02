@@ -4,6 +4,7 @@ NEEDLOGIN = [
     # 'add_story',
     # 'add_comment',
     # 'uploadImg',
+    'changeBug'
 ]
 
 UNNEEDLOGIN = [
