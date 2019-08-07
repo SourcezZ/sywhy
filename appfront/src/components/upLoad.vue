@@ -37,11 +37,15 @@ export default {
     methods: {
         beforeUpload (file) {
             let isJPG = (file.type == 'image/jpeg' || file.type == 'image/jpg' || file.type == 'image/png' || file.type == 'image/gif')
-            let is500K = file.size / 1024 < 500
+            let is500K = file.size / 1024 < 10000
             let fileSize = (file.size / 1024).toFixed(0)
 
             if (!isJPG){
                 this.message("上传图片只支持jpg、jpeg、png或gif格式", "error");
+                return false
+            }else if(!is500K){
+                this.message("不支持上传大小超过10MB的图片，请谅解", "error");
+                return false
             }
             this.$confirm('上传图片大小为' + fileSize + 'K,若超过500K,上传可能花费较长时间,是否继续?', '提示', {
                 confirmButtonText: '继续',
