@@ -15,6 +15,7 @@ class Book(models.Model):
     bookId = models.AutoField(primary_key=True)
     bookName = models.CharField(max_length=64)
     addTime = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
 
     def __unicode__(self):
         return self.bookName

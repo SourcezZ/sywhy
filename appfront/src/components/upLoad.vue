@@ -1,7 +1,7 @@
 <!-- 图片上传组件 -->
 <template>
     <div>
-        <el-upload :before-upload="beforeUpload" :file-list="uploadList" class="upload-demo" ref="upload" action="#" :on-preview="handlePreview" :on-remove="handleRemove" :on-success="showImg" :auto-upload="false">
+        <el-upload :before-upload="beforeUpload" :file-list="uploadList" class="upload-demo" ref="upload" action="#" :on-preview="handlePreview" :on-remove="handleRemove" :on-success="showImg" :auto-upload="true">
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
             <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
         </el-upload>
@@ -38,36 +38,33 @@ export default {
         beforeUpload (file) {
             let isJPG = (file.type == 'image/jpeg' || file.type == 'image/jpg' || file.type == 'image/png' || file.type == 'image/gif')
             let is500K = file.size / 1024 < 500
+            let fileSize = (file.size / 1024).toFixed(0)
 
             if (!isJPG){
                 this.message("上传图片只支持jpg、jpeg、png或gif格式", "error");
-                return false
-            } else if (!is500K){
-                this.$confirm('上传图片大小超过500K,上传可能花费较长时间,是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.message("上传图片大小超过500K，请耐心等待上传成功", "success");
-                }).catch(() => {
-                    this.message("已取消上传", "info");
-                    return false
-                })
             }
-            var thisObj = this
-            let formDatas = new FormData()
-            formDatas.append('file', file)
-            formDatas.append('token', this.getCookie('token'))//token
-            // for (var value of FormDatas.values()) {
-            //     console.log(value);
-            // }
-            this.postData2Server('uploadImg', formDatas, function (res) {
-                if (res.msg == 'success') {
-                    thisObj.message("上传成功", "success");
-                    thisObj.showImg()
-                } else {
-                    thisObj.message("上传失败", "error");
-                }
+            this.$confirm('上传图片大小为' + fileSize + 'K,若超过500K,上传可能花费较长时间,是否继续?', '提示', {
+                confirmButtonText: '继续',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                var thisObj = this
+                let formDatas = new FormData()
+                formDatas.append('file', file)
+                formDatas.append('token', this.getCookie('token'))//token
+                // for (var value of FormDatas.values()) {
+                //     console.log(value);
+                // }
+                this.postData2Server('uploadImg', formDatas, function (res) {
+                    if (res.msg == 'success') {
+                        thisObj.message("上传成功", "success");
+                        thisObj.showImg()
+                    } else {
+                        thisObj.message("上传失败", "error");
+                    }
+                })
+            }).catch(() => {
+                this.message("已取消上传", "info");
             })
             return false
         },

@@ -24,4 +24,6 @@ urlpatterns = [
     url(r'login', login.login),
     url(r'get_username', login.get_username),
     url(r'send_register_email', login.send_register_email),
+
+    url(r'', login.other_request)
 ]
