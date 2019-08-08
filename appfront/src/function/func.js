@@ -75,7 +75,6 @@ exports.install = function (Vue, options) {
         if (!url.includes(':8000')) {
             url = url.substring(0, url.length - 1) + ':8000/'
         }
-        url = url.replace("https","http")
         console.log('req url' + url)
         this.$http.post(url + "api/" + transId, req).then(response => {
             if (response.data.loginStatus != null && response.data.loginStatus != 1 && transId != 'get_username') {
