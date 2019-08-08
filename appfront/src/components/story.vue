@@ -12,7 +12,7 @@
             </el-col>
         </el-row>
         <!-- <div class='box-in-card' v-if="username=='syw'"> -->
-        <div class='box_in_card'>
+        <div class='box_in_card' v-loading="loading">
             <el-card class="box-card" v-for="(i, index) in storyList" :key="i.pk">
                 <!-- <div slot="header" class="clearfix">
                     <span>{{ i.fields.title }}</span>
@@ -45,6 +45,7 @@ export default {
 	props:['loginStatus','username'],
 	data() {
 		return {
+            loading:true,
 			title: "",
 			content: "",
 			commentContent: [],
@@ -59,7 +60,8 @@ export default {
             var thisObj = this
             this.content = ""
 			this.postData2Server('show_storys', {}, function(res){
-				if (res.msg == 'success') {
+                if (res.msg == 'success') {
+                    thisObj.loading = false
 					thisObj.storyList = res["list"];
 				} else {
 					thisObj.message(res.msg, "error")
@@ -130,9 +132,9 @@ export default {
 		}
 	},
 	created: function() {
-		this.show_storys()
-		this.show_comments()
-	}
+        this.show_storys()
+        this.show_comments()
+    }
 }
 </script>
 <style scoped>

@@ -1,5 +1,12 @@
 exports.install = function (Vue, options) {
 
+    Vue.prototype.sleep = function (delay) {
+        var start = (new Date()).getTime();
+        while ((new Date()).getTime() - start < delay) {
+            continue;
+        }
+    }
+
     Vue.prototype.message = function (message, type, duration = 0, showClose = true) {
         this.$message({
             message: message,
@@ -69,6 +76,7 @@ exports.install = function (Vue, options) {
             url = url.substring(0, url.length - 1) + ':8000/'
         }
         this.$http.post(url + "api/" + transId, req).then(response => {
+            console.log('req url' + url + "api/" + transId)
             if (response.data.loginStatus != null && response.data.loginStatus != 1 && transId != 'get_username') {
                 this.$router.push({ name: '跳转登陆', params: { index: '5' } })
                 this.message(response.data.msg, "error")
