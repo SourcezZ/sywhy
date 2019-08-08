@@ -75,9 +75,7 @@ exports.install = function (Vue, options) {
         if (!url.includes(':8000')) {
             url = url.substring(0, url.length - 1) + ':8000/'
         }
-        url = url.replace('https','http')
-        console.log('req url' + url)
-        this.$http.post("api/" + transId, req).then(response => {
+        this.$http.post("67.209.179.205:8000/api/" + transId, req).then(response => {
             if (response.data.loginStatus != null && response.data.loginStatus != 1 && transId != 'get_username') {
                 this.$router.push({ name: '跳转登陆', params: { index: '5' } })
                 this.message(response.data.msg, "error")
