@@ -1,5 +1,5 @@
 <template>
-    <div class="index_main" :style="'height:' + picHeight + 'px'">
+    <div class="index_main" >
         <!-- <Light></Light> -->
         <div class='div1'>
             <div :style="'display:' + musicFlag">
@@ -127,7 +127,7 @@ export default {
 }
 
 .index_main {
-    background-image: url('/static/img/bg/bg1.jpg');
+    /* background-image: url('/static/img/bg/bg1.jpg'); */
     background-repeat:repeat;
     background-size: 50%;
     width: 100%;
