@@ -58,7 +58,6 @@ export default {
 	methods: {
 		show_storys: function(params) {
             var thisObj = this
-            this.content = ""
 			this.postData2Server('show_storys', {}, function(res){
                 if (res.msg == 'success') {
                     thisObj.loading = false
@@ -77,7 +76,8 @@ export default {
 			var req = {
 				'title':this.title,
 				'content':this.content
-			}
+            }
+            this.content = ''
 			var thisObj = this
 			this.postData2Server('add_story', req, function(res){
 				if (res.msg == 'success') {
@@ -100,7 +100,8 @@ export default {
 			var req = {
 				'commentContent' : this.commentContent[commentId],
 				'storyId' : commentId
-			}
+            }
+            this.commentContent = ""
 			var thisObj = this
 			this.postData2Server('add_comment', req, function(res){
 				if (res.msg == 'success') {

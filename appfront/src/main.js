@@ -5,7 +5,7 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
-import func from './function/func' //引用全局函数
+import global_function from './function/global_function' //引用全局函数
 import VueResource from 'vue-resource' //引用vue-resource
 //BMap
 // import "../static/BMap/js/bmap.js"; 
@@ -16,7 +16,7 @@ import * as axios_config from './function/axios_config'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI, { size: 'small', zIndex: 3000 });
-Vue.use(func)
+Vue.use(global_function)
 Vue.use(VueResource)
 Vue.use(axios_config)
 

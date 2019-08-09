@@ -7,7 +7,7 @@ exports.install = function (Vue, options) {
         }
     }
 
-    Vue.prototype.message = function (message, type, duration = 0, showClose = true) {
+    Vue.prototype.message = function (message, type, duration = 5000, showClose = true) {
         this.$message({
             message: message,
             type: type,
@@ -100,7 +100,7 @@ exports.install = function (Vue, options) {
         return url
     }
 
-    Date.prototype.Format = function (fmt) { //author: meizz
+    Date.prototype.Format = function (fmt) { //author: meizz  eg. time = new Date().Format("yyyy-MM-dd hh:mm:ss")
         var o = {
             "M+": this.getMonth() + 1, //月份
             "d+": this.getDate(), //日
@@ -117,7 +117,7 @@ exports.install = function (Vue, options) {
     }
 
     //filter里使用dataFormat
-    Vue.filter('dataFormat', function (value, fmt) {
+    Vue.filter('dataFormat', function (value, fmt) { // eg. {{ updateTime | dataFormat('yyyy-MM-dd hh:mm:ss') }}
         let getDate = new Date(value);
         let o = {
             'M+': getDate.getMonth() + 1,

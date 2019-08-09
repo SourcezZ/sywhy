@@ -48,10 +48,11 @@ export default {
                 this.message('内容不能为空', "error")
 				return
             }
+            let _req = JSON.parse(JSON.stringify(this.req))
+            this.req.bookName = ''
             var thisObj = this
-            this.postData2Server('add_book', this.req, function (res) {
+            this.postData2Server('add_book', _req, function (res) {
                 if (res.msg == 'success') {
-                    this.req.bookName = ''
                     thisObj.show_books()
                 } else {
                     thisObj.message(res['msg'], 'error')
