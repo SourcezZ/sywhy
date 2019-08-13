@@ -2,10 +2,10 @@
 <template>
     <div>
         <el-row>
-            <el-col :span="7">
+            <el-col>
                 <!--span宽度-->
                 <!-- <el-input class='input' v-model="title" placeholder="请输入标题"></el-input> -->
-                <el-input class='input' v-model="content" type="textarea" rows="5" placeholder="请输入你的话"></el-input>
+                <el-input class='wordsInput' v-model="content" type="textarea" rows="5" placeholder="请输入你的话"></el-input>
             </el-col>
             <el-col>
                 <el-button type="primary" v-on:click="add_story">提交</el-button>
@@ -139,8 +139,9 @@ export default {
 }
 </script>
 <style scoped>
-.input {
+.wordsInput {
   margin: 5px 0 5px 0;
+  width: 65%;
   /*上 右 下 左*/
 }
 
