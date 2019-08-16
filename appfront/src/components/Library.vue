@@ -44,9 +44,9 @@ export default {
             })
         },
         add_book: function () {
-            if (this.req.bookName == ''){
+            if (this.req.bookName == '') {
                 this.message('内容不能为空', "error")
-				return
+                return
             }
             let _req = JSON.parse(JSON.stringify(this.req))
             this.req.bookName = ''

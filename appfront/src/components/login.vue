@@ -8,11 +8,11 @@
         <div style="height:50px;"></div>
         <el-form class="loginForm" :rules='loginRule' :model='userForm' ref="userForm" label-width="80px" label-position="left">
             <el-form-item label='用户名' prop='username'>
-                <el-input v-if="chooseLog=='logup'" v-model="userForm.username" :disabled='isDisabled()' onkeyup="value=value.replace(/[^\w]/ig,'')" ></el-input>
+                <el-input v-if="chooseLog=='logup'" v-model="userForm.username" :disabled='isDisabled()' onkeyup="value=value.replace(/[^\w]/ig,'')"></el-input>
                 <el-input v-else v-model="userForm.username" :disabled='isDisabled()'></el-input>
             </el-form-item>
             <el-form-item label='密码' v-if="loginStatus==0" prop='password'>
-                <el-input v-model='userForm.password'  type='password' autocomplete="new-password" @keyup.enter.native='login'></el-input>
+                <el-input v-model='userForm.password' type='password' autocomplete="new-password" @keyup.enter.native='login'></el-input>
             </el-form-item>
             <el-form-item label='邮箱' v-if="loginStatus==0 && chooseLog=='logup'" prop='email'>
                 <el-input v-model='userForm.email'></el-input>

@@ -21,9 +21,9 @@ Vue.use(VueResource)
 Vue.use(axios_config)
 
 new Vue({
-  el: '#app',
-  router,
-  render: h => h(App),
-  components: { App },
-  template: '<App/>',
+    el: '#app',
+    router,
+    render: h => h(App),
+    components: { App },
+    template: '<App/>',
 })

@@ -1,16 +1,16 @@
 <template>
-    <div class="index_main" >
+    <div class="index_main">
         <!-- <Light></Light> -->
         <div class='div1'>
             <div :style="'display:' + musicFlag">
-            <!-- <div> -->
+                <!-- <div> -->
                 <!-- <iframe class="framClass" frameborder="no" border="0" marginwidth="0" marginheight="0" src="http://www.kuwo.cn/my/5651795?autoplay=1"></iframe> -->
                 <audio id='audio' class="framClass2" src="/static/mp3/monsters8.mp3" controls="controls" preload="none">
                     Your browser does not support the audio tag.
                 </audio>
             </div>
-                <!-- <iframe class="framClass" src="/static/mp3/monsters.mp3?autoplay=1"></iframe> -->
-                <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28481189&auto=1&height=66"></iframe> -->
+            <!-- <iframe class="framClass" src="/static/mp3/monsters.mp3?autoplay=1"></iframe> -->
+            <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28481189&auto=1&height=66"></iframe> -->
             <el-menu :default-active="activeIndex" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
                 <el-menu-item index="1">主页</el-menu-item>
                 <el-menu-item index="2">没得用</el-menu-item>
@@ -59,8 +59,8 @@ export default {
             bookList: [],
             username: "",
             loginStatus: 0,
-            picHeight:'',
-            musicFlag:'none',
+            picHeight: '',
+            musicFlag: 'none',
         };
     },
     methods: {
@@ -84,10 +84,10 @@ export default {
         userSignIn: function (username) {
             this.username = username;
         },
-        openMusic(){
+        openMusic () {
             if (this.musicFlag == 'none') {
                 this.musicFlag = ''
-            }else{
+            } else {
                 this.musicFlag = 'none'
             }
         }
@@ -98,9 +98,9 @@ export default {
         }
     },
     mounted: function () {
-        this.picHeight = document.body.scrollHeight + window.screen.height + document.body.scrollHeight ; 
+        this.picHeight = document.body.scrollHeight + window.screen.height + document.body.scrollHeight;
         var thisObj = this
-        if (this.activeIndex != '5'){
+        if (this.activeIndex != '5') {
             this.postData2Server('get_username', {}, function (res) {
                 if (res.msg == 'success') {
                     thisObj.username = res.username
@@ -128,36 +128,35 @@ export default {
 
 .index_main {
     /* background-image: url('/static/img/bg/bg1.jpg'); */
-    background-repeat:repeat;
+    background-repeat: repeat;
     background-size: 50%;
     width: 100%;
 }
 
 .framClass {
-    position: fixed; 
-    bottom: 0px; 
+    position: fixed;
+    bottom: 0px;
     /* display: none; */
     background-color: pink;
-    width:100%;
-    height:200px;
-    z-index:100;
+    width: 100%;
+    height: 200px;
+    z-index: 100;
 }
 
 .framClass2 {
-    position: fixed; 
-    bottom: 0px; 
+    position: fixed;
+    bottom: 0px;
     /* display: none; */
     background-color: pink;
     /* width:100%; */
     /* height:200px; */
-    z-index:100;
-    border-radius:35px;
+    z-index: 100;
+    border-radius: 35px;
 }
 
-.musicButton{
-    position:absolute;
+.musicButton {
+    position: absolute;
     right: 50px;
-    top:150px;
+    top: 150px;
 }
-
 </style>

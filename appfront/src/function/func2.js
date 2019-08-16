@@ -1,11 +1,10 @@
-function sayHello() {
+function sayHello () {
     console.log('hello')
 }
 
-export default{
+export default {
     sayHello,
-    sayHello1 : function(){
+    sayHello1: function () {
         console.log('hello1')
     }
 }
-  

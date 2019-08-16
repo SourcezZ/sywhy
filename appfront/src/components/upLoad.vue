@@ -5,10 +5,7 @@
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
             <!-- <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button> -->
         </el-upload>
-        <div v-loading='loading' 
-        element-loading-text="拼命上传中"
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(255, 0, 0, 0.8)"></div>
+        <div v-loading='loading' element-loading-text="拼命上传中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(255, 0, 0, 0.8)"></div>
         <!-- <div v-for="i in imgList" :key="i.pk">
             <a :href="'/upload/img/' + i.fields.imgUrl">
                 <el-image :src="'/upload/img/' + i.fields.imgUrl"></el-image>
@@ -27,7 +24,7 @@ export default {
     // props:['loginStatus','username'],
     data () {
         return {
-            loading:true,
+            loading: true,
             loginStatus: '',
             actionUrl: "",
             imgList: [],
@@ -45,10 +42,10 @@ export default {
             let is500K = file.size / 1024 < 10000
             let fileSize = (file.size / 1024).toFixed(0)
 
-            if (!isJPG){
+            if (!isJPG) {
                 this.message("上传图片只支持jpg、jpeg、png或gif格式", "error");
                 return false
-            }else if(!is500K){
+            } else if (!is500K) {
                 this.message("不支持上传大小超过10MB的图片，请谅解", "error");
                 return false
             }
@@ -112,20 +109,24 @@ export default {
 }
 </script>
 <style>
-.img_a{
+.img_a {
     position: relative;
     width: 100%;
-    text-decoration:none;
+    text-decoration: none;
 }
 
-.img_a:link {color:#2E84FF;}
-.img_a:visited {color:#2E84FF;}
+.img_a:link {
+    color: #2e84ff;
+}
+.img_a:visited {
+    color: #2e84ff;
+}
 
 .img_class {
     width: 45%;
     margin: 7px 0 25px 8px;
 }
-.time_class{
+.time_class {
     position: absolute;
     top: 110%;
     left: 11%;
