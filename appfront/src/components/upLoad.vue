@@ -5,6 +5,10 @@
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
             <!-- <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button> -->
         </el-upload>
+        <div v-loading='loading' 
+        element-loading-text="拼命上传中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(255, 0, 0, 0.8)"></div>
         <!-- <div v-for="i in imgList" :key="i.pk">
             <a :href="'/upload/img/' + i.fields.imgUrl">
                 <el-image :src="'/upload/img/' + i.fields.imgUrl"></el-image>
@@ -23,6 +27,7 @@ export default {
     // props:['loginStatus','username'],
     data () {
         return {
+            loading:true,
             loginStatus: '',
             actionUrl: "",
             imgList: [],
@@ -59,12 +64,15 @@ export default {
                 // for (var value of FormDatas.values()) {
                 //     console.log(value);
                 // }
+                thisObj.message("上传中,请耐心等待几秒钟哦~", "warning");
+                this.loading = true
                 this.postData2Server('uploadImg', formDatas, function (res) {
+                    thisObj.loading = false
                     if (res.msg == 'success') {
-                        thisObj.message("上传成功", "success");
+                        thisObj.message("上传成功啦", "success");
                         thisObj.showImg()
                     } else {
-                        thisObj.message("上传失败", "error");
+                        thisObj.message("上传失败了QAQ", "error");
                     }
                 })
             }).catch(() => {
