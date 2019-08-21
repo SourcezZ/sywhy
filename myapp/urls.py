@@ -4,6 +4,7 @@ from myapp.view import views
 from myapp.view import story
 from myapp.view import img  # 添加
 from myapp.view import login
+from myapp.view import tuling
 
 urlpatterns = [
     url(r'add_book$', views.add_book, ),
@@ -25,5 +26,7 @@ urlpatterns = [
     url(r'get_username', login.get_username),
     url(r'send_register_email', login.send_register_email),
 
-    url(r'', login.other_request)
+    url(r'chat_with_tuling', tuling.chat_with_tuling),
+
+    url(r'', login.other_request),
 ]

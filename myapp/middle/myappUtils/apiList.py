@@ -5,7 +5,7 @@ NEEDLOGIN2 = [
     'uploadImg',
 ]
 
-NEEDLOGIN = [ ]
+NEEDLOGIN = []
 
 UNNEEDLOGIN = [
     '/',
@@ -19,6 +19,7 @@ UNNEEDLOGIN = [
     'send_register_email',
     'showImgForUs',
     'uploadImgForUs',
+    'chat_with_tuling',
 ]
 
 # ROUTER = [

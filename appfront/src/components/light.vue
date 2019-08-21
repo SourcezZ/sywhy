@@ -1,21 +1,24 @@
 <!-- 走马灯组件 -->
 <template>
     <div style="text-align:center">
-        <div>
-            <el-carousel :interval="4000" type="card" height="100px">
-                <el-carousel-item>
-                    <img class="img" src="../light/1.jpg">
-                </el-carousel-item>
+        <el-carousel :interval="4000" type="card" height="100px">
+            <el-carousel-item>
+                <img class="img" src="../light/1.jpg">
+            </el-carousel-item>
 
-                <el-carousel-item>
-                    <img class="img" src="../light/2.jpg">
-                </el-carousel-item>
+            <el-carousel-item>
+                <img class="img" src="../light/2.jpg">
+            </el-carousel-item>
 
-                <el-carousel-item>
-                    <img class="img" src="../light/3.jpg">
-                </el-carousel-item>
-            </el-carousel>
-        </div>
+            <el-carousel-item>
+                <img class="img" src="../light/3.jpg">
+            </el-carousel-item>
+        </el-carousel>
+        <el-input class="tl_input" v-model="words" placeholder="和我儿子对话"></el-input>
+        <el-button @click="chat_with_tuling">发送</el-button>
+        <el-card class="tl_output">
+            <div>{{ return_words }}</div>
+        </el-card>
     </div>
 </template>
 
@@ -23,14 +26,38 @@
 export default {
     data () {
         return {
+            words: '',
+            return_words: '它还没有说话',
         }
     },
     methods: {
+        chat_with_tuling () {
+            if (this.words == '') {
+                this.message('请输入内容再发送', 'error')
+                return
+            }
+            var req = { 'words': this.words }
+            var thisObj = this
+            this.postData2Server('chat_with_tuling', req, function (res) {
+                if (res.msg == 'success') {
+                    thisObj.return_words = res.return_words
+                }
+            }, true)
+        }
     }
 
 }        
 </script>
 <style scoped>
+.tl_output {
+    width: 50%;
+    position: relative;
+    left: 25%;
+    top: 20px;
+}
+.tl_input {
+    width: 50%;
+}
 .el-carousel__item h3 {
     color: #475669;
     font-size: 14px;

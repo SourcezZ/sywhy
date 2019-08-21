@@ -1,10 +1,10 @@
 function sayHello () {
-    console.log('hello')
+    console.log('hello000')
 }
 
 export default {
-    sayHello,
+    sayHello,//引入上面定义的sayhello
     sayHello1: function () {
-        console.log('hello1')
+        console.log('hello111')
     }
 }

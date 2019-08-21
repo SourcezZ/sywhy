@@ -44,10 +44,9 @@ export default {
     },
     mounted: function () {
         // function(){
-        //     this.hello = this.hello.Format("yyyy-MM-dd hh:mm:ss qq S")
-        //     this.text1()
-        //     func2.sayHello1()
-        //     func2.sayHello()
+        this.hello = this.hello.Format("yyyy-MM-dd hh:mm:ss qq S")
+        func2.sayHello1()
+        func2.sayHello()
         // }
         // this.aa()
         console.log(/nihao/.test('nihao'))

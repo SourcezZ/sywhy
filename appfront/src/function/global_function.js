@@ -66,7 +66,7 @@ exports.install = function (Vue, options) {
             this.message(error, "error")
         }
     }
-    Vue.prototype.postData2Server = function (transId, req, callback) {
+    Vue.prototype.postData2Server = function (transId, req, callback, showError = false) {
         req.token = this.getCookie('token')
         var url = window.location.href
         if (url.includes(':8080')) {
@@ -75,7 +75,9 @@ exports.install = function (Vue, options) {
         if (!url.includes(':8000')) {
             url = url.substring(0, url.length - 1) + ':8000/'
         }
-        console.log('req url :' + url)
+        if (transId == 'get_username') {
+            return
+        }
         this.$http.post(url + "api/" + transId, req).then(response => {
             if (response.data.loginStatus != null && response.data.loginStatus != 1 && transId != 'get_username') {
                 this.$router.push({ name: '跳转登陆', params: { index: '5' } })
@@ -84,8 +86,11 @@ exports.install = function (Vue, options) {
                 this.delCookie('username')
                 return
             }
-            var res = JSON.parse(response.bodyText);
-            callback(res)
+            // var res = JSON.parse(response.bodyText);
+            callback(response.data)
+            if (showError && response.data.msg != 'success') {
+                this.message(response.data.msg, "error")
+            }
         })
     }
 

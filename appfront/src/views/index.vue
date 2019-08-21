@@ -13,7 +13,7 @@
             <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28481189&auto=1&height=66"></iframe> -->
             <el-menu :default-active="activeIndex" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
                 <el-menu-item index="1">主页</el-menu-item>
-                <el-menu-item index="2">没得用</el-menu-item>
+                <el-menu-item index="2">解闷</el-menu-item>
                 <el-menu-item index="3">书籍</el-menu-item>
                 <el-menu-item index="4">图库</el-menu-item>
                 <el-menu-item index="5">登陆</el-menu-item>

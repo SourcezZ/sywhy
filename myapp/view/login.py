@@ -20,6 +20,7 @@ validCode_logger = logging.getLogger("valiCode")
 login_record_logger = logging.getLogger("login_record")
 rubbish_record_logger = logging.getLogger("rubbish")
 
+
 @require_http_methods(["POST"])
 def send_register_email(request, send_type='register'):
     response = {}
@@ -133,9 +134,11 @@ def get_username(request):
             response['msg'] = '登陆信息已失效，请重新登陆'
     return JsonResponse(response)
 
+
 @require_http_methods(["POST"])
 def other_request(request):
     response = {}
     response['msg'] = 'you sb'
-    rubbish_record_logger.info("I'm a rubbish request. " + request._current_scheme_host)
+    rubbish_record_logger.info(
+        "I'm a rubbish request. " + request._current_scheme_host)
     return JsonResponse(response)
