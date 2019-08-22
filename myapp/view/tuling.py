@@ -16,7 +16,7 @@ def chat_with_tuling(request):
             return_words = '对不起啦，我太累了，需要休息~'
         else:
             return_words = res['results'][0]['values']['text']
-            return_words.replace('图灵', '源源')
+            return_words = return_words.replace('图灵', '源源')
         response['return_words'] = return_words
         response['msg'] = 'success'
     except Exception as e:
