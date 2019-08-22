@@ -28,7 +28,7 @@ def chat_with_tuling(word):
     url = 'http://openapi.tuling123.com/openapi/api/v2'
     response = requests.post(url, data=req)
     content = json.loads(response.text)
-    if str(content).find('爸爸'):
+    if content.find('爸爸'):
         content = '当然是源源啦,要叫他一起来玩儿吗?'
     # res = content['results'][0]['values']['text']
     return content
