@@ -21,7 +21,7 @@ def chat_with_tuling(word):
         },
         "userInfo": {
             "apiKey": TULING_API_KEY,
-            "userId": "my_web"
+            "userId": "01"
         }
     }
     req = json.dumps(req)
