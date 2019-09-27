@@ -2,6 +2,9 @@
 import requests
 import json
 from myproject.settings import TULING_API_KEY
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 
 def chat_with_tuling(word):
