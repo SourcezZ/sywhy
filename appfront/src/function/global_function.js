@@ -73,7 +73,7 @@ exports.install = function (Vue, options) {
             url = url.substring(0, url.lastIndexOf(":")) + ':8000/'
         }
         if (!url.includes(':8000')) {
-            url = url.substring(0, url.length - 1) + ':8000/'
+            // url = url.substring(0, url.length - 1) + ':8000/'
         }
         if (transId == 'get_username') {
             return
