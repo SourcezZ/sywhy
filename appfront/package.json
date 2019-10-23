@@ -16,8 +16,11 @@
     "dependencies": {
         "axios": "^0.18.0",
         "element-ui": "^2.8.2",
+        "live2d4vue": "^0.1.0",
         "vue": "^2.5.2",
-        "vue-router": "^3.0.1"
+        "vue-router": "^3.0.1",
+        "webpack-cli": "^3.3.9",
+        "webpack-dev-server": "^2.9.7"
     },
     "devDependencies": {
         "autoprefixer": "^7.1.2",
@@ -35,7 +38,7 @@
         "babel-preset-stage-2": "^6.22.0",
         "babel-register": "^6.22.0",
         "chalk": "^2.0.1",
-        "chromedriver": "^2.27.2",
+        "chromedriver": "^2.46.0",
         "copy-webpack-plugin": "^4.0.1",
         "cross-spawn": "^5.0.1",
         "css-loader": "^0.28.0",
@@ -75,7 +78,6 @@
         "vue-template-compiler": "^2.5.2",
         "webpack": "^3.6.0",
         "webpack-bundle-analyzer": "^3.3.2",
-        "webpack-dev-server": "^3.1.11",
         "webpack-merge": "^4.1.0"
     },
     "engines": {
