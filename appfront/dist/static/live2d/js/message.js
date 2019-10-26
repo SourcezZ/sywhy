@@ -134,4 +134,16 @@ function initLive2d (){
         $('.hide-button').fadeOut(600)
     })
 }
+
+function turnToIndex (){
+    $('.index-button').fadeOut(0).on('click', () => {
+        window.location = window.location.protocol+'//'+window.location.hostname+'/'
+    })
+    $('#landlord').hover(() => {
+        $('.index-button').fadeIn(600)
+    }, () => {
+        $('.index-button').fadeOut(600)
+    })
+}
 initLive2d ();
+turnToIndex ();
