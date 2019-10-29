@@ -178,7 +178,7 @@ function initModel(waifuPath){
     if (waifuPath === undefined) waifuPath = '';
     var modelId = localStorage.getItem('modelId');
     var modelTexturesId = localStorage.getItem('modelTexturesId');
-    
+    let defaultUrl = localStorage.getItem('url')
     if (modelId == null || modelId == 'undefined') {
         
         /* 首次访问加载 指定模型 的 指定材质 */
@@ -186,7 +186,7 @@ function initModel(waifuPath){
         var modelId = 1;            // 模型 ID
         var modelTexturesId = 1    // 材质 ID
         
-    } loadModel(modelId, modelTexturesId);
+    } loadModel(modelId, modelTexturesId, defaultUrl);
 	
 	$.ajax({
         cache: true,
@@ -242,7 +242,7 @@ function sendGetRequest(api, param, callback) {
     })
 }
 
-function loadModel(modelId, modelTexturesId){
+function loadModel(modelId, modelTexturesId, defaultUrl){
     localStorage.setItem('modelId', modelId);
     if (modelTexturesId === undefined) modelTexturesId = 0;
     let param = {
@@ -250,6 +250,9 @@ function loadModel(modelId, modelTexturesId){
         modelTexturesId : modelTexturesId,
         isRandom : 0
     };
+    if (defaultUrl != null && defaultUrl != 'undefined') {
+        param.defaultUrl = defaultUrl   
+    }
     this.sendGetRequest("utilView_getLive2d", param, function (res) {
         let url = res.url;
         localStorage.setItem('modelId', res.modelId)
@@ -272,7 +275,7 @@ function loadRandClothes(){
         showMessage('没衣服换了', 3000, true);
         return
     }
-
+    
     this.sendGetRequest("utilView_getRandJson", param, function (res) {
         url = res.url;
         modelId = res.modelId;

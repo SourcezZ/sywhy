@@ -72,6 +72,11 @@ def getTextures(path):
 def getLive2d(request):
     response = {}
     data = request.GET
+    defaultUrl = None
+    try:
+        defaultUrl = data.getlist('defaultUrl')[0]
+    except:
+        print('no defaultUrl')
 
     model_list = getModelList('appfront/static/live2d_2/live2d_api/model/')
     isRandom = int(data.getlist('isRandom')[0])
@@ -89,6 +94,8 @@ def getLive2d(request):
     url ='./static/live2d_2/live2d_api/model/' + modelIdUrl + '/' + modelTexturesIdUrl + '/index.json'
 
     response['url'] = url
+    if defaultUrl != None:
+        response['url'] = defaultUrl
     response['modelId'] = modelId
     response['modelTexturesId'] = modelTexturesId
 
