@@ -28,7 +28,8 @@ urlpatterns = [
     url(r'send_register_email', login.send_register_email),
 
     url(r'chat_with_tuling', tuling.chat_with_tuling),
-    url(r'utilView_getlive2d', utilView.getlive2d),
+    url(r'utilView_getLive2d', utilView.getLive2d),
+    url(r'utilView_getRandJson', utilView.getRandJson),
 
     url(r'', login.other_request),
 ]

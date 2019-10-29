@@ -44,7 +44,7 @@ $('.waifu-tool .fui-chat').click(function (){
 });
 
 $('.waifu-tool .fui-user').click(function (){
-    loadRandModel();
+    loadRandClothes();
 });
 
 $('.waifu-tool .fui-info-circle').click(function (){
@@ -179,7 +179,7 @@ function initModel(waifuPath){
     var modelId = localStorage.getItem('modelId');
     var modelTexturesId = localStorage.getItem('modelTexturesId');
     
-    if (modelId == null) {
+    if (modelId == null || modelId == 'undefined') {
         
         /* 首次访问加载 指定模型 的 指定材质 */
         
@@ -226,15 +226,15 @@ function initModel(waifuPath){
     });
 }
 
-function sendGetRequest(param, callback) {
-    var url = window.location.href
+function sendGetRequest(api, param, callback) {
+    var url = window.location.href;
     if (url.includes(':8080')) {
         url = url.substring(0, url.lastIndexOf(":")) + ':8000/'
     }
     $.ajax({
         type: "GET",
         data: param,
-        url: url + "api/utilView_getlive2d",
+        url: url + "api/" + api,
         dataType: "json",
         success: function(data){
             callback(data)
@@ -245,14 +245,15 @@ function sendGetRequest(param, callback) {
 function loadModel(modelId, modelTexturesId){
     localStorage.setItem('modelId', modelId);
     if (modelTexturesId === undefined) modelTexturesId = 0;
-    localStorage.setItem('modelTexturesId', modelTexturesId);
     let param = {
         modelId : modelId,
         modelTexturesId : modelTexturesId,
         isRandom : 0
-    }
-    this.sendGetRequest(param, function (res) {
-        let url = res.url
+    };
+    this.sendGetRequest("utilView_getLive2d", param, function (res) {
+        let url = res.url;
+        localStorage.setItem('modelId', res.modelId)
+        localStorage.setItem('modelTexturesId', res.modelTexturesId)
         loadlive2d('live2d', url, console.log('live2d','模型 '+modelId+'-'+modelTexturesId+' 加载完成'));
     })
     // loadlive2d('live2d', './static/live2d_2/live2d_api/model/bilibili-live/22/index.json', console.log('live2d','模型 '+modelId+'-'+modelTexturesId+' 加载完成'));
@@ -260,44 +261,42 @@ function loadModel(modelId, modelTexturesId){
     // loadlive2d('live2d', 'https://api.fghrsh.net/live2d/get/?id='+modelId+'-'+modelTexturesId, console.log('live2d','模型 '+modelId+'-'+modelTexturesId+' 加载完成'));
 }
 
-function loadRandModel(){
+function loadRandClothes(){
+    let clothesPath = localStorage.getItem('clothesPath');
     let param = {
-        isRandom : 1
+        modelId : localStorage.getItem('modelId'),
+        modelTexturesId : localStorage.getItem('modelTexturesId'),
     }
-    this.sendGetRequest(param, function (res) {
-        url = res.url
-        loadlive2d('live2d', url);
-    })
 
-    // $.ajax({
-    //     cache: false,
-    //     url: './static/live2d_2/live2d_api/'+modelTexturesRandMode+'_textures/?id='+modelId+'-'+modelTexturesId,
-    //     // url: 'https://api.fghrsh.net/live2d/'+modelTexturesRandMode+'_textures/?id='+modelId+'-'+modelTexturesId,
-    //     dataType: "json",
-    //     success: function (result){
-    //         if (result.textures['id'] == 1 && (modelTexturesId == 1 || modelTexturesId == 0)) {
-    //             showMessage('我还没有其他衣服呢', 3000, true);
-    //         } else {
-    //             showMessage('我的新衣服好看嘛', 3000, true);
-    //         }
-    //         loadModel(modelId, result.textures['id']);
-    //     }
-    // });
+    if (param.modelId == 1 || param.modelId == 2 || param.modelId == 4) {
+        showMessage('没衣服换了', 3000, true);
+        return
+    }
+
+    this.sendGetRequest("utilView_getRandJson", param, function (res) {
+        url = res.url;
+        modelId = res.modelId;
+        modelTexturesId = res.modelTexturesId;
+        localStorage.setItem('modelId', modelId);
+        localStorage.setItem('modelTexturesId', modelTexturesId);
+        localStorage.setItem('url', url);
+        loadlive2d('live2d', url, console.log('live2d','模型 '+modelId+'-'+modelTexturesId+' 加载完成'));
+        showMessage('我的新衣服好看嘛', 3000, true);
+    })
 }
 
 function loadOtherModel(){
-    var modelId = localStorage.getItem('modelId');
-    
-    var modelTexturesRandMode = 'switch';     // 可选 'rand'(随机), 'switch'(顺序)
-    
-    $.ajax({
-        cache: false,
-        url: './static/live2d_2/live2d_api/'+modelTexturesRandMode+'/?id='+modelId,
-        // url: 'https://api.fghrsh.net/live2d/'+modelTexturesRandMode+'/?id='+modelId,
-        dataType: "json",
-        success: function (result){
-            loadModel(result.model['id']);
-            showMessage(result.model['message'], 3000, true);
-        }
-    });
+    let param = {
+        isRandom : 1
+    };
+    this.sendGetRequest("utilView_getLive2d", param, function (res) {
+        let url = res.url;
+        let modelId = res.modelId;
+        let modelTexturesId = res.modelTexturesId;
+        localStorage.setItem('modelId', modelId)
+        localStorage.setItem('modelTexturesId', modelTexturesId)
+        localStorage.setItem('url', res.url)
+        loadlive2d('live2d', url, console.log('live2d','模型 '+modelId+'-'+modelTexturesId+' 加载完成'));
+        showMessage('我好看嘛', 3000, true);
+    })
 }

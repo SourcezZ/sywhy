@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 import myapp.urls
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(myapp.urls)),
