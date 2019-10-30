@@ -5,8 +5,12 @@
             "text": ["想要去评论些什么吗？"]
         },
         {
-            "selector": "#landlord > div.index-button",
-            "text": ["点击前往首页哦~"]
+            "selector": ".fui-eye",
+            "text": ["要切换看板娘吗？"]
+        },
+        {
+            "selector": ".fui-user",
+            "text": ["喜欢看换装PLAY吗？"]
         },
         {
             "selector": ".container a[href^='http']",

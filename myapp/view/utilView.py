@@ -1,129 +1,103 @@
 # -- coding: utf-8 --
 from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
-import json
 import os
 import collections
-from random import randrange, choice
+import random
 import re
 
-def getModelList(path):
+
+def get_model_list(path: str) -> list:
     queue = collections.deque()
     queue.append(path)
-    model_list = [] #总list
-    modeMap = {} #存放对应包名与子包名的map
-    modelList = [] #存放modelId包名的list
+    model_list = []  # 总list
+    mode_map = {}  # 存放对应包名与子包名的map
+    model_id_list = []  # 存放modelId包名的list
     while len(queue) != 0:
-        dirpath = queue.popleft()
-        filelist = os.listdir(dirpath)
-        for listname in filelist:
-            fileabspath = os.path.join(dirpath, listname)
-            if os.path.isdir(fileabspath):
+        dir_path = queue.popleft()
+        file_list = os.listdir(dir_path)
+        for list_name in file_list:
+            file_abspath = os.path.join(dir_path, list_name)
+            if os.path.isdir(file_abspath):
                 # print("目录："+listname)
-                queue.append(fileabspath)
+                queue.append(file_abspath)
             else:
-                if fileabspath.find('index.json') != -1 :
-                    url = './' + fileabspath.replace('appfront/','')
-                    urlSplit = re.split(r".*/model/", url)[1].split('\\')
-                    modelIdUrl = urlSplit[0]
-                    modelTexturesIdUrl = urlSplit[1]
-                    modelList.append(modelIdUrl) if modelIdUrl not in modelList else ''
-                    modeMap[modelIdUrl] = [] if modelIdUrl not in modeMap else modeMap[modelIdUrl]
-                    modeMap[modelIdUrl].append(modelTexturesIdUrl)
+                if file_abspath.find('index.json') != -1:
+                    url = './' + file_abspath.replace('appfront/', '')
+                    url_split = re.split(r".*/model/", url)[1].split('\\')
+                    model_id_url = url_split[0]
+                    model_textures_id_url = url_split[1]
+                    model_id_list.append(model_id_url) if model_id_url not in model_id_list else ''
+                    mode_map[model_id_url] = [] if model_id_url not in mode_map else mode_map[model_id_url]
+                    mode_map[model_id_url].append(model_textures_id_url)
                     # print("普通文件"+fileabspath)
-    model_list.append(modelList)
-    model_list.append(modeMap)
+    model_list.append(model_id_list)
+    model_list.append(mode_map)
     return model_list
 
-def getTextures(path):
-    queue = collections.deque()
-    queue.append(path)
-    model_list = [] #总list
-    modeMap = {} #存放对应包名与子包名的map
-    modelList = [] #存放modelId包名的list
-    while len(queue) != 0:
-        dirpath = queue.popleft()
-        filelist = os.listdir(dirpath)
-        for listname in filelist:
-            fileabspath = os.path.join(dirpath, listname)
-            if os.path.isdir(fileabspath):
-                # print("目录："+listname)
-                queue.append(fileabspath)
-            else:
-                if fileabspath.find('index.json') != -1 :
-                    url = './' + fileabspath.replace('appfront/','')
-                    urlSplit = re.split(r".*/model/", url)[1].split('\\')
-                    modelIdUrl = urlSplit[0]
-                    modelTexturesIdUrl = urlSplit[1]
-                    modelList.append(modelIdUrl) if modelIdUrl not in modelList else ''
-                    modeMap[modelIdUrl] = [] if modelIdUrl not in modeMap else modeMap[modelIdUrl]
-                    modeMap[modelIdUrl].append(modelTexturesIdUrl)
-                    # print("普通文件"+fileabspath)
-    model_list.append(modelList)
-    model_list.append(modeMap)
-    return model_list
-
-# a = 'E:\\Source\\Documents\\VS Code\\OnlyForPractice\\appfront\\static\\live2d_2\\live2d_api\\model\\bilibili-live\\22\\index.json'
-# print(a.find('index.json'))
-
-# getModelList("E:\Source\Documents\VS Code\OnlyForPractice\\appfront\static\live2d_2\live2d_api\model")
 
 @require_http_methods(["GET"])
-def getLive2d(request):
+def get_live2d(request):
     response = {}
     data = request.GET
-    defaultUrl = None
+    default_url = None
     try:
-        defaultUrl = data.getlist('defaultUrl')[0]
-    except:
-        print('no defaultUrl')
+        default_url = data.getlist('defaultUrl')[0]
+    except Exception as e:
+        print(f'no defaultUrl:{e}')
 
-    model_list = getModelList('appfront/static/live2d_2/live2d_api/model/')
-    isRandom = int(data.getlist('isRandom')[0])
+    model_list = get_model_list('appfront/static/live2d_2/live2d_api/model/')
+    is_random = int(data.getlist('isRandom')[0])
 
-    if isRandom == 1:
-        modelId = randrange(0,len(model_list[0]))
-        modelTexturesId = randrange(0,len(model_list[1][model_list[0][modelId]]))
+    if is_random == 1:
+        model_id = random.randrange(0, len(model_list[0]))
+        model_textures_id = random.randrange(0, len(model_list[1][model_list[0][model_id]]))
     else:
-        modelId = int(data.getlist('modelId')[0])
-        modelTexturesId = int(data.getlist('modelTexturesId')[0])
+        model_id = int(data.getlist('modelId')[0])
+        model_textures_id = int(data.getlist('modelTexturesId')[0])
 
-    modelIdUrl = model_list[0][modelId]
-    modelTexturesIdUrl = model_list[1][modelIdUrl][modelTexturesId]
+    model_id_url = model_list[0][model_id]
+    model_textures_id_url = model_list[1][model_id_url][model_textures_id]
 
-    url ='./static/live2d_2/live2d_api/model/' + modelIdUrl + '/' + modelTexturesIdUrl + '/index.json'
+    url = './static/live2d_2/live2d_api/model/' + model_id_url + '/' + model_textures_id_url + '/index.json'
 
     response['url'] = url
-    if defaultUrl != None:
-        response['url'] = defaultUrl
-    response['modelId'] = modelId
-    response['modelTexturesId'] = modelTexturesId
+    if default_url is not None:
+        response['url'] = default_url
+    response['modelId'] = model_id
+    response['modelTexturesId'] = model_textures_id
 
     return JsonResponse(response)
 
+
 @require_http_methods(["GET"])
-def getRandJson(request):
+def get_rand_json(request):
     response = {}
     data = request.GET
 
     try:
-        modelId = int(data.getlist('modelId')[0])
-        modelTexturesId = int(data.getlist('modelTexturesId')[0])
-    except:
-        modelId = 0
-        modelTexturesId = 0
-    model_list = getModelList('appfront/static/live2d_2/live2d_api/model/')
+        model_id = int(data.getlist('modelId')[0])
+        model_textures_id = int(data.getlist('modelTexturesId')[0])
+    except Exception as e:
+        print(f'no model_id and model_textures_id:{e}')
+        model_id = 0
+        model_textures_id = 0
+    model_list = get_model_list('appfront/static/live2d_2/live2d_api/model/')
 
-    modelIdUrl = model_list[0][modelId]
-    modelTexturesIdUrl = model_list[1][modelIdUrl][modelTexturesId]
+    model_id_url = model_list[0][model_id]
+    model_textures_id_url = model_list[1][model_id_url][model_textures_id]
 
-    randomUrl = f'appfront/static/live2d_2/live2d_api/model/{modelIdUrl}/{modelTexturesIdUrl}/randomJson/'
-    randomList = os.listdir(randomUrl)
-    randomJson = choice(randomList)
-
-    url = randomUrl.replace('appfront', '.') + randomJson
+    if model_id == 1 or model_id == 4:
+        # modeId为1 或者4时，用包里的其他模型
+        rand_model_textures_id_url = random.choice(model_list[1][model_id_url])
+        url = f'./static/live2d_2/live2d_api/model/{model_id_url}/{rand_model_textures_id_url}/index.json'
+    else:
+        random_url = f'appfront/static/live2d_2/live2d_api/model/{model_id_url}/{model_textures_id_url}/randomJson/'
+        random_list = os.listdir(random_url)
+        random_json = random.choice(random_list)
+        url = random_url.replace('appfront', '.') + random_json
 
     response['url'] = url
-    response['modelId'] = modelId
-    response['modelTexturesId'] = modelTexturesId
+    response['modelId'] = model_id
+    response['modelTexturesId'] = model_textures_id
     return JsonResponse(response)

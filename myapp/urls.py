@@ -1,5 +1,5 @@
 # -- coding: utf-8 --
-from django.conf.urls import url, include
+from django.conf.urls import url
 from myapp.view import views
 from myapp.view import story
 from myapp.view import img  # 添加
@@ -28,8 +28,8 @@ urlpatterns = [
     url(r'send_register_email', login.send_register_email),
 
     url(r'chat_with_tuling', tuling.chat_with_tuling),
-    url(r'utilView_getLive2d', utilView.getLive2d),
-    url(r'utilView_getRandJson', utilView.getRandJson),
+    url(r'utilView_getLive2d', utilView.get_live2d),
+    url(r'utilView_getRandJson', utilView.get_rand_json),
 
     url(r'', login.other_request),
 ]

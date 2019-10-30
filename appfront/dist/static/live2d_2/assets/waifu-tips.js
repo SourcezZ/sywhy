@@ -271,7 +271,7 @@ function loadRandClothes(){
         modelTexturesId : localStorage.getItem('modelTexturesId'),
     }
 
-    if (param.modelId == 1 || param.modelId == 2 || param.modelId == 4) {
+    if (param.modelId == 2) { //1,4
         showMessage('没衣服换了', 3000, true);
         return
     }
@@ -288,7 +288,15 @@ function loadRandClothes(){
     })
 }
 
+
 function loadOtherModel(){
+    let messagesList = [
+        ["来自 Bilibili Live 的 22 哦 ~","来自 Bilibili Live 的 33 的说"],
+        "Nep! Nep! 超次元游戏：海王星 系列",
+        "艦隊これくしょん / 叢雲(むらくも)",
+        ["来自 Potion Maker 的 Pio 酱 ~","来自 Potion Maker 的 Tia 酱 ~"],
+        "Shizuku Talk ！这里是 Shizuku ~"
+    ]
     let param = {
         isRandom : 1
     };
@@ -300,6 +308,12 @@ function loadOtherModel(){
         localStorage.setItem('modelTexturesId', modelTexturesId)
         localStorage.setItem('url', res.url)
         loadlive2d('live2d', url, console.log('live2d','模型 '+modelId+'-'+modelTexturesId+' 加载完成'));
-        showMessage('我好看嘛', 3000, true);
+        let message = modelId == 0 || modelId == 3 ? messagesList[modelId][modelTexturesId] : messagesList[modelId]
+        console.log('modelId:' + modelId)
+        console.log('modelTexturesId:' + modelTexturesId)
+        console.log('message:' + message)
+        showMessage(message, 3000, true);
     })
 }
+
+
