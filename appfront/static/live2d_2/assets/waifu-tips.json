@@ -13,6 +13,10 @@
             "text": ["喜欢看换装PLAY吗？"]
         },
         {
+            "selector": ".fui-photo",
+            "text": ["想要合影吗？"]
+        },
+        {
             "selector": ".container a[href^='http']",
             "text": ["要看看 <span style=\"color:#0099cc;\">{text}</span> 么？"]
         },
