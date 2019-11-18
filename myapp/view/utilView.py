@@ -7,7 +7,7 @@ import random
 import re
 
 
-def get_model_list(path: str) -> list:
+def get_model_list(path):
     queue = collections.deque()
     queue.append(path)
     model_list = []  # 总list
