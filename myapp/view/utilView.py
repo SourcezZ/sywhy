@@ -37,7 +37,6 @@ def get_model_list(path):
     model_list.append(model_id_list_diy)
     # model_list.append(model_id_list)
     model_list.append(mode_map)
-    model_list[0].sort(reverse=True)
     return model_list
 
 
