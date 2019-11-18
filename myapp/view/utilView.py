@@ -24,9 +24,11 @@ def get_model_list(path):
             else:
                 if file_abspath.find('index.json') != -1:
                     url = './' + file_abspath.replace('appfront/', '')
-                    url_split = re.split(r".*/model/", url)[1].split('\\')
-                    model_id_url = url_split[0]
-                    model_textures_id_url = url_split[1]
+                    url = url.replace('\\', '/')
+                    url_split = re.split(r".*/model/", url)[1]
+                    url_split_split = url_split.split('/')
+                    model_id_url = url_split_split[0]
+                    model_textures_id_url = url_split_split[1]
                     model_id_list.append(model_id_url) if model_id_url not in model_id_list else ''
                     mode_map[model_id_url] = [] if model_id_url not in mode_map else mode_map[model_id_url]
                     mode_map[model_id_url].append(model_textures_id_url)
