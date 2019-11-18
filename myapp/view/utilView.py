@@ -79,7 +79,7 @@ def get_rand_json(request):
         model_id = int(data.getlist('modelId')[0])
         model_textures_id = int(data.getlist('modelTexturesId')[0])
     except Exception as e:
-        print(f'no model_id and model_textures_id:{e}')
+        print('no model_id and model_textures_id:' + str(e))
         model_id = 0
         model_textures_id = 0
     model_list = get_model_list('appfront/static/live2d_2/live2d_api/model/')
