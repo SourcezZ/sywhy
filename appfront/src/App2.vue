@@ -22,7 +22,6 @@
         </div>
         <br>
         <span>Checked names: {{ checkedNames }}</span>
-        <!-- <todo-item></todo-item> -->
         <h1 v-for="(item,index) in items">
             <ul>
                 <li v-text="item.label" v-on:click='finish(item)' v-bind:class="{Finished:item.isFinished}" v-bind:title="FinishedMsg"></li>

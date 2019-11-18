@@ -47,7 +47,7 @@ def get_live2d(request):
     data = request.GET
     default_url = None
     try:
-        default_url = data.getlist('defaultUrl')[0]
+        default_url = data.getlist('url')[0]
     except Exception as e:
         print('no defaultUrl:' + str(e))
 
