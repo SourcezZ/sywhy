@@ -44,7 +44,7 @@ def get_live2d(request):
     try:
         default_url = data.getlist('defaultUrl')[0]
     except Exception as e:
-        print(f'no defaultUrl:{e}')
+        print('no defaultUrl:' + str(e))
 
     model_list = get_model_list('appfront/static/live2d_2/live2d_api/model/')
     is_random = int(data.getlist('isRandom')[0])
@@ -90,9 +90,9 @@ def get_rand_json(request):
     if model_id == 1 or model_id == 4:
         # modeId为1 或者4时，用包里的其他模型
         rand_model_textures_id_url = random.choice(model_list[1][model_id_url])
-        url = f'./static/live2d_2/live2d_api/model/{model_id_url}/{rand_model_textures_id_url}/index.json'
+        url = './static/live2d_2/live2d_api/model/' + model_id_url + '/' + rand_model_textures_id_url + '/index.json'
     else:
-        random_url = f'appfront/static/live2d_2/live2d_api/model/{model_id_url}/{model_textures_id_url}/randomJson/'
+        random_url = 'appfront/static/live2d_2/live2d_api/model/' + model_id_url + '/' + model_textures_id_url + '/randomJson/'
         random_list = os.listdir(random_url)
         random_json = random.choice(random_list)
         url = random_url.replace('appfront', '.') + random_json
