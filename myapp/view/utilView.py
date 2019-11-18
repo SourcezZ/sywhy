@@ -51,12 +51,17 @@ def get_live2d(request):
     model_list = get_model_list('appfront/static/live2d_2/live2d_api/model/')
     is_random = int(data.getlist('isRandom')[0])
 
-    if is_random == 1:
-        model_id = random.randrange(0, len(model_list[0]))
-        model_textures_id = random.randrange(0, len(model_list[1][model_list[0][model_id]]))
-    else:
-        model_id = int(data.getlist('modelId')[0])
-        model_textures_id = int(data.getlist('modelTexturesId')[0])
+    try:
+        if is_random == 1:
+            model_id = random.randrange(0, len(model_list[0]))
+            model_textures_id = random.randrange(0, len(model_list[1][model_list[0][model_id]]))
+        else:
+            model_id = int(data.getlist('modelId')[0])
+            model_textures_id = int(data.getlist('modelTexturesId')[0])
+    except Exception as e:
+        print('catch exception:' + str(e))
+        model_id = 0
+        model_textures_id = 0
 
     model_id_url = model_list[0][model_id]
     model_textures_id_url = model_list[1][model_id_url][model_textures_id]
