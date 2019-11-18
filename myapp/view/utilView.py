@@ -33,8 +33,11 @@ def get_model_list(path):
                     mode_map[model_id_url] = [] if model_id_url not in mode_map else mode_map[model_id_url]
                     mode_map[model_id_url].append(model_textures_id_url)
                     # print("普通文件"+fileabspath)
-    model_list.append(model_id_list)
+    model_id_list_diy = ['bilibili-live', 'HyperdimensionNeptunia', 'KantaiCollection', 'Potion-Maker', 'ShizukuTalk']
+    model_list.append(model_id_list_diy)
+    # model_list.append(model_id_list)
     model_list.append(mode_map)
+    model_list[0].sort(reverse=True)
     return model_list
 
 
