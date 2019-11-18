@@ -99,10 +99,16 @@ def get_rand_json(request):
         rand_model_textures_id_url = random.choice(model_list[1][model_id_url])
         url = './static/live2d_2/live2d_api/model/' + model_id_url + '/' + rand_model_textures_id_url + '/index.json'
     else:
-        random_url = 'appfront/static/live2d_2/live2d_api/model/' + model_id_url + '/' + model_textures_id_url + '/randomJson/'
-        random_list = os.listdir(random_url)
-        random_json = random.choice(random_list)
-        url = random_url.replace('appfront', '.') + random_json
+        try:
+            random_url = 'appfront/static/live2d_2/live2d_api/model/' + model_id_url + '/' + model_textures_id_url + '/randomJson/'
+            random_list = os.listdir(random_url)
+            random_json = random.choice(random_list)
+            url = random_url.replace('appfront', '.') + random_json
+        except Exception as e:
+            print('no dir:' + str(e))
+            # modeId为1 或者4时，用包里的其他模型
+            rand_model_textures_id_url = random.choice(model_list[1][model_id_url])
+            url = './static/live2d_2/live2d_api/model/' + model_id_url + '/' + rand_model_textures_id_url + '/index.json'
 
     response['url'] = url
     response['modelId'] = model_id
