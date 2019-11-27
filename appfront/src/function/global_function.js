@@ -1,5 +1,24 @@
 exports.install = function (Vue, options) {
 
+    //带T时间字符串转换为yyyy-MM-DD hh:mm:ss
+    Vue.prototype.formatDateTimeHasT = function (date) {
+        let time = new Date(Date.parse(date));
+        // time.setTime(time.setHours(time.getHours() + 8));
+
+        let Y = time.getFullYear() + '-';
+        let M = this.addZero(time.getMonth() + 1) + '-';
+        let D = this.addZero(time.getDate()) + ' ';
+        let h = this.addZero(time.getHours()) + ':';
+        let m = this.addZero(time.getMinutes()) + ':';
+        let s = this.addZero(time.getSeconds());
+        return Y + M + D + h + m + s;
+    }
+
+    // 数字补0操作
+    Vue.prototype.addZero = function(num) {
+        return num < 10 ? '0' + num : num;
+    }
+
     Vue.prototype.sleep = function (delay) {
         var start = (new Date()).getTime();
         while ((new Date()).getTime() - start < delay) {
