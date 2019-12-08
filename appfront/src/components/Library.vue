@@ -3,7 +3,8 @@
     <div class="home">
         <el-row class="inputBook">
             <el-col :span="7">
-                <el-input v-model="req.bookName" placeholder="请输入书名"></el-input>
+                <el-input v-model="req.bookName" placeholder="请输入歌曲名"></el-input>
+                <span class="inputSpan">注: 在这里写上你喜欢的歌曲，我会尽快为你添加到曲库~</span>
             </el-col>
             <span style="width:20px"></span>
             <el-button type="primary" v-on:click="add_book">新增</el-button>
@@ -12,7 +13,7 @@
             <el-table :data="bookList" style="width:100%" border>
                 <el-table-column prop="pk" label="编号" min-width="100">
                 </el-table-column>
-                <el-table-column prop="fields.bookName" label="书名" min-width="100">
+                <el-table-column prop="fields.bookName" label="歌曲名" min-width="100">
                 </el-table-column>
                 <el-table-column label="添加时间" min-width="100">
                     <template slot-scope="scope">{{ scope.row.fields.addTime | dataFormat('yyyy-MM-dd hh:mm:ss') }}</template>
@@ -76,5 +77,9 @@ export default {
 
 .el-col {
     border-radius: 20px;
+}
+.inputSpan {
+    font-size: 10px;
+    color: #909399;
 }
 </style>

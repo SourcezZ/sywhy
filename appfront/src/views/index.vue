@@ -1,12 +1,13 @@
 <template>
     <div class="index_main">
         <div class='div1'>
-            <el-menu :default-active="activeIndex" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
+            <el-menu :default-active="activeIndex" @select="handleSelect" background-color="#545c64" text-color="#fff"
+                     active-text-color="#ffd04b" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
                 <el-menu-item index="1">主页</el-menu-item>
                 <el-menu-item index="2">解闷</el-menu-item>
-                <el-menu-item index="3">书籍</el-menu-item>
+                <el-menu-item index="3">曲库</el-menu-item>
                 <el-menu-item index="4">图库</el-menu-item>
-                <el-menu-item index="5">登陆</el-menu-item>
+                <!--                <el-menu-item index="5">登陆</el-menu-item>-->
                 <!-- <el-menu-item index="6" v-if="username == '宋雨蔚'">You know me</el-menu-item> -->
                 <!-- <el-menu-item index="7">You know me</el-menu-item> -->
             </el-menu>
@@ -14,7 +15,16 @@
         </div>
         <div class='login'>
             <el-tag type="success" v-if="loginStatus==1">hello，{{this.username}}</el-tag>
-            <el-tag type="success" v-else>未登录</el-tag>
+            <!--            <el-tag type="success" v-else>未登录</el-tag>-->
+<!--            <el-tag type="success" v-else>~</el-tag>-->
+            <el-button class="announcement_button" type="text" @click="dialogVisible = true">公告</el-button>
+            <el-dialog class="announcement" title="公告" :visible.sync="dialogVisible" width="30%">
+                <div>网站不定期更新，欢迎留下您宝贵的意见与建议。</div>
+                <div>天气转凉，注意保暖~</div>
+                <span slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                </span>
+            </el-dialog>
         </div>
         <div>
             <Story v-if='activeIndex==1' :loginStatus='loginStatus' :username='username'></Story>
@@ -29,115 +39,130 @@
 </template>
 
 <script>
-document.body.style.margin = 0;
-import Library from "../components/Library";
-import Story from "../components/story";
-import Light from "../components/light";
-import Picture from "../components/upLoad";
-import Login from "../components/login";
-import Store from "../store";
-import ZY from "../components/zy";
-import TOGETHER from "../components/together";
-export default {
-    components: { Library, Light, Story, Picture, Login, ZY, TOGETHER },
+    document.body.style.margin = 0;
+    import Library from "../components/Library";
+    import Story from "../components/story";
+    import Light from "../components/light";
+    import Picture from "../components/upLoad";
+    import Login from "../components/login";
+    import Store from "../store";
+    import ZY from "../components/zy";
+    import TOGETHER from "../components/together";
 
-    data () {
-        return {
-            user: {},
-            activeIndex: this.$route.params.index || '1',
-            bookList: [],
-            username: "",
-            loginStatus: 0,
-            picHeight: '',
-        };
-    },
-    methods: {
-        changeeee () {
-            debugger
-            this.activeIndex = this.$route.params.index
+    export default {
+        components: {Library, Light, Story, Picture, Login, ZY, TOGETHER},
 
-            this.$router.push({ name: '首页', params: { index: '5' } })
-            // this.$router.push({path:'/', query: {index: '5'}})
+        data() {
+            return {
+                dialogVisible: false,//dialog
+                user: {},
+                activeIndex: this.$route.params.index || '1',
+                bookList: [],
+                username: "",
+                loginStatus: 0,
+                picHeight: '',
+            };
         },
-        handleSelect (key, keyPath) {
-            this.activeIndex = key
+        methods: {
+            changeeee() {
+                debugger
+                this.activeIndex = this.$route.params.index
+
+                this.$router.push({name: '首页', params: {index: '5'}})
+                // this.$router.push({path:'/', query: {index: '5'}})
+            },
+            handleSelect(key, keyPath) {
+                this.activeIndex = key
+            },
+            getloginStatus() {
+                if (this.username != "" && this.username != null) {
+                    this.loginStatus = 1;//已登录
+                } else {
+                    this.loginStatus = 0;//未登录
+                }
+            },
+            userSignIn: function (username) {
+                this.username = username;
+            },
         },
-        getloginStatus () {
-            if (this.username != "" && this.username != null) {
-                this.loginStatus = 1;//已登录
-            } else {
-                this.loginStatus = 0;//未登录
+        watch: {
+            username: function () {
+                this.getloginStatus();
             }
         },
-        userSignIn: function (username) {
-            this.username = username;
-        },
-    },
-    watch: {
-        username: function () {
-            this.getloginStatus();
+        mounted: function () {
+            this.picHeight = document.body.scrollHeight + window.screen.height + document.body.scrollHeight;
+            var thisObj = this
+            if (this.activeIndex != '5') {
+                this.postData2Server('get_username', {}, function (res) {
+                    if (res.msg == 'success') {
+                        thisObj.username = res.username
+                    }
+                })
+            }
+            // var audio = document.getElementById('audio');
+            // audio.play();
         }
-    },
-    mounted: function () {
-        this.picHeight = document.body.scrollHeight + window.screen.height + document.body.scrollHeight;
-        var thisObj = this
-        if (this.activeIndex != '5') {
-            this.postData2Server('get_username', {}, function (res) {
-                if (res.msg == 'success') {
-                    thisObj.username = res.username
-                }
-            })
-        }
-        // var audio = document.getElementById('audio');
-        // audio.play();
-    }
-};
+    };
 </script>
 
 <style scoped>
-.div1 .el-menu {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
+    .div1 .el-menu {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
 
-.div1 {
-    display: flex;
-    justify-content: center;
-}
+    .div1 {
+        display: flex;
+        justify-content: center;
+    }
 
-.index_main {
-    /* background-image: url('/static/img/bg/bg1.jpg'); */
-    background-repeat: repeat;
-    background-size: 50%;
-    width: 100%;
-}
+    .index_main {
+        /* background-image: url('/static/img/bg/bg1.jpg'); */
+        background-repeat: repeat;
+        background-size: 50%;
+        width: 100%;
+    }
 
-.framClass {
-    position: fixed;
-    bottom: 0px;
-    /* display: none; */
-    background-color: pink;
-    width: 100%;
-    height: 200px;
-    z-index: 100;
-}
+    .framClass {
+        position: fixed;
+        bottom: 0px;
+        /* display: none; */
+        background-color: pink;
+        width: 100%;
+        height: 200px;
+        z-index: 100;
+    }
 
-.framClass2 {
-    position: fixed;
-    bottom: 0px;
-    /* display: none; */
-    background-color: pink;
-    /* width:100%; */
-    /* height:200px; */
-    z-index: 100;
-    border-radius: 35px;
-}
+    .framClass2 {
+        position: fixed;
+        bottom: 0px;
+        /* display: none; */
+        background-color: pink;
+        /* width:100%; */
+        /* height:200px; */
+        z-index: 100;
+        border-radius: 35px;
+    }
 
-.musicButton {
-    position: absolute;
-    right: 50px;
-    top: 150px;
-}
+    .musicButton {
+        position: absolute;
+        right: 50px;
+        top: 150px;
+    }
+
+    .announcement div{
+        margin: 5px 0 5px 0;
+    }
+
+    .announcement_button{
+        margin-right: 5px;
+        font-size: 15px;
+    }
+
+    .login {
+        text-align: right;
+    }
 </style>
