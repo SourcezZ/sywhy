@@ -7,7 +7,7 @@
                 <span class="inputSpan">注: 在这里写上你喜欢的歌曲，我会尽快为你添加到曲库~</span>
             </el-col>
             <span style="width:20px"></span>
-            <el-button type="primary" v-on:click="add_book">新增</el-button>
+            <el-button class="add_button" type="primary" v-on:click="add_book">新增</el-button>
         </el-row>
         <el-row>
             <el-table :data="bookList" style="width:100%" border>
@@ -72,14 +72,23 @@ export default {
     justify-content: center;
 }
 .el-row {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .el-col {
     border-radius: 20px;
 }
 .inputSpan {
+    position: absolute;
+    top: 35px;
+    left: 40px;
     font-size: 10px;
     color: #909399;
+    font-weight: bold;
+}
+
+.add_button{
+    height: 32px;
+    width: 20%;
 }
 </style>

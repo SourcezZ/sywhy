@@ -18,7 +18,7 @@
             <!--            <el-tag type="success" v-else>未登录</el-tag>-->
 <!--            <el-tag type="success" v-else>~</el-tag>-->
             <el-button class="announcement_button" type="text" @click="dialogVisible = true">小公告</el-button>
-            <el-dialog class="announcement" title="小公告" center :visible.sync="dialogVisible" width="30%">
+            <el-dialog class="announcement" title="小公告" center :visible.sync="dialogVisible" width="70%">
                 <div>网站不定期更新，欢迎留下您宝贵的意见与建议。</div>
                 <div>天气转凉，注意保暖~</div>
                 <div>我好困啊，今天不写了~</div>
