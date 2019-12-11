@@ -89,6 +89,5 @@ export default {
 
 .add_button{
     height: 32px;
-    width: 20%;
 }
 </style>
