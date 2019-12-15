@@ -31,8 +31,6 @@
                                v-on:click='ifCommit(index)'>评论
                     </el-button>
                 </div>
-
-                <br><br>
                 <hr v-if="i.fields.commitFlag == 1">
                 <div v-if="i.fields.commitFlag == 1">
                     <div v-for="j in commentList" :key='j.pk'>
