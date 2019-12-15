@@ -27,7 +27,7 @@ export default {
     data () {
         return {
             words: '',
-            return_words: '它还没有说话',
+            return_words: '请主动和我儿子说话',
         }
     },
     methods: {
@@ -46,7 +46,7 @@ export default {
         }
     }
 
-}        
+}
 </script>
 <style scoped>
 .tl_output {
