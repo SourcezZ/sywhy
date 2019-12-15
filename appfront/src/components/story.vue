@@ -5,7 +5,7 @@
             <el-col>
                 <!--span宽度-->
                 <!-- <el-input class='input' v-model="title" placeholder="请输入标题"></el-input> -->
-                <el-input class='wordsInput' v-model="content" type="textarea" rows="5" placeholder="请输入你的话"></el-input>
+                <el-input class='wordsInput' v-model="content" type="textarea" rows="5" placeholder="想说点什么呢"></el-input>
             </el-col>
             <el-col>
                 <el-button type="primary" v-on:click="add_story">提交</el-button>
@@ -85,19 +85,25 @@
                     this.message('内容不能为空', "error")
                     return
                 }
-                var req = {
-                    'title': this.title,
-                    'content': this.content
-                }
-                this.content = ''
                 var thisObj = this
-                this.postData2Server('add_story', req, function (res) {
-                    if (res.msg == 'success') {
-                        thisObj.message("提交成功", "success")
-                        thisObj.show_storys()
-                    } else {
-                        thisObj.message(res.msg, "error")
+                this.$confirm('确认提交吗', '提示', {
+                    confirmButtonText: '继续',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    var req = {
+                        'title': thisObj.title,
+                        'content': thisObj.content
                     }
+                    thisObj.content = ''
+                    thisObj.postData2Server('add_story', req, function (res) {
+                        if (res.msg == 'success') {
+                            thisObj.message("提交成功", "success")
+                            thisObj.show_storys()
+                        } else {
+                            thisObj.message(res.msg, "error")
+                        }
+                    })
                 })
             },
             commentOnOff: function () {
@@ -174,7 +180,7 @@
     }
 
     .text {
-        font-size: 16px;
+        font-size: 14px;
         margin-bottom: 30px;
     }
 
@@ -240,11 +246,9 @@
     }
 
     .button_style {
-        position: absolute;
-        right: 70px;
     }
 
     .button_div {
-
+        text-align: right;
     }
 </style>

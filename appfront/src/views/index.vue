@@ -162,6 +162,7 @@
     .announcement_button{
         margin-right: 5px;
         font-size: 15px;
+        font-weight: bold;
     }
 
     .login {
