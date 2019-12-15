@@ -18,16 +18,20 @@
                     <span>{{ i.fields.title }}</span>
                     <span style='float: right;'>{{ i.fields.addTime | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
                 </div> -->
-                <div class="text item">
-                    <span>{{ i.fields.content }}</span>
-                    <span style='float: right;'>{{ i.fields.addTime | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
+                <div class="text">
+                    <span class="contents">{{ i.fields.content }}</span>
+                    <br>
+                    <span class="contents_time">{{ i.fields.addTime | dataFormat('yyyy-MM-dd hh:mm:ss')}}</span>
                 </div>
-                <el-button style='float: right;' v-if="i.fields.commitFlag == 1" size="small"
-                           v-on:click='ifCommit(index)'>收起
-                </el-button>
-                <el-button style='float: right;' v-if="i.fields.commitFlag == 0" size="small"
-                           v-on:click='ifCommit(index)'>评论
-                </el-button>
+                <div class="button_div">
+                    <el-button class="button_style" v-if="i.fields.commitFlag == 1" size="small"
+                               v-on:click='ifCommit(index)'>收起
+                    </el-button>
+                    <el-button class="button_style" v-if="i.fields.commitFlag == 0" size="small"
+                               v-on:click='ifCommit(index)'>评论
+                    </el-button>
+                </div>
+
                 <br><br>
                 <hr v-if="i.fields.commitFlag == 1">
                 <div v-if="i.fields.commitFlag == 1">
@@ -171,10 +175,7 @@
 
     .text {
         font-size: 16px;
-    }
-
-    .item {
-        margin-bottom: 18px;
+        margin-bottom: 30px;
     }
 
     .inline {
@@ -228,5 +229,22 @@
     .comments_time {
         font-size: 5px;
         float: right;
+    }
+
+    .contents {
+
+    }
+
+    .contents_time {
+        float: right;
+    }
+
+    .button_style {
+        position: absolute;
+        right: 70px;
+    }
+
+    .button_div {
+
     }
 </style>
