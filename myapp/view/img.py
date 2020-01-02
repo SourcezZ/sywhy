@@ -29,7 +29,7 @@ def uploadImg(request):  # 图片上传函数
 def showImg(request):
     response = {}
     try:
-        imgs = Img.objects.all()  # 从数据库中取出所有的图片路径
+        imgs = Img.objects.all().order_by('-addTime')  # 从数据库中取出所有的图片路径
         response['list'] = json.loads(serializers.serialize("json", imgs))
         response['msg'] = 'success'
     except Exception as e:
