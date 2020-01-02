@@ -21,7 +21,7 @@
             <el-dialog class="announcement" title="小公告" center :visible.sync="dialogVisible" width="70%">
                 <div>网站不定期更新，欢迎留下您宝贵的意见与建议。</div>
                 <div>天气转凉，注意保暖~</div>
-                <div>我好困啊，今天不写了~</div>
+                <div>录入支持emoj表情了哦~😄🐮🍺</div>
                 <span slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
                 </span>
@@ -55,7 +55,7 @@
 
         data() {
             return {
-                dialogVisible: false,//dialog
+                dialogVisible: true,//dialog
                 user: {},
                 activeIndex: this.$route.params.index || '1',
                 bookList: [],
