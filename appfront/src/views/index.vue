@@ -40,6 +40,9 @@
 </template>
 
 <script>
+    // import "../../static/BadApplePlayer/scrollbar.js";
+    // import "https://static.badapple.top/BadApplePlayer/Player.js";
+
     document.body.style.margin = 0;
     import Library from "../components/Library";
     import Story from "../components/story";
