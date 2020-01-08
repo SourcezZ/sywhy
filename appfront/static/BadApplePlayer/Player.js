@@ -73,7 +73,7 @@ var BadApplePlayerIsLoad = (typeof (BadApplePlayerIsLoad) != _$_22cb[0] ? BadApp
         $(_$_22cb[135])[_$_22cb[133]](_0x1628D);
         _0x1628D = null;
         $[_$_22cb[123]]({
-            url: BadApplePlayerDomain_API + _$_22cb[136] + "RainRose",
+            url: BadApplePlayerDomain_API + _$_22cb[136] + "Rainrose",
             dataType: _$_22cb[121],
             scriptCharset: _$_22cb[122],
             cache: false,

@@ -36,12 +36,13 @@
             <!-- <ZY v-if='activeIndex==7'></ZY> -->
             <TOGETHER v-if="activeIndex==520"></TOGETHER>
         </div>
+<!--        <div id="XlchPlayer">*************************</div>-->
     </div>
 </template>
 
 <script>
-    // import "../../static/BadApplePlayer/scrollbar.js";
-    // import "https://static.badapple.top/BadApplePlayer/Player.js";
+    import "../../static/BadApplePlayer/scrollbar.js";
+    import "../../static/BadApplePlayer/Player.js";
 
     document.body.style.margin = 0;
     import Library from "../components/Library";
