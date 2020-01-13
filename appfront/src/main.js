@@ -7,8 +7,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import global_function from './function/global_function' //引用全局函数
 import VueResource from 'vue-resource' //引用vue-resource
-//BMap
-// import "../static/BMap/js/bmap.js"; 
+
+// 引入markdown插件
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+Vue.use(mavonEditor)
 
 //axios
 import * as axios_config from './function/axios_config'

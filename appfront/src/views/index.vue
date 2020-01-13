@@ -7,8 +7,7 @@
                 <el-menu-item index="2">解闷</el-menu-item>
                 <el-menu-item index="3">曲库</el-menu-item>
                 <el-menu-item index="4">图库</el-menu-item>
-                <!--                <el-menu-item index="5">登陆</el-menu-item>-->
-                <!-- <el-menu-item index="6" v-if="username == '宋雨蔚'">You know me</el-menu-item> -->
+                <!-- <el-menu-item index="5">登陆</el-menu-item>-->
                 <!-- <el-menu-item index="7">You know me</el-menu-item> -->
             </el-menu>
             <!-- <router-link :to="{name:'首页',params:{index:'5'}}" style="font-size: 14px;color: orange;">立即注册</router-link> -->
@@ -18,10 +17,9 @@
             <!--            <el-tag type="success" v-else>未登录</el-tag>-->
 <!--            <el-tag type="success" v-else>~</el-tag>-->
             <el-button class="announcement_button" type="text" @click="dialogVisible = true">小公告</el-button>
-            <el-dialog class="announcement" title="小公告" center :visible.sync="dialogVisible" width="70%">
-                <div>网站不定期更新，欢迎留下您宝贵的意见与建议。</div>
-                <div>天气转凉，注意保暖~</div>
-                <div>录入支持emoj表情了哦~😄🐮🍺</div>
+<!--            <el-dialog class="announcement" title="小公告" center :visible.sync="dialogVisible" width="70%">-->
+            <el-dialog title="小公告" center :visible.sync="dialogVisible" width="70%">
+                <mavon-editor v-html="announcement_md"></mavon-editor>
                 <span slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
                 </span>
@@ -43,6 +41,7 @@
 <script>
     import "../../static/BadApplePlayer/scrollbar.js";
     import "../../static/BadApplePlayer/Player.js";
+    import announcement_md from "../../dist/upload/md/announcement_md.md"
 
     document.body.style.margin = 0;
     import Library from "../components/Library";
@@ -59,6 +58,7 @@
 
         data() {
             return {
+                announcement_md: announcement_md,
                 dialogVisible: true,//dialog
                 user: {},
                 activeIndex: this.$route.params.index || '1',
@@ -173,4 +173,7 @@
         text-align: right;
     }
 
+    .v-note-wrapper {
+        min-height: 100px;
+    }
 </style>
