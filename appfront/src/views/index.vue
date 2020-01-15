@@ -7,7 +7,7 @@
                 <el-menu-item index="2">解闷</el-menu-item>
                 <el-menu-item index="3">曲库</el-menu-item>
                 <el-menu-item index="4">图库</el-menu-item>
-                <!-- <el-menu-item index="5">登陆</el-menu-item>-->
+                <el-menu-item index="5">登陆</el-menu-item>
                 <!-- <el-menu-item index="7">You know me</el-menu-item> -->
             </el-menu>
             <!-- <router-link :to="{name:'首页',params:{index:'5'}}" style="font-size: 14px;color: orange;">立即注册</router-link> -->
@@ -18,7 +18,7 @@
 <!--            <el-tag type="success" v-else>~</el-tag>-->
             <el-button class="announcement_button" type="text" @click="dialogVisible = true">小公告</el-button>
 <!--            <el-dialog class="announcement" title="小公告" center :visible.sync="dialogVisible" width="70%">-->
-            <el-dialog title="小公告" center :visible.sync="dialogVisible" width="70%">
+            <el-dialog title="小公告" center :visible.sync="dialogVisible" width="90%">
                 <mavon-editor v-html="announcement_md"></mavon-editor>
                 <span slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -105,8 +105,6 @@
                     }
                 })
             }
-            // var audio = document.getElementById('audio');
-            // audio.play();
         }
     };
 </script>
@@ -174,6 +172,6 @@
     }
 
     .v-note-wrapper {
-        min-height: 100px;
+        min-height: 200px;
     }
 </style>

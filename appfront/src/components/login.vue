@@ -8,15 +8,15 @@
         <div style="height:50px;"></div>
         <el-form class="loginForm" :rules='loginRule' :model='userForm' ref="userForm" label-width="80px" label-position="left">
             <el-form-item label='用户名' prop='username'>
-                <el-input v-if="chooseLog=='logup'" v-model="userForm.username" :disabled='isDisabled()' onkeyup="value=value.replace(/[^\w]/ig,'')"></el-input>
-                <el-input v-else v-model="userForm.username" :disabled='isDisabled()'></el-input>
+                <el-input v-model="userForm.username" :disabled='isDisabled()' maxlength="10"></el-input>
+                <el-button v-if="chooseLog=='logup'" class="right_button" v-on:click="check_username(userForm.username, chooseLog, true)">检查是否可用</el-button>
             </el-form-item>
             <el-form-item label='密码' v-if="loginStatus==0" prop='password'>
                 <el-input v-model='userForm.password' type='password' autocomplete="new-password" @keyup.enter.native='login'></el-input>
             </el-form-item>
             <el-form-item label='邮箱' v-if="loginStatus==0 && chooseLog=='logup'" prop='email'>
                 <el-input v-model='userForm.email'></el-input>
-                <el-button style="position:absolute;top: 1px;left: 205px;" v-on:click="send_register_email" :disabled="!showSendValid">
+                <el-button class="right_button" v-on:click="send_register_email" :disabled="!showSendValid">
                     获取验证码 {{ remainSecond }}<span v-if="remainSecond!=null">s</span>
                 </el-button>
             </el-form-item>
@@ -36,6 +36,7 @@ export default {
     // props: ["loginStatus"],
     data () {
         return {
+            username_access : false,
             chooseLog: 'login',
             showSendValid: true,
             timer: null,
@@ -48,7 +49,10 @@ export default {
                 validCode: '',
             },
             loginRule: {
-                username: { required: true, message: '请输入用户名', trigger: 'blur' },
+                username: [
+                    { required: true, message: '请输入用户名', trigger: 'blur' },
+                    { pattern: /^[\da-zA-Z_@]+$/, message: '用户名格式错误，仅支持大小写字母，数字，_@', trigger: 'blur' }
+                ],
                 password: { required: true, message: '请输入密码', trigger: 'change' },
                 validCode: { required: true, message: '请输入验证码', trigger: 'change' },
                 email: [
@@ -87,27 +91,58 @@ export default {
             }
         },
 
+        check_username: function (username, chooseLog, show_msg) {
+            let thisObj = this
+            return new Promise(function(resolve, reject) {
+                thisObj.$refs.userForm.validateField('username', errorMessage => {
+                    if (errorMessage == '') {
+                        thisObj.postData2Server('check_username', {'username': username}, function (res) {
+                            if (res.msg == 'success') {
+                                show_msg ? thisObj.message("该用户名可以使用", "success", 1000) : ''
+                                thisObj.username_access = true
+                            } else {
+                                show_msg ? thisObj.message("该用户名已存在", "error", 1000) : ''
+                                thisObj.username_access = false
+                            }
+                            resolve(thisObj.username_access)
+                        })
+                    }
+                })
+            })
+        },
+
         //注册
         logup: function () {
-            this.$refs.userForm.validate(valid => {
-                if (valid) {
-                    if (this.userForm.username == "" || this.userForm.password == "") {
-                        this.message("输入不能为空", "error");
-                        return;
-                    }
-
-                    var thisObj = this
-                    this.postData2Server('add_user', this.userForm, function (res) {
-                        console.log(res)
-                        if (res.msg == 'success') {
-                            thisObj.message("logup success", "success")
-                            thisObj.chooseLog = 'login'//注册成功，转换登陆页面
-                        } else {
-                            thisObj.message(res.msg, "error");
-                        }
-                    })
+            this.check_username(this.userForm.username, this.chooseLog, false)/*先检测用户名是否符合规则*/.then((username_access)=>{
+                if (username_access == false){
+                    this.message("该用户名已存在", "error", 1000);
+                    return;
                 }
+                this.$refs.userForm.validate(valid => {
+                    if (valid) {
+                        if (this.userForm.username == "" || this.userForm.password == "") {
+                            this.message("输入不能为空", "error");
+                            return;
+                        }
+                        if (this.username_access == false){
+                            this.message("该用户名已存在", "error");
+                            return;
+                        }
+
+                        var thisObj = this
+                        this.postData2Server('add_user', this.userForm, function (res) {
+                            console.log(res)
+                            if (res.msg == 'success') {
+                                thisObj.message("logup success", "success")
+                                thisObj.chooseLog = 'login'//注册成功，转换登陆页面
+                            } else {
+                                thisObj.message(res.msg, "error");
+                            }
+                        })
+                    }
+                })
             })
+
         },
 
         //登陆
@@ -140,6 +175,10 @@ export default {
 
         send_register_email: function () {
             var thisObj = this
+            if (this.username_access == false){
+                this.message("该用户名已存在", "error", 1000);
+                return;
+            }
             this.$refs.userForm.validateField('username', (errorMsg) => {
                 this.$refs.userForm.validateField('email', (errorMsg) => {
                     if (errorMsg == '') {
@@ -198,6 +237,10 @@ export default {
                 thisObj.loginStatus = 1
             }
         })
+        // this.axios.post('get_username').then(function (res) {
+        //     debugger
+        //     console.log(res)
+        // })
     }
 }
 </script>
@@ -218,6 +261,19 @@ export default {
 
 .loginForm .el-input {
     width: 200px;
+    margin-bottom: 15px;
+}
+
+.loginForm .right_button {
+    position:absolute;
+    top: 1px;
+    left: 205px;
+}
+</style>
+<style>
+.loginForm .el-form-item__error {
+    width: 500px;
+    top: 90%;
 }
 </style>
 

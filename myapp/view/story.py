@@ -7,9 +7,38 @@ from django.core import serializers
 from myapp.models import Story
 from myapp.models import Comment
 from django.db import transaction
+from django.core.mail import send_mail
+from myproject.settings import EMAIL_GET_NEW_MESSAGE
+import threading
+
+import logging
+
+logger = logging.getLogger(__name__)
+get_words_logger = logging.getLogger("get_words")
+
+
+def send_mail_wrapper(func):
+    def wrapper(request, *args, **kwargs):
+        def send():
+            content = json.loads(request.body)['content']
+            email_title = "有新留言啦~"
+            email_body = '''\n\t有一条新留言：{}'''.format(content)
+            email_to = ['598481331@qq.com']
+
+            get_words_logger.info("sending:" + str(content))
+            send_status = send_mail(email_title, email_body,
+                                    EMAIL_GET_NEW_MESSAGE, email_to, content)  # 返回真值，判断是否发送OK
+            get_words_logger.info("sending over\n" + str(send_status))
+
+        threading.Thread(target=send, args=(request,)).start()
+        return func(request, *args, **kwargs)
+
+    return wrapper
+
 
 # Create your views here.
 @require_http_methods(["POST"])
+@send_mail_wrapper
 def add_story(request):
     response = {}
     data = json.loads(request.body)
@@ -28,7 +57,7 @@ def show_storys(request):
     response = {}
     try:
         storys = Story.objects.filter().order_by('-addTime')
-        #storys = Story.objects.filter(id='1')
+        # storys = Story.objects.filter(id='1')
         response['list'] = json.loads(serializers.serialize("json", storys))
         response['msg'] = 'success'
     except Exception as e:

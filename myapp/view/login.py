@@ -13,6 +13,7 @@ from django.core.mail import send_mail
 from myproject.settings import EMAIL_FROM
 
 import logging
+
 # 生成一个以当前文件名为名字的logger实例
 logger = logging.getLogger(__name__)
 # 生成一个名为collect的logger实例
@@ -41,7 +42,7 @@ def send_register_email(request, send_type='register'):
     email_to.append(email)
 
     validCode = myUtils.getValidCode()
-    cache.set(username + ':' + email, validCode, 5*60)
+    cache.set(username + ':' + email, validCode, 5 * 60)
 
     validCode_logger.info(username + ' : ' + email + ' : ' + validCode)
 
@@ -59,6 +60,7 @@ def send_register_email(request, send_type='register'):
         else:
             response['msg'] = '发送邮件失败'
             return JsonResponse(response)
+
 
 # Create your views here.
 @require_http_methods(["POST"])
@@ -79,7 +81,7 @@ def add_user(request):
     # 判断账号是否存在
     user = User.objects.filter(username=username)
     userList = json.loads(serializers.serialize("json", user))
-    if(len(userList) != 0):
+    if (len(userList) != 0):
         response['msg'] = '用户名已存在'
         return JsonResponse(response)
 
@@ -107,7 +109,7 @@ def login(request):
 
     if userList != []:
         validPwd = userList[0]['fields']['password']
-        if(password == validPwd):
+        if (password == validPwd):
             response['token'] = tokenUtil.create_token(username)
             response['msg'] = 'success'
             login_record_logger.info('log in success. user : ' + username)
@@ -125,20 +127,36 @@ def get_username(request):
     response = {}
     accessToken = request.data.get('token')
     try:
-        if accessToken != None:
+        if accessToken is not None:
             username = tokenUtil.get_username(accessToken)
             response['username'] = username
             response['msg'] = 'success'
     finally:
-        if(response.get('msg') != 'success'):
+        if response.get('msg') != 'success':
             response['msg'] = '登陆信息已失效，请重新登陆'
     return JsonResponse(response)
 
 
 @require_http_methods(["POST"])
 def other_request(request):
-    response = {}
-    response['msg'] = 'you sb'
+    response = {'msg': 'you sb'}
     rubbish_record_logger.info(
-        "I'm a rubbish request. " + request._current_scheme_host)
+        "I'm a rubbish request. " + request['_current_scheme_host'])
+    return JsonResponse(response)
+
+
+@require_http_methods(["POST"])
+def check_username(request):
+    response = {}
+    username = request.data.get('username')
+    try:
+        if username is not None:
+            username_list = User.objects.filter(username=username)
+            userList = json.loads(serializers.serialize("json", username_list))
+            if len(userList) == 0:
+                response['msg'] = 'success'
+            else:
+                response['msg'] = 'false'
+    except Exception as e:
+        response['msg'] = str(e)
     return JsonResponse(response)

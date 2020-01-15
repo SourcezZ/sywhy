@@ -9,6 +9,7 @@ KEY = 'HE_YUAN'
 SALT = 'www.missme1.com'
 TIME_OUT = 30 * 60  # 30min
 
+
 def encrypt(obj):
     """加密"""
     value = signing.dumps(obj, key=KEY, salt=SALT)
@@ -57,7 +58,8 @@ def get_username(token):
 
 
 def check_token(token):
-    if token == None: return 0 # 0 未登录
+    if token is None:
+        return 0  # 0 未登录
     username = get_username(token)
     last_token = cache.get(username)
     if last_token:

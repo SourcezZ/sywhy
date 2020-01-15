@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import axios from 'axios' 
+import axios from 'axios'
 import * as utils from './utils'
 import Router from '@/router/index'
 
@@ -9,7 +9,9 @@ axios.defaults.baseURL = utils.default.getUrl()
 //请求拦截器
 axios.interceptors.request.use(function(req){
     //发送请求之前
+    req.data = req.data == null ? {} : req.data
     req.data.token = Vue.prototype.getCookie('token')
+
     return req;
 
   },function(error){

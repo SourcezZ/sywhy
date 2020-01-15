@@ -95,7 +95,7 @@ exports.install = function (Vue, options) {
             // url = url.substring(0, url.length - 1) + ':8000/'
         }
         if (transId == 'get_username') {
-            return
+            // return
         }
         this.$http.post(url + "api/" + transId, req).then(response => {
             if (response.data.loginStatus != null && response.data.loginStatus != 1 && transId != 'get_username') {
