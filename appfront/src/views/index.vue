@@ -7,7 +7,7 @@
                 <el-menu-item index="2">解闷</el-menu-item>
                 <el-menu-item index="3">曲库</el-menu-item>
                 <el-menu-item index="4">图库</el-menu-item>
-                <el-menu-item index="5">登陆</el-menu-item>
+<!--                <el-menu-item index="5">登陆</el-menu-item>-->
                 <!-- <el-menu-item index="7">You know me</el-menu-item> -->
             </el-menu>
             <!-- <router-link :to="{name:'首页',params:{index:'5'}}" style="font-size: 14px;color: orange;">立即注册</router-link> -->
@@ -98,13 +98,13 @@
         mounted: function () {
             this.picHeight = document.body.scrollHeight + window.screen.height + document.body.scrollHeight;
             var thisObj = this
-            if (this.activeIndex != '5') {
-                this.postData2Server('get_username', {}, function (res) {
-                    if (res.msg == 'success') {
-                        thisObj.username = res.username
-                    }
-                })
-            }
+            // if (this.activeIndex != '5') {
+            //     this.postData2Server('get_username', {}, function (res) {
+            //         if (res.msg == 'success') {
+            //             thisObj.username = res.username
+            //         }
+            //     })
+            // }
         }
     };
 </script>
