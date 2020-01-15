@@ -28,7 +28,7 @@ def send_mail_wrapper(func):
             get_words_logger.info("sending:" + str(content))
             send_status = send_mail(email_title, email_body,
                                     EMAIL_GET_NEW_MESSAGE, email_to, content)  # 返回真值，判断是否发送OK
-            get_words_logger.info("sending over\n" + str(send_status))
+            get_words_logger.info("sending over:" + str(send_status))
 
         # threading.Thread(target=send, args=(request,)).start()
         threading.Thread(target=send).start()
