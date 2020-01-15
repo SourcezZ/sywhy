@@ -175,10 +175,10 @@ export default {
 
         send_register_email: function () {
             var thisObj = this
-            // if (this.username_access == false){
-            //     this.message("该用户名已存在", "error", 1000);
-            //     return;
-            // }
+            if (this.username_access == false){
+                this.message("该用户名已存在", "error", 1000);
+                return;
+            }
             this.$refs.userForm.validateField('username', (errorMsg) => {
                 this.$refs.userForm.validateField('email', (errorMsg) => {
                     if (errorMsg == '') {
@@ -231,12 +231,12 @@ export default {
     },
     mounted: function () {
         var thisObj = this
-        // this.postData2Server('get_username', {}, function (res) {
-        //     if (res.msg == 'success') {
-        //         thisObj.userForm.username = res.username
-        //         thisObj.loginStatus = 1
-        //     }
-        // })
+        this.postData2Server('get_username', {}, function (res) {
+            if (res.msg == 'success') {
+                thisObj.userForm.username = res.username
+                thisObj.loginStatus = 1
+            }
+        })
         // this.axios.post('get_username').then(function (res) {
         //     debugger
         //     console.log(res)

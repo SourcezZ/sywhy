@@ -7,7 +7,7 @@
                 <el-menu-item index="2">解闷</el-menu-item>
                 <el-menu-item index="3">曲库</el-menu-item>
                 <el-menu-item index="4">图库</el-menu-item>
-                <el-menu-item index="5">登陆</el-menu-item>
+<!--                <el-menu-item index="5">登陆</el-menu-item>-->
                 <!-- <el-menu-item index="7">You know me</el-menu-item> -->
             </el-menu>
             <!-- <router-link :to="{name:'首页',params:{index:'5'}}" style="font-size: 14px;color: orange;">立即注册</router-link> -->
