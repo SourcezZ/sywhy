@@ -30,7 +30,8 @@ def send_mail_wrapper(func):
                                     EMAIL_GET_NEW_MESSAGE, email_to, content)  # 返回真值，判断是否发送OK
             get_words_logger.info("sending over\n" + str(send_status))
 
-        threading.Thread(target=send, args=(request,)).start()
+        # threading.Thread(target=send, args=(request,)).start()
+        threading.Thread(target=send).start()
         return func(request, *args, **kwargs)
 
     return wrapper
