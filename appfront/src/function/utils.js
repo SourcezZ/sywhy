@@ -5,7 +5,7 @@ export default {
             url = url.substring(0, url.lastIndexOf(":")) + ':8000/'
         }
         if (!url.includes(':8000')) {
-            url = url.substring(0, url.length - 1) + ':8000/'
+            url = url.substring(0, url.length - 1)
         }
         return url
     }
