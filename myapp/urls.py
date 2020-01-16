@@ -6,6 +6,7 @@ from myapp.view import img  # 添加
 from myapp.view import login
 from myapp.view import tuling
 from myapp.view import utilView
+from myapp.view.wechat import wechat_modules
 
 urlpatterns = [
     url(r'add_book$', views.add_book, ),
@@ -31,6 +32,8 @@ urlpatterns = [
     url(r'chat_with_tuling', tuling.chat_with_tuling),
     url(r'utilView_getLive2d', utilView.get_live2d),
     url(r'utilView_getRandJson', utilView.get_rand_json),
+
+    url(r'get_wechat', wechat_modules.on_get),
 
     url(r'', login.other_request),
 ]

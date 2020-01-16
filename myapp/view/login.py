@@ -140,8 +140,7 @@ def get_username(request):
 @require_http_methods(["POST"])
 def other_request(request):
     response = {'msg': 'you sb'}
-    rubbish_record_logger.info(
-        "I'm a rubbish request. " + request['_current_scheme_host'])
+    rubbish_record_logger.info("I'm a rubbish request. ")
     return JsonResponse(response)
 
 
