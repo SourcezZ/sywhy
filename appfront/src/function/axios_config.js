@@ -23,7 +23,6 @@ axios.interceptors.request.use(function(req){
 //响应拦截器
 axios.interceptors.response.use(function(response){
     //响应数据
-    debugger
     if(response.data.loginStatus!=null && response.data.loginStatus!=1 && transId!='get_username') {
         Router.push({name: '跳转登陆'})
         Vue.prototype.message(response.data.msg, "error")

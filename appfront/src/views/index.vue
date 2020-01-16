@@ -19,7 +19,22 @@
             <el-button class="announcement_button" type="text" @click="dialogVisible = true">小公告</el-button>
 <!--            <el-dialog class="announcement" title="小公告" center :visible.sync="dialogVisible" width="70%">-->
             <el-dialog title="小公告" center :visible.sync="dialogVisible" width="90%">
-                <mavon-editor v-html="announcement_md"></mavon-editor>
+<!--            <mavon-editor v-html="announcement_md"-->
+                <mavon-editor
+                :value=announcement_md
+                :subfield = false
+                :defaultOpen = "'preview'"
+                :toolbarsFlag = false
+                :editable=false
+                :scrollStyle=true
+                :ishljs = true></mavon-editor>
+                <!--:value="detailContent.content"：引入要转换的内容-->
+                <!--:subfield = "false"：开启单栏模式-->
+                <!--:defaultOpen = "'preview'"：默认展示预览区域-->
+                <!--:toolbarsFlag = "false"：关闭工具栏-->
+                <!--:editable="false"：不允许编辑-->
+                <!--scrollStyle="true"：开启滚动条样式(暂时仅支持chrome)-->
+                <!--:ishljs = "true"：开启代码高亮-->
                 <span slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
                 </span>
@@ -41,7 +56,6 @@
 <script>
     import "../../static/BadApplePlayer/scrollbar.js";
     import "../../static/BadApplePlayer/Player.js";
-    import announcement_md from "../../dist/upload/md/announcement_md.md"
 
     document.body.style.margin = 0;
     import Library from "../components/Library";
@@ -58,7 +72,7 @@
 
         data() {
             return {
-                announcement_md: announcement_md,
+                announcement_md: "",
                 dialogVisible: true,//dialog
                 user: {},
                 activeIndex: this.$route.params.index || '1',
@@ -105,6 +119,9 @@
             //         }
             //     })
             // }
+            this.axios.get("upload/md/announcement_md.md").then( response => {
+                thisObj.announcement_md = response.data;
+            });
         }
     };
 </script>

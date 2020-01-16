@@ -21,12 +21,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 import myapp.urls
 
-
-urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^api/', include(myapp.urls)),
-    url(r'^$', TemplateView.as_view(template_name="index.html")),
-    url(r'^.*', TemplateView.as_view(template_name="index.html")),
-    # url(r'^((?!upload).)*$', TemplateView.as_view(template_name="index.html")),  # 匹配没有upload的链接
-    # ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.UPLOAD_URL, document_root=settings.UPLOAD_DIRS)
-] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns = \
+    static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS) + \
+    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + \
+    static(settings.UPLOAD_URL, document_root=settings.UPLOAD_DIRS) + \
+    [
+        url(r'^admin/', admin.site.urls),
+        url(r'^api/', include(myapp.urls)),
+        url(r'^$', TemplateView.as_view(template_name="index.html")),
+        url(r'^.*', TemplateView.as_view(template_name="index.html")),
+        # url(r'^((?!upload).)*$', TemplateView.as_view(template_name="index.html")),  # 匹配没有upload的链接
+    ]
