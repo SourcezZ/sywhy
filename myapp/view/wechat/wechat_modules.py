@@ -36,8 +36,8 @@ def on_get(req):
             stories = Story.objects.order_by('-addTime')[:num]
             res_msg_list = json.loads(serializers.serialize("json", stories))
             resp = ''
-            for list in res_msg_list:
-                resp += list['fields']['content'] + '\n'
+            for res_msg in res_msg_list:
+                resp += res_msg['fields']['content'] + '\n'
             resp += 'over la~'
             reply = TextReply(content=resp, message=msg_info)
             xml = reply.render()
