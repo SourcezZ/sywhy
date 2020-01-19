@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="html_class">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -44,14 +44,21 @@
 <!--        <script src="https://static.badapple.top/BadApplePlayer/js/scrollbar.js"></script>-->
 <!--        <script src="https://static.badapple.top/BadApplePlayer/Player.js"></script>-->
     <!-- BadApplePlayer End -->
+    <div class="bottom_div">
+        <div class="record_no_div"><a href="http://www.beian.miit.gov.cn" target="_blank">备案号：蜀ICP备19036441号</a></div>
+    </div>
 </body>
 </html>
 <style>
+    .html_class{
+        height: 100%;
+    }
     .body_class{
         background-image: url('/static/img/bg/bg1.jpg');
         background-repeat:repeat;
         background-size: 50%;
         width: 100%;
+        height: 100%;
     }
     #BadAppleTips {
         position: fixed;
@@ -72,5 +79,31 @@
         -moz-transform: translate3d(-100%,0,0);
         -ms-transform: translate3d(-100%,0,0);
         transform: translate3d(-100%,0,0);
+    }
+
+    .bottom_div {
+        position: relative;
+        width: 100%;
+    }
+
+    .record_no_div {
+        width: 100%;
+        /*height: 50%;*/
+        background-color: black;
+        position: absolute;
+        bottom: 0;
+        text-align: center;
+
+    }
+
+    .record_no_div a {
+        color: white;
+        text-decoration: none;
+        height: 50%;
+        line-height: 30px;
+    }
+
+    .record_no_div a:hover {
+        color: grey;
     }
 </style>

@@ -49,9 +49,6 @@
             <!-- <ZY v-if='activeIndex==7'></ZY> -->
             <TOGETHER v-if="activeIndex==520"></TOGETHER>
         </div>
-        <div class="bottom_div">
-            <div class="record_no_div"><a href="http://www.beian.miit.gov.cn" target="_blank">备案号：蜀ICP备19036441号</a></div>
-        </div>
 <!--        <div id="XlchPlayer">*************************</div>-->
     </div>
 </template>
@@ -147,6 +144,8 @@
         background-repeat: repeat;
         background-size: 50%;
         width: 100%;
+        min-height: 100%;
+        /*float: bottom;*/
     }
 
     .framClass {
@@ -195,31 +194,4 @@
         min-height: 200px;
     }
 
-    .bottom_div {
-        position: relative;
-        bottom: 0;
-        width: 100%;
-        height: 60px;
-    }
-
-    .record_no_div {
-        width: 100%;
-        height: 50%;
-        background-color: black;
-        position: absolute;
-        bottom: 0;
-        text-align: center;
-
-    }
-
-    .record_no_div a {
-        color: white;
-        text-decoration: none;
-        height: 50%;
-        line-height: 30px;
-    }
-
-    .record_no_div a:hover {
-        color: grey;
-    }
 </style>

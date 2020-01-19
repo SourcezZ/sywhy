@@ -1,6 +1,6 @@
 <!--story组件-->
 <template>
-    <div>
+    <div class="container">
         <el-row>
             <el-col>
                 <!--span宽度-->
@@ -155,11 +155,30 @@
     }
 </script>
 <style scoped>
+    .container{
+        padding-bottom: 50px;
+    }
+
     .wordsInput {
         margin: 5px 0 5px 0;
         width: 65%;
         /*上 右 下 左*/
     }
+
+    /*@media (min-device-height:900px){!* 兼容pc *!*/
+    /*    .wordsInput {*/
+    /*        margin: 5px 0 5px 0;*/
+    /*        width: 40%;*/
+    /*        !*上 右 下 左*!*/
+    /*    }*/
+    /*}*/
+
+    /*@media (min-device-height:900px){!* 兼容pc *!*/
+    /*    .box_in_card {*/
+    /*        width: 30%;*/
+    /*        margin: auto;*/
+    /*    }*/
+    /*}*/
 
     .el-row {
         margin-bottom: 20px;
