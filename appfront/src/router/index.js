@@ -1,10 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import index from '@/views/index'
-import practice from '@/views/practice'
-import test from '@/views/test'
-import jumpLogin from '@/views/jumpLogin'
-import RainRose from '@/components/zy'
+// import index from '@/views/index'
+// import practice from '@/views/practice'
+// import test from '@/views/test'
+// import jumpLogin from '@/views/jumpLogin'
+// import RainRose from '@/components/zy'
+
+const index = () => import('@/views/index')
+const practice = () => import('@/views/practice')
+const test = () => import('@/views/test')
+const jumpLogin = () => import('@/views/jumpLogin')
+const RainRose = () => import('@/components/zy')
+
 Vue.use(Router)
 
 
