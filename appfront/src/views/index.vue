@@ -41,21 +41,21 @@
             </el-dialog>
         </div>
         <div>
-            <Story v-if='activeIndex==1' :loginStatus='loginStatus' :username='username'></Story>
-            <Light v-if='activeIndex==2' :loginStatus='loginStatus' :username='username'></Light>
-            <Library v-if='activeIndex==3' :loginStatus='loginStatus' :username='username'></Library>
-            <Picture v-if='activeIndex==4' :loginStatus='loginStatus' :username='username'></Picture>
-            <Login @userSignIn='userSignIn' v-if='activeIndex==5' :loginStatus='loginStatus'></Login>
+            <Story v-if='activeIndex==1' :loginStatus='loginStatus' :username='username'/>
+            <Light v-if='activeIndex==2' :loginStatus='loginStatus' :username='username'/>
+            <Library v-if='activeIndex==3' :loginStatus='loginStatus' :username='username'/>
+            <Picture v-if='activeIndex==4' :loginStatus='loginStatus' :username='username'/>
+            <Login @userSignIn='userSignIn' v-if='activeIndex==5' :loginStatus='loginStatus'/>
             <!-- <ZY v-if='activeIndex==7'></ZY> -->
-            <TOGETHER v-if="activeIndex==520"></TOGETHER>
+            <TOGETHER v-if="activeIndex==520"/>
         </div>
 <!--        <div id="XlchPlayer">*************************</div>-->
     </div>
 </template>
 
 <script>
-    import "../../static/BadApplePlayer/scrollbar.js";
-    import "../../static/BadApplePlayer/Player.js";
+    // import "../../static/BadApplePlayer/scrollbar.js";
+    // import "../../static/BadApplePlayer/Player.js";
 
     document.body.style.margin = 0;
     import Library from "../components/Library";
