@@ -49,13 +49,26 @@
             <!-- <ZY v-if='activeIndex==7'></ZY> -->
             <TOGETHER v-if="activeIndex==520"/>
         </div>
+        <div class="waifu" v-if="live2d_flag">
+            <div class="waifu-tips"></div>
+            <canvas id="live2d" width="280" height="250" class="live2d"/>
+            <div class="waifu-tool">
+        <!--    <span class="fui-home"></span>-->
+        <!--    <span class="fui-chat"></span>-->
+                <span class="fui-eye"/>
+                <span class="fui-user"/>
+                <span class="fui-photo"/>
+        <!--    <span class="fui-info-circle"></span>-->
+                <span class="fui-cross"/>
+            </div>
+        </div>
 <!--        <div id="XlchPlayer">*************************</div>-->
     </div>
 </template>
 
 <script>
-    // import "../../static/BadApplePlayer/scrollbar.js";
-    // import "../../static/BadApplePlayer/Player.js";
+    import "../../static/BadApplePlayer/scrollbar.js";
+    import "../../static/BadApplePlayer/Player.js";
 
     document.body.style.margin = 0;
     import Library from "../components/Library";
@@ -72,6 +85,7 @@
 
         data() {
             return {
+                live2d_flag: false,
                 announcement_md: "",
                 dialogVisible: true,//dialog
                 user: {},
