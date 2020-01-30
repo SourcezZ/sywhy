@@ -14,7 +14,7 @@
                 <img class="img" src="../light/3.jpg">
             </el-carousel-item>
         </el-carousel>
-        <el-input class="tl_input" v-model="words" placeholder="和我儿子对话"></el-input>
+        <el-input class="tl_input" v-model="words" placeholder="和我儿子对话"/>
         <el-button @click="chat_with_tuling">发送</el-button>
         <el-card class="tl_output">
             <div>{{ return_words }}</div>
