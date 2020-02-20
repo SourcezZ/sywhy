@@ -104,8 +104,8 @@ module.exports = {
     child_process: 'empty'
   },
     externals: {
-        'vue': 'Vue',
-        'vue-router': 'VueRouter',
-        'element-ui': 'ELEMENT',
+        'Vue': 'vue',
+        'router': 'router',
+        'ElementUI': 'element-ui',
      },
 }
