@@ -1,7 +1,7 @@
 <!-- 走马灯组件 -->
 <template>
-    <div style="text-align:center">
-        <el-carousel :interval="4000" type="card">
+    <div class="container">
+<!--        <el-carousel :interval="4000" type="card">-->
 <!--            <el-carousel-item>-->
 <!--                <img class="img" src="../light/1.jpg">-->
 <!--            </el-carousel-item>-->
@@ -13,10 +13,13 @@
 <!--            <el-carousel-item>-->
 <!--                <img class="img" src="../light/3.jpg">-->
 <!--            </el-carousel-item>-->
-            <el-carousel-item>
-                <img class="img" src="https://api.r10086.com:8443/动漫综合2.php">
-            </el-carousel-item>
-        </el-carousel>
+<!--            <el-carousel-item>-->
+<!--                <img class="img" src="https://api.r10086.com:8443/动漫综合2.php">-->
+<!--            </el-carousel-item>-->
+<!--        </el-carousel>-->
+        <el-image class="el_img" :src="'https://api.r10086.com:8443/动漫综合2.php'" lazy></el-image>
+        <br/>
+        <br/>
         <el-input class="tl_input" v-model="words" placeholder="和我儿子对话"/>
         <el-button @click="chat_with_tuling">发送</el-button>
         <el-card class="tl_output">
@@ -51,37 +54,36 @@ export default {
 
 }
 </script>
+
 <style scoped>
-.tl_output {
-    width: 50%;
-    position: relative;
-    left: 25%;
-    top: 20px;
-}
-.tl_input {
-    width: 50%;
-}
-/*.el-carousel__item h3 {*/
-/*    color: #475669;*/
-/*    font-size: 14px;*/
-/*    opacity: 0.75;*/
-/*    line-height: 200px;*/
-/*    margin: 0;*/
-/*    text-align: center;*/
-/*}*/
+    .tl_output {
+        width: 50%;
+        position: relative;
+        left: 25%;
+        top: 20px;
+    }
+    .tl_input {
+        width: 50%;
+    }
 
-/*.el-carousel__item:nth-child(2n) {*/
-/*    background-color: #99a9bf;*/
-/*}*/
+    .container {
+        text-align: center;
+    }
 
-/*.el-carousel__item:nth-child(2n + 1) {*/
-/*    background-color: #d3dce6;*/
-/*}*/
+</style>
+<style>
+    @media only screen and (min-width: 1200px) {
+        .el_img .el-image__inner {
+            width: 50%;
+            height: auto;
+            border-radius: 10px;
+        }
+    }
 
-.img {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    display: block;
-}
+    @media only screen and (max-width: 1200px) {
+        .el_img .el-image__inner {
+            width: 75%;
+            border-radius: 10px;
+        }
+    }
 </style>
