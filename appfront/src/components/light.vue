@@ -51,11 +51,21 @@ export default {
                     // image.src = dataUrl
                     image.src = dataUrl
                     this.show_desc = false
+                    try {
+                        sessionStorage.setItem("img_data_url", dataURL)
+                    }catch (e) {
+                        console.log("sessionStorage large")
+                    }
                 })
             }else{
                 // image.src = dataUrl
                 image.src = dataUrl
                 this.show_desc = false
+                try {
+                    sessionStorage.setItem("img_data_url", dataURL)
+                }catch (e) {
+                    console.log("sessionStorage large")
+                }
             }
         },
 
@@ -89,7 +99,6 @@ export default {
                 ctx.drawImage(image, 0, 0, image.width, image.height);
                 var ext = image.src.substring(image.src.lastIndexOf(".") + 1).toLowerCase();
                 var dataURL = canvas.toDataURL("image/" + ext);
-                sessionStorage.setItem("img_data_url", dataURL)
                 callback.call(this, dataURL)
             };
         },
