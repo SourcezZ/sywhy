@@ -22,6 +22,11 @@
         <div slot="placeholder" class="image-slot" v-if="show_desc">
             我这里有一张图片，你可以等我再加载一会儿0.0<span class="dot">...</span>
         </div>
+        <div>
+            <el-button slot="placeholder" size="large" :disabled="changing" class="image-slot" v-if="!show_desc" @click="get_img_api(true)">
+                {{changing?"更换中":"换一张"}}<span style="position: absolute" v-if="changing">{{point}}</span>
+            </el-button>
+        </div>
         <br/>
         <br/>
         <el-input class="tl_input" v-model="words" placeholder="和我儿子对话"/>
@@ -40,6 +45,8 @@ export default {
             words: '',
             return_words: '请主动和我儿子说话',
             img_url:"https://api.r10086.com:8443/动漫综合2.php",
+            changing: false,
+            point:'.'
         }
     },
     methods: {
@@ -133,17 +140,23 @@ export default {
                 }
             }, true)
         },
-        get_img_api (){
+        get_img_api (isChange){
             let thisObj = this
             let data_url = sessionStorage.getItem("data_url")
             let img = document.querySelector("#img")
-            if (data_url != null){
+            if (data_url != null && !isChange){
                 img.src = data_url
+                thisObj.show_desc = false
                 return
+            }
+            if (isChange){
+                this.changing = true
+                this.point = '.'
             }
             this.postData2Server('get_img_api', {}, (res)=>{
                 img.src = "data:" + res.content_type + ";base64," + res.img
                 thisObj.show_desc = false
+                thisObj.changing = false
                 try {
                     sessionStorage.setItem("data_url", img.src)
                 }catch (e) {
@@ -154,7 +167,15 @@ export default {
 
     },
     mounted() {
-        this.get_img_api()
+        this.get_img_api(false)
+        let thisObj = this
+        setInterval(()=>{
+            if (thisObj.point != '.....'){
+                thisObj.point += '.'
+            }else {
+                thisObj.point = '.'
+            }
+        },300)
     }
 
 }
