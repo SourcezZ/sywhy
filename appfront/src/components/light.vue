@@ -137,7 +137,7 @@ export default {
             let thisObj = this
             let data_url = sessionStorage.getItem("data_url")
             let img = document.querySelector("#img")
-            if (data_url != ""){
+            if (data_url != null){
                 img.src = data_url
                 return
             }
