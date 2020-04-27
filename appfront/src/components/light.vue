@@ -17,6 +17,7 @@
 <!--                <img class="img" src="https://api.r10086.com:8443/动漫综合2.php">-->
 <!--            </el-carousel-item>-->
 <!--        </el-carousel>-->
+<!--        <img class="img" :src="img_url" id="img" alt=""/>-->
         <img class="img" src="" id="img" alt=""/>
         <div slot="placeholder" class="image-slot" v-if="show_desc">
             我这里有一张图片，你可以等我再加载一会儿0.0<span class="dot">...</span>
@@ -132,20 +133,18 @@ export default {
                 }
             }, true)
         },
+        get_img_api (){
+            let thisObj = this
+            this.postData2Server('get_img_api', {}, (res)=>{
+                let img = document.querySelector("#img")
+                img.src = "data:" + res.content_type + ";base64," + res.img
+                thisObj.show_desc = false
+            }, true)
+        }
 
     },
     mounted() {
-        // let thisObj = this
-        // document.addEventListener("load", function (event) {
-        //     var ev=event
-        //     var elem = ev.target
-        //
-        //     if (elem.tagName.toLowerCase() == 'img') {
-        //         console.log("图片加载成功")
-        //         thisObj.onload(elem)
-        //     }
-        // }, true)
-        this.read()
+        this.get_img_api()
     }
 
 }

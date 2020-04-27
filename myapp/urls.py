@@ -7,8 +7,10 @@ from myapp.view import login
 from myapp.view import tuling
 from myapp.view import utilView
 from myapp.view.wechat import wechat_modules
+from myapp.view import router
 
 urlpatterns = [
+    url(r'get_img_api$', router.get_img_api),
     url(r'add_book$', views.add_book, ),
     url(r'show_books$', views.show_books, ),
 

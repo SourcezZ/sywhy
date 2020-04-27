@@ -88,7 +88,7 @@ exports.install = function (Vue, options) {
     Vue.prototype.postData2Server = function (transId, req, callback, showError = false) {
         req.token = this.getCookie('token')
         var url = window.location.href
-        if (url.includes(':8080')) {
+        if (url.includes(':8080') || url.includes(':7080')) {
             url = url.substring(0, url.lastIndexOf(":")) + ':8000/'
         }
         if (!url.includes(':8000')) {

@@ -21,6 +21,7 @@ UNNEEDLOGIN = [
     'uploadImgForUs',
     'chat_with_tuling',
     'getlive2d',
+    'get_img_api',
 ]
 
 # ROUTER = [
