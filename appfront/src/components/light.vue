@@ -135,10 +135,20 @@ export default {
         },
         get_img_api (){
             let thisObj = this
+            let data_url = sessionStorage.getItem("data_url")
+            let img = document.querySelector("#img")
+            if (data_url != ""){
+                img.src = data_url
+                return
+            }
             this.postData2Server('get_img_api', {}, (res)=>{
-                let img = document.querySelector("#img")
                 img.src = "data:" + res.content_type + ";base64," + res.img
                 thisObj.show_desc = false
+                try {
+                    sessionStorage.setItem("data_url", img.src)
+                }catch (e) {
+                    console.log("save data_url error : " + e)
+                }
             }, true)
         }
 
