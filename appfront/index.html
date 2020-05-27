@@ -10,6 +10,14 @@
     <link type="favicon" rel="shortcut icon" href="./static/favicon.ico" rel="external nofollow" /><!--favicon-->
 <!--    <link rel="stylesheet" type="text/css" href="./static/live2d_2/assets/waifu.css"/>&lt;!&ndash;看板娘css&ndash;&gt;-->
     <script src="./static/live2d_2/assets/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $(window).scroll(function(){
+                var h=$(document).scrollTop();
+                $(".netease").stop().animate({"top":h+400},700);
+            });
+        });
+    </script>
 </head>
 <body class='body_class'>
 
